@@ -1,0 +1,1143 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a1122">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>CBMM · Gimnasio</title>
+<style>
+:root{color-scheme:dark;--bg:#0a1122;--panel:#121c33;--panel2:#0f1930;--line:#22304f;--line2:#2e4068;--ink:#eef3fc;--muted:#9fb0cd;--faint:#6f80a3;--accent:#ff5c5c;--fill:#d42f34;--ok:#5fd29a;--warn:#f2b84b}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:640px;margin:0 auto;padding:max(18px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) 40px max(16px,env(safe-area-inset-left));position:relative;z-index:1}
+.wrap.wide{max-width:1180px}
+.bg-logo{position:fixed;inset:0;z-index:0;display:grid;place-items:center;pointer-events:none}
+.bg-logo svg{width:min(78vw,540px);height:auto;color:var(--accent);opacity:.045}
+.fox{color:var(--accent)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;font-weight:850;letter-spacing:.17em;font-size:12px}
+.top .brand{display:flex;align-items:center;gap:8px}
+.top .brand svg{width:22px;height:26px}
+.top a,.top button.link{letter-spacing:.02em;font-size:12px;font-weight:700;color:var(--ink);text-decoration:none;background:none;border:0;padding:6px 0;display:flex;align-items:center;gap:8px}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--fill);display:grid;place-items:center;font-size:11px;font-weight:900;letter-spacing:0;color:#fff;flex:none}
+.badge{padding:3px 8px;border-radius:6px;background:var(--ink);color:var(--bg);font-size:10px;letter-spacing:.1em}
+.hero{position:relative;overflow:hidden;isolation:isolate;background:linear-gradient(135deg,#17264b,#0f1a33);border:1px solid var(--line);border-radius:20px;padding:22px 20px}
+.hero svg{position:absolute;z-index:-1;right:-6px;top:50%;transform:translateY(-50%);height:130%;width:auto;color:var(--accent);opacity:.24}
+.eyebrow{margin:0;color:var(--accent);font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:850}
+.hero h1,.h1{font-size:clamp(36px,9vw,54px);letter-spacing:-.06em;line-height:.9;margin:12px 0 14px;font-weight:950;text-transform:uppercase}
+.h1{margin:6px 0 10px}
+.hero p:last-child{margin:0;font-weight:650;font-size:13px;color:var(--muted)}
+.label{margin:0 0 8px;color:var(--muted);font-size:11px;letter-spacing:.13em;font-weight:780;text-transform:uppercase}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.stack{display:flex;flex-direction:column;gap:14px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.between{justify-content:space-between}
+.field{display:flex;flex-direction:column;gap:6px;color:var(--muted);font-size:11px;font-weight:750;letter-spacing:.12em;text-transform:uppercase}
+.field input,.field select,.field textarea,.input{min-height:48px;padding:10px 14px;border:1px solid var(--line2);border-radius:12px;background:var(--panel);color:var(--ink);font-size:16px;font-weight:500;letter-spacing:0;text-transform:none;width:100%}
+textarea.input,.field textarea{min-height:76px;resize:vertical}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 18px;border-radius:14px;border:0;background:var(--fill);color:#fff;font-weight:800;font-size:16px;text-decoration:none;width:100%}
+.btn.ghost{background:var(--panel);border:1px solid var(--line2);color:var(--ink);font-weight:700}
+.btn.small{min-height:42px;font-size:14px;width:auto;border-radius:11px}
+.btn[disabled]{opacity:.55;cursor:default}
+.linkbtn{background:none;border:0;padding:6px 0;color:var(--muted);font-weight:700;font-size:13px;min-height:32px}
+.linkbtn.red{color:var(--accent)}
+.msg{padding:10px 12px;border-radius:10px;font-size:14px;font-weight:600}
+.msg.err{background:rgba(255,92,92,.12);border:1px solid #a8333a;color:#ffb3b3}
+.msg.ok{background:rgba(95,210,154,.1);border:1px solid #2f6b52;color:var(--ok)}
+.grid{display:grid;gap:7px;grid-template-columns:repeat(4,minmax(0,1fr))}
+.opt{border:1px solid var(--line);background:var(--panel);border-radius:10px;min-height:44px;padding:6px;font-size:13px;font-weight:750}
+.opt[aria-pressed="true"]{color:#fff;background:var(--fill);border-color:var(--fill)}
+.choice{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:76px;padding:14px 16px;border-radius:15px;background:var(--panel);border:2px solid var(--line);text-align:left}
+.choice b{display:block;font-size:20px;font-weight:900;letter-spacing:-.03em;text-transform:uppercase}
+.choice span{font-size:13px;color:var(--muted)}
+.choice .dot{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--line2)}
+.choice[aria-checked="true"]{border-color:var(--fill);background:#1a1f38}
+.choice[aria-checked="true"] .dot{border:7px solid var(--fill);background:#fff}
+.session{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:18px 0 6px}
+.session h2{margin:0;font-size:24px;letter-spacing:-.045em}
+.session span{font-size:12px;color:var(--accent);font-weight:750}
+.bar{height:6px;border-radius:10px;background:var(--line);overflow:hidden;margin-bottom:10px}
+.bar>span{display:block;height:100%;background:var(--fill);transition:width .2s}
+.group-label{margin:16px 0 7px;color:var(--muted);font-size:11px;letter-spacing:.13em;font-weight:780;text-transform:uppercase}
+.card{border:1px solid var(--line);background:var(--panel);border-radius:15px;padding:13px;margin-bottom:8px}
+.card.done{border-color:#a8333a}
+.card-top{display:flex;align-items:flex-start;gap:10px}
+.num{flex:none;color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.1em;padding-top:4px}
+.card h3{margin:0;font-size:16px;line-height:1.25}
+.target{margin:3px 0 0;color:var(--muted);font-size:12px}
+.load{margin:5px 0 0;color:var(--accent);font-size:13px;font-weight:750}
+.prev{margin:3px 0 0;color:var(--muted);font-size:12px;font-weight:600}
+.lines{margin:8px 0 0;padding:0;list-style:none}
+.lines li{display:flex;justify-content:space-between;gap:10px;font-size:13px;border-top:1px solid var(--line);padding:5px 0}
+.lines li span:last-child{color:var(--muted);white-space:nowrap}
+.log{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+.sets{display:flex;gap:6px;flex-wrap:wrap}
+.set{min-height:44px;min-width:44px;border:1px solid var(--line2);border-radius:9px;background:transparent;font-size:13px;font-weight:800}
+.set[aria-pressed="true"]{background:var(--fill);border-color:var(--fill);color:#fff}
+.weight{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:12px}
+.weight input{width:72px;min-height:44px;padding:7px;border:1px solid var(--line2);border-radius:9px;background:var(--bg);color:var(--ink);font-size:16px;text-align:center}
+.ramp{margin:8px 0 0;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.note{margin:10px 0 0;padding:8px 10px;border-radius:9px;background:var(--bg);border:1px solid var(--line);font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}
+.note small{display:block;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
+.note.pf{border-color:#a8333a}
+.timer{position:sticky;bottom:0;z-index:5;margin-top:14px;padding:8px 0 max(10px,env(safe-area-inset-bottom));background:var(--bg)}
+.timer-inner{border:1px solid var(--line);border-radius:14px;padding:8px;display:flex;gap:5px;align-items:center;background:var(--panel2)}
+.timer-inner.running{border-color:var(--accent)}
+.timer-read{padding:0 5px;min-width:62px}
+.timer-read .label{font-size:9px;margin:0}
+#clock{display:block;font-variant-numeric:tabular-nums;font-weight:850;color:var(--accent);font-size:20px;line-height:1.15}
+.tbtn{flex:1;min-height:44px;border:1px solid var(--line);background:var(--panel);border-radius:10px;font-size:12px;font-weight:750;padding:4px}
+#timer-status{color:var(--accent);font-weight:750;font-size:13px;min-height:18px;margin:6px 2px 0}
+.tiles{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+.tile{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:12px}
+.tile b{display:block;font-size:26px;font-weight:900;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.tile span{color:var(--muted);font-size:12px;font-weight:600}
+.panel{border:1px solid var(--line);background:var(--panel);border-radius:15px;padding:14px 16px}
+.list-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:14px}
+.list-row:first-child{border-top:0}
+.pill{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:800}
+.pill.ok{color:var(--ok);background:rgba(95,210,154,.12)}
+.pill.warn{color:var(--warn);background:rgba(242,184,75,.12)}
+.pill.bad{color:#ff8a8a;background:rgba(255,92,92,.14)}
+.effort{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.effort button{min-height:54px;border-radius:10px;border:1px solid var(--line);background:var(--panel);padding:4px 2px}
+.effort button b{display:block;font-size:16px}
+.effort button span{display:block;font-size:10px;opacity:.85}
+.effort button[aria-pressed="true"]{background:var(--fill);border-color:var(--fill);color:#fff}
+.pf-layout{display:flex;flex-wrap:wrap;gap:0;min-height:100vh}
+.side{flex:1 1 210px;max-width:100%;background:var(--panel2);border-right:1px solid var(--line);padding:max(22px,env(safe-area-inset-top)) 14px 18px;display:flex;flex-direction:column;gap:4px}
+.side .brand{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;letter-spacing:.17em;margin:0 6px 16px}
+.side .brand svg{width:24px;height:28px}
+.side a{display:flex;align-items:center;justify-content:space-between;min-height:42px;padding:0 12px;border-radius:10px;color:#c9d4ea;font-size:14px;font-weight:650;text-decoration:none}
+.side a[aria-current="page"]{background:var(--fill);color:#fff}
+.side .count{padding:1px 7px;border-radius:999px;background:var(--fill);color:#fff;font-size:11px;font-weight:800}
+.side a[aria-current="page"] .count{background:#fff;color:var(--fill)}
+.pf-main{flex:999 1 560px;min-width:0;padding:max(24px,env(safe-area-inset-top)) max(20px,env(safe-area-inset-right)) 48px 20px}
+.pf-main .h1{font-size:clamp(32px,5vw,46px)}
+@media (max-width:820px){.side{flex-direction:row;flex-wrap:wrap;border-right:0;border-bottom:1px solid var(--line)}.side .brand{width:100%;margin-bottom:6px}.side a{min-height:38px;font-size:13px}}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-top:1px solid var(--line)}
+thead th{border-top:0;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:750;background:var(--panel2)}
+td small{display:block;color:var(--muted);font-size:12px}
+.days{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;align-items:start}
+.issue{padding:10px 12px;border-radius:10px;background:var(--bg);border-left:3px solid var(--warn);font-size:13px}
+.issue.error{border-left-color:var(--accent)}
+.issue b{display:block}
+.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:140px;padding:20px;border-radius:16px;border:2px dashed var(--line2);background:var(--panel2);text-align:center;cursor:pointer}
+.drop.over{border-color:var(--accent)}
+.drop b{font-size:17px}
+.toast{position:fixed;left:50%;bottom:max(90px,calc(env(safe-area-inset-bottom) + 80px));transform:translateX(-50%);z-index:20;background:var(--ink);color:var(--bg);font-weight:700;font-size:14px;padding:10px 16px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.4);max-width:calc(100% - 32px)}
+.loading{display:grid;place-items:center;min-height:60vh;color:var(--muted)}
+.chat{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.bubble{padding:8px 10px;border-radius:10px;background:var(--bg);border:1px solid var(--line);font-size:14px}
+.bubble.pf{background:var(--fill);border-color:var(--fill);color:#fff}
+.bubble small{display:block;font-size:10px;font-weight:800;letter-spacing:.06em;opacity:.8;text-transform:uppercase}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="fox" viewBox="0 0 2835 3415"><path fill="currentColor" d="M 1792 640 C 1804 596 1868 545 1900 511 C 2008 396 2125 290 2257 259 C 2208 335 2173 427 2162 517 C 2043 569 1917 607 1792 640 M 1490 803 C 1487 813 1375 834 1360 838 C 1331 846 1256 872 1232 851 C 1249 828 1273 806 1295 788 C 1320 765 1351 747 1385 746 C 1417 746 1446 762 1474 778 C 1483 784 1494 793 1490 803 M 2469 1047 C 2573 1005 2685 977 2796 967 C 2639 872 2474 786 2295 746 C 2217 729 2137 718 2057 710 C 2113 667 2183 634 2248 606 C 2277 452 2331 304 2407 167 C 2425 134 2448 98 2475 73 C 2291 113 2114 186 1955 286 C 1900 321 1847 359 1797 401 C 1754 437 1709 471 1670 512 C 1677 474 1689 432 1700 396 C 1703 388 1701 379 1696 373 C 1691 368 1685 364 1680 360 C 1664 348 1657 327 1650 309 C 1629 256 1602 205 1566 162 C 1500 295 1424 420 1333 537 C 1350 545 1367 549 1386 548 C 1379 570 1360 585 1338 592 C 1317 600 1300 597 1278 594 C 1223 652 1162 713 1107 770 C 1031 848 955 920 856 965 C 830 976 801 993 776 1005 C 730 1027 684 1047 637 1065 C 577 1089 517 1103 453 1103 C 420 1103 377 1111 344 1110 C 268 1109 203 1100 128 1085 C 129 1118 120 1155 130 1187 C 136 1205 148 1218 161 1231 C 188 1258 227 1264 264 1259 C 346 1248 412 1214 484 1174 C 473 1212 443 1242 408 1261 C 374 1280 340 1287 302 1297 C 334 1314 367 1332 402 1341 C 427 1347 452 1353 477 1358 C 533 1369 589 1385 646 1394 C 689 1401 730 1408 773 1410 C 825 1411 876 1412 927 1418 C 1012 1429 1098 1415 1183 1415 C 1241 1414 1299 1403 1356 1395 C 1455 1382 1546 1369 1639 1333 C 1499 1366 1353 1361 1209 1355 C 1157 1353 1099 1354 1047 1351 C 1228 1265 1436 1194 1609 1078 C 1668 1039 1728 999 1763 938 C 1828 945 1894 953 1959 961 C 1993 964 2027 968 2061 969 C 2133 969 2208 956 2275 982 C 2108 1016 1964 1117 1847 1242 C 1939 1245 2030 1250 2122 1252 C 2063 1277 2008 1311 1956 1349 C 1837 1436 1735 1554 1702 1697 C 1803 1576 1929 1475 2069 1402 C 2151 1359 2238 1326 2325 1294 C 2474 1238 2625 1188 2776 1137 C 2704 1124 2632 1107 2562 1088 C 2529 1079 2496 1067 2469 1047 M 1314 1576 C 1323 1569 1331 1561 1334 1550 C 1299 1566 1254 1596 1214 1631 C 1199 1643 1184 1661 1172 1676 C 1149 1705 1131 1725 1109 1755 C 1088 1786 1071 1823 1066 1860 C 1130 1796 1204 1757 1291 1735 C 1242 1790 1215 1843 1179 1908 C 1165 1934 1152 1971 1150 2000 C 1199 1963 1244 1939 1303 1918 C 1271 2074 1301 2238 1377 2377 C 1362 2252 1322 2150 1356 2032 C 1375 1964 1394 1900 1431 1853 C 1363 1853 1301 1867 1239 1895 C 1245 1859 1265 1827 1289 1800 C 1314 1773 1343 1751 1373 1730 C 1397 1712 1422 1695 1451 1687 C 1433 1676 1411 1676 1390 1677 C 1339 1678 1288 1679 1240 1696 C 1230 1700 1215 1703 1205 1708 C 1220 1652 1271 1614 1314 1576 M 2442 2879 C 2442 2879 2442 2879 2442 2879 C 2442 2879 2442 2879 2442 2879 M 2444 2877 C 2444 2877 2444 2877 2444 2877 M 2444 2877 C 2444 2877 2444 2877 2444 2877 C 2444 2877 2444 2877 2444 2877 M 2444 2877 C 2444 2877 2444 2877 2444 2877 C 2444 2877 2444 2877 2444 2877 M 2442 2879 C 2443 2878 2444 2878 2444 2877 C 2444 2878 2443 2878 2442 2879 M 2440 2882 C 2440 2882 2440 2882 2440 2882 C 2440 2882 2440 2882 2440 2882 M 2440 2881 C 2440 2881 2440 2881 2440 2882 C 2440 2881 2440 2881 2440 2881 M 2440 2882 C 2439 2882 2439 2882 2440 2882 M 2154 2311 C 2114 2138 2096 1964 2072 1788 C 2060 1697 2078 1587 2064 1494 C 1982 1581 1872 1629 1788 1712 C 1704 1794 1617 1909 1587 2035 C 1556 2160 1563 2293 1595 2418 C 1753 2262 1886 2076 1979 1875 C 1953 1997 1903 2133 1861 2251 C 1815 2377 1742 2414 1658 2534 C 1779 2635 1896 2744 1999 2862 C 2023 2890 2052 2921 2089 2921 C 2115 2922 2139 2906 2164 2903 C 2152 2919 2136 2933 2118 2944 C 2090 2961 2057 2970 2024 2964 C 1974 2956 1936 2915 1901 2878 C 1792 2758 1675 2644 1542 2552 C 1409 2461 1258 2391 1098 2368 C 1070 2364 1043 2362 1016 2360 C 967 2358 918 2358 869 2362 C 921 2378 973 2393 1024 2409 C 1068 2422 1111 2435 1153 2454 C 1277 2509 1378 2614 1429 2739 C 1349 2691 1260 2658 1173 2626 C 1144 2616 1115 2606 1085 2600 C 1014 2585 941 2587 868 2589 C 844 2590 820 2590 796 2591 C 751 2593 705 2594 665 2615 C 840 2635 1005 2729 1106 2872 C 999 2850 888 2847 780 2863 C 851 2883 914 2931 966 2984 C 1017 3037 1059 3099 1097 3162 C 987 3111 878 3059 765 3016 C 652 2974 538 2936 419 2918 C 319 2902 217 2902 116 2916 C 192 2749 323 2607 479 2511 C 531 2480 588 2452 630 2408 C 370 2533 150 2738 10 2990 C 211 2933 425 2986 620 3059 C 816 3131 1014 3217 1214 3279 C 1391 3334 1563 3349 1749 3340 C 1803 3337 1888 3300 1939 3284 C 2059 3248 2146 3193 2234 3105 C 2314 3022 2366 2966 2442 2879 C 2411 2820 2384 2806 2358 2769 C 2259 2626 2193 2480 2154 2311"/></symbol></defs></svg>
+<div class="bg-logo" aria-hidden="true"><svg viewBox="0 0 2835 3415"><use href="#fox"/></svg></div>
+<div id="app"><div class="loading">Cargando…</div></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" defer></script>
+<script>
+// ===== Lector de la planilla "FORMATO PLAN FUERZA" =====
+const WEEK_START = [2, 11, 20, 29]; // columnas C, L, U, AD (0 = A)
+const COL = (i) => { let s = ''; i++; while (i) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; };
+
+const strip = (s) => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '');
+const squash = (s) => String(s).replace(/\s+/g, ' ').trim();
+const cleanVal = (s) => squash(s).replace(/[.,]+$/, '').trim();
+
+// Abreviaturas y errores de tipeo frecuentes en las planillas
+const WORDS = {
+  BCO: 'banco', MANC: 'mancuerna', 'MANC.': 'mancuerna', '1BB': 'a un brazo', BB: 'brazo', '1PP': 'a una pierna',
+  'C/': 'con', C: 'con', PTE: 'puente', LAT: 'lateral', POS: 'posición', PROF: 'profunda', 'O.H.': 'overhead', OH: 'overhead',
+  FRON: 'frontal', SIMULT: 'simultáneo', ARROD: 'arrodillado', EXCETRIC: 'excéntrico', PERTURBACION: 'perturbación',
+  PRENSION: 'prensión', BULGARAS: 'búlgaras', FRANCES: 'francés', TRICEPS: 'tríceps', BICEPS: 'bíceps',
+  CUADRICEPS: 'cuádriceps', NORDICOS: 'nórdicos', ISQUIO: 'isquios', DIA: 'día', ATRAS: 'atrás', ANROLD: 'Arnold', '1ROD': 'una rodilla', DEFICIT: 'déficit', SIMULTANEO: 'simultáneo', 'FRON/LAT': 'frontal y lateral', 'L': 'en L', PLANCK: 'plank', BAND: 'banda', '+': '+',
+  ARNOLD: 'Arnold', BICHOO: 'bicho', BARAA: 'barra', TRHUST: 'thrust', SOURRENDER: 'surrender', LADMINE: 'landmine',
+  MENTON: 'mentón', PUÑOS: 'puños', PALLOF: 'Pallof', ZERCHER: 'Zercher', MEADOWS: 'Meadows', COPENHAGUE: 'Copenhague',
+  SEE: 'see', SOW: 'saw', EM: 'en', T: 'thrust', PTAS: 'puntas', ESTOCADA: 'estocada', ESTOCADAS: 'estocadas', SILLON: 'sillón',
+  'HIP': 'hip', 'C/DISCO': 'con disco', 'C/D': 'con disco', 'C/REMO': 'con remo', 'C/ PUÑOS': 'con puños', 'HOLD,': 'hold', 'HOLD.': 'hold',
+  'EXCETRIC.': 'excéntrico', 'ARROD.': 'arrodillado', 'ALTERNADO.': 'alternado', 'HOLD': 'hold', TRAP: 'trap', BAR: 'bar'
+};
+function niceName(raw) {
+  const words = squash(String(raw).replace(/\+/g, ' + ')).replace(/"/g, '').split(' ').filter(Boolean);
+  const out = [];
+  for (let i = 0; i < words.length; i++) {
+    const w = words[i];
+    const key = strip(w).toUpperCase();
+    if (w === '1' && words[i + 1] && /^(BB|PP)$/i.test(words[i + 1])) { out.push(words[i + 1].toUpperCase() === 'BB' ? 'a un brazo' : 'a una pierna'); i++; continue; }
+    if (WORDS[w] !== undefined) out.push(WORDS[w]);
+    else if (WORDS[key] !== undefined) out.push(WORDS[key]);
+    else if (key.startsWith('C/') && WORDS[key.slice(2)] !== undefined) out.push('con ' + WORDS[key.slice(2)]);
+    else if (key.startsWith('C/')) out.push('con ' + w.slice(2).toLowerCase());
+    else out.push(w.toLowerCase().replace(/[.,]+$/, ''));
+  }
+  let s = out.join(' ').replace(/\s+/g, ' ').trim();
+  s = s.replace(/^1\/2 /, 'medio ');
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+const catalogKey = (name) => strip(name).toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ').trim();
+
+function excelDate(serial) {
+  const d = new Date(Math.round((serial - 25569) * 86400000));
+  return { d: d.getUTCDate(), m: d.getUTCMonth() + 1 };
+}
+const isDateFmt = (z) => !!z && !/%/.test(z) && /[dmy]/i.test(z.replace(/"[^"]*"/g, ''));
+
+function readPlan(XLSX, buffer, fileName) {
+  const wb = XLSX.read(buffer, { type: 'array', cellNF: true });
+  const ws = wb.Sheets[wb.SheetNames[0]];
+  const range = XLSX.utils.decode_range(ws['!ref']);
+  const owner = {};
+  for (const m of ws['!merges'] || []) {
+    for (let r = m.s.r; r <= m.e.r; r++) for (let c = m.s.c; c <= m.e.c; c++) owner[r + ',' + c] = [m.s.r, m.s.c];
+  }
+  // Celda con su origen real (si está combinada, la de arriba a la izquierda)
+  const cell = (r, c) => {
+    const [rr, cc] = owner[r + ',' + c] || [r, c];
+    const x = ws[XLSX.utils.encode_cell({ r: rr, c: cc })];
+    if (!x || x.v === undefined || x.v === null || (typeof x.v === 'string' && !x.v.trim())) return null;
+    return { v: x.v, t: x.t, z: x.z, r: rr, c: cc, ref: COL(cc) + (rr + 1), inherited: rr !== r };
+  };
+  const raw = (r, c) => { const x = cell(r, c); return x && !x.inherited ? x : null; };
+  const first = (r, from, to) => { for (let c = from; c <= to; c++) { const x = cell(r, c); if (x) return x; } return null; };
+
+  const plan = { file: fileName, group: '', days: [] };
+  const issues = [];
+  let day = null, block = null, pendingPrep = [];
+  const addIssue = (level, where, text, ref) => issues.push({ level, ...where, text, ref });
+
+  for (let r = range.s.r; r <= range.e.r; r++) {
+    const a = raw(r, 0), b = raw(r, 1);
+    const A = a ? squash(a.v).toUpperCase() : '';
+    const B = b ? squash(b.v) : '';
+    if (!A && !B) continue;
+    if (A === 'PLAN DE FUERZA') continue;
+    if (A.startsWith('PREPARACION')) {
+      const g = first(r, 3, 12);
+      if (g && !plan.group) plan.group = squash(g.v);
+      if (B) pendingPrep.push(B);
+      continue;
+    }
+    const dm = A.match(/^DIA\s*(\d+)/);
+    if (dm) {
+      day = { n: Number(dm[1]), prep: pendingPrep.slice(), blocks: [] };
+      pendingPrep = [];
+      plan.days.push(day);
+      block = null;
+      continue;
+    }
+    if (A === 'BLOQUES' || B.toUpperCase() === 'EJERCICIO') continue;
+    if (/^REALIZAR MOVILIDAD/i.test(B) || /^ACTIVACION/i.test(B)) {
+      (day && day.blocks.length === 0 && !pendingPrep.length ? day.prep : pendingPrep).push(B);
+      continue;
+    }
+    if (!day || !B) continue;
+
+    if (A) {
+      const kind = /ESTABILIDAD/.test(A) ? 'core' : /CIRCUITO|AMRAP/.test(A) ? 'amrap' : 'bloque';
+      block = { label: squash(a.v), kind, row: r, exercises: [], weeks: [] };
+      day.blocks.push(block);
+    } else if (!block) {
+      block = { label: 'Ejercicios', kind: 'bloque', row: r, exercises: [], weeks: [] };
+      day.blocks.push(block);
+    }
+    const isFirst = block.exercises.length === 0;
+    const ex = { raw: B, name: niceName(B), row: r + 1, weeks: [] };
+    ex.key = catalogKey(ex.name);
+    for (let w = 0; w < 4; w++) {
+      const s = WEEK_START[w];
+      const where = { day: day.n, exercise: ex.name, week: w + 1 };
+      const seriesCell = cell(r, s);
+      const repsCell = first(r, s + 1, s + 4);
+      const cargaCell = first(r, s + 5, s + 7);
+      const restCell = cell(r, s + 8);
+      const wk = {};
+      // Series
+      if (isFirst) block.weeks[w] = { series: seriesCell ? parseSeries(seriesCell.v) : null, rest: restCell ? parseRest(restCell.v) : null };
+      const bw = block.weeks[w] || {};
+      const ownSeries = seriesCell && !seriesCell.inherited ? parseSeries(seriesCell.v) : null;
+      if (!isFirst && ownSeries && !ownSeries.ramp) {
+        const blockLabel = bw.series ? bw.series.label : 'sin series';
+        if (ownSeries.label !== blockLabel) addIssue('revisar', where, `Tiene un ${ownSeries.label} en la columna de series y el bloque hace ${blockLabel}. ¿Es a propósito o quedó suelto?`, seriesCell.ref);
+      }
+      wk.series = isFirst ? bw.series : (ownSeries || bw.series || null);
+      wk.rest = !isFirst && restCell && !restCell.inherited ? parseRest(restCell.v) : (bw.rest || null);
+      // Repeticiones (en series en escalera vienen en la misma celda que las series)
+      if (wk.series && wk.series.ramp) wk.reps = { text: wk.series.ramp.map(g => `${g.sets}×${g.reps}`).join(' · '), list: wk.series.ramp.flatMap(g => Array(g.sets).fill(g.reps)) };
+      else if (repsCell) {
+        if (repsCell.t === 'n' && isDateFmt(repsCell.z) && repsCell.v > 59) {
+          const { d, m } = excelDate(repsCell.v);
+          addIssue('error', where, `Excel convirtió "${d}/${m}" en una fecha (${d} de ${['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][m - 1]}). Se lee como ${d}/${m}, por lado.`, repsCell.ref);
+          wk.reps = parseReps(`${d}/${m}`);
+        } else wk.reps = parseReps(repsCell.v);
+      } else {
+        wk.reps = null;
+        addIssue('revisar', where, 'No tiene repeticiones cargadas para esta semana.', COL(s + 1) + (r + 1));
+      }
+      // Carga
+      if (cargaCell) {
+        const c = parseCarga(cargaCell);
+        wk.carga = c;
+        if (c.pct) for (const p of c.pct) {
+          if (p > 100) addIssue('error', where, `La carga es ${fmtPct(p)} del máximo, más de lo que se puede levantar. Revisá el valor.`, cargaCell.ref);
+          else if (p < 30 && !c.asNumber) addIssue('revisar', where, `La carga es ${fmtPct(p)} del máximo, muy baja comparada con el resto.`, cargaCell.ref);
+        }
+        if (c.asNumber) addIssue('error', where, `Dice "${cargaCell.v}" sin el signo %, en otras semanas está en %. Se lee como ${fmtPct(c.pct[0])}.`, cargaCell.ref);
+      } else wk.carga = null;
+      ex.weeks.push(wk);
+    }
+    block.exercises.push(ex);
+  }
+  return { plan, issues };
+}
+
+const fmtPct = (p) => (Math.round(p * 10) / 10).toString().replace('.', ',') + '%';
+
+function parseSeries(v) {
+  if (typeof v === 'number') return { count: v, label: String(v) };
+  const s = squash(v).toUpperCase();
+  const ramp = [...s.matchAll(/(\d+)\s*\*\s*(\d+)/g)];
+  if (ramp.length >= 2) {
+    const groups = ramp.map(m => ({ sets: Number(m[1]), reps: Number(m[2]) }));
+    const count = groups.reduce((t, g) => t + g.sets, 0);
+    return { count, label: String(count), ramp: groups };
+  }
+  let m = s.match(/^(\d+)\s*\+\s*(\d+)$/);
+  if (m) return { count: Number(m[1]) + Number(m[2]), label: `${m[1]}+${m[2]}`, extra: Number(m[2]) };
+  m = s.match(/(\d+)\s*MIN/);
+  if (m) return { minutes: Number(m[1]), label: `${m[1]} min` };
+  m = s.match(/^(\d+)\.?$/);
+  if (m) return { count: Number(m[1]), label: m[1] };
+  return { label: cleanVal(v) };
+}
+
+function parseRest(v) {
+  const s = squash(v).toUpperCase();
+  if (/NO\s*HAY/.test(s)) return { seconds: 0, label: 'Sin pausa' };
+  let m = s.match(/^(\d+(?:[.,]\d+)?)\s*[´'`’]/);
+  if (m) { const sec = Math.round(parseFloat(m[1].replace(',', '.')) * 60); return { seconds: sec, label: sec % 60 ? `${sec} s` : `${sec / 60} min` }; }
+  m = s.match(/^(\d+)\s*(S|SEG|")?$/);
+  if (m) return { seconds: Number(m[1]), label: `${m[1]} s` };
+  return { label: cleanVal(v) };
+}
+
+function parseReps(v) {
+  if (typeof v === 'number') return { text: `${v}`, n: v, unit: 'reps' };
+  let s = cleanVal(v);
+  const U = s.toUpperCase();
+  let m;
+  if (U === 'AMRAP') return { text: 'máximo de reps', unit: 'amrap' };
+  if ((m = U.match(/^(\d+)\s*"\s*\/\s*(\d+)\s*"$/))) return { text: `${m[1]} s por lado`, unit: 's' };
+  if ((m = U.match(/^(\d+)\s*\/\s*(\d+)[-.]?$/))) return { text: `${m[1]} por lado`, n: Number(m[1]), unit: 'reps', perSide: true };
+  if ((m = U.match(/^(\d+)\s*"\.?$/))) return { text: `${m[1]} s`, unit: 's' };
+  if ((m = U.match(/^(\d+)\s*\*\s*(\d+)\s*"$/))) return { text: `${m[1]} × ${m[2]} s`, unit: 's' };
+  if ((m = U.match(/^(\d+)\s*\*\s*(\d+)$/))) return { text: `${m[1]} × ${m[2]}`, unit: 'reps' };
+  if ((m = U.match(/^(\d+)\s*PASOS$/))) return { text: `${m[1]} pasos`, unit: 'pasos' };
+  if ((m = U.match(/^(\d+)\s*MTS?$/))) return { text: `${m[1]} m`, unit: 'm' };
+  if ((m = U.match(/^(\d+)\s*TOTAL$/))) return { text: `${m[1]} en total`, unit: 'reps' };
+  if ((m = U.match(/^(\d+)$/))) return { text: m[1], n: Number(m[1]), unit: 'reps' };
+  if (/^\d+(\s*-\s*\d+){2,}$/.test(U) && !/^7-7-7$/.test(U)) { const list = U.split('-').map(x => Number(x.trim())); return { text: list.join(' · '), list, unit: 'reps' }; }
+  if (/^7-7-7$/.test(U)) return { text: '7 + 7 + 7 (21)', unit: 'reps' };
+  if ((m = U.match(/^(\d+)\s*\+\s*(\d+)$/))) return { text: `${m[1]} + ${m[2]}`, parts: [Number(m[1]), Number(m[2])], unit: 'reps' };
+  return { text: s.toLowerCase().replace('fallo', 'al fallo').replace(/\s*\+\s*/g, ' + '), unit: 'reps' };
+}
+
+function parseCarga(x) {
+  const v = x.v;
+  if (typeof v === 'number') {
+    if (x.z && /%/.test(x.z)) return { pct: [v * 100], text: fmtPct(v * 100) };
+    if (v <= 1.5) return { pct: [v * 100], text: fmtPct(v * 100) };
+    if (v <= 100) return { pct: [v], text: fmtPct(v), asNumber: true };
+    return { text: String(v) };
+  }
+  const s = squash(v).toUpperCase();
+  let m;
+  if ((m = s.match(/^(\d+)\s*A\s*(\d+)\s*%?$/))) return { pct: [Number(m[1]), Number(m[2])], range: true, text: `${m[1]} a ${m[2]}%` };
+  if ((m = s.match(/^(\d+)\s*\+\s*(\d+)\s*%?$/))) return { pct: [Number(m[1]), Number(m[2])], split: true, text: `${m[1]}% + ${m[2]}%` };
+  if ((m = s.match(/^(\d+)\s*%$/))) return { pct: [Number(m[1])], text: `${m[1]}%` };
+  if (/NO\s*HAY/.test(s)) return null;
+  const notes = { HOLD: 'sostené', SLOW: 'lento', 'MAX.VEL': 'máxima velocidad', 'MAX. VEL': 'máxima velocidad' };
+  return { note: notes[s] || cleanVal(v).toLowerCase().replace('kg', ' kg').replace(/\s+/g, ' ') };
+}
+
+if (typeof module !== 'undefined') module.exports = { readPlan, parseReps, parseSeries, parseCarga, parseRest, niceName };
+
+</script>
+<script>
+// ===================== Configuración =====================
+const SUPABASE_URL = 'https://cfcguumuaeiikhikuddl.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_Py9j5O7u3V12P5huAThaVw_NUKI_91v';
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, autoRefreshToken: true } });
+
+// ===================== Utilidades =====================
+const $ = (s) => document.querySelector(s);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+const kgFmt = (n) => (Math.round(n * 100) / 100).toString().replace('.', ',');
+const initials = (n) => (n || '?').split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('') || '?';
+const FOX = '<svg viewBox="0 0 2835 3415" aria-hidden="true"><use href="#fox"/></svg>';
+const todayStart = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
+const fmtDate = (s) => s ? new Date(/^\d{4}-\d{2}-\d{2}$/.test(s) ? s + 'T00:00:00' : s).toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit' }) : '—';
+function ago(s) {
+  if (!s) return 'nunca';
+  const d = Math.floor((todayStart() - new Date(new Date(s).setHours(0, 0, 0, 0))) / 86400000);
+  return d <= 0 ? 'hoy' : d === 1 ? 'ayer' : `hace ${d} días`;
+}
+let toastTimer;
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => (t.hidden = true), 2800); }
+function fail(e) { console.error(e); toast(e?.message ? 'Error: ' + e.message : 'Algo falló. Probá de nuevo.'); }
+const LS = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
+
+// ===================== Estado =====================
+const S = {
+  user: null, perfil: null, grupos: [],
+  plan: null, bloques: [], items: [], week: 0, day: 0,
+  sesion: null, series: {}, prev: {}, maximos: {}, comentarios: [],
+  effort: 2, asPlayer: false,
+  pf: { tab: 'inicio' }
+};
+const isPF = () => S.perfil && ['pf', 'admin'].includes(S.perfil.rol) && !S.asPlayer;
+
+// ===================== Router =====================
+function go(view) { if (location.hash !== '#' + view) location.hash = view; else render(); }
+window.addEventListener('hashchange', render);
+function view() { return (location.hash || '#').slice(1); }
+
+async function boot() {
+  const { data } = await db.auth.getSession();
+  S.user = data.session?.user || null;
+  if (S.user) await loadPerfil();
+  render();
+}
+db.auth.onAuthStateChange(async (event, session) => {
+  if (event === 'PASSWORD_RECOVERY') { S.user = session?.user || null; go('nueva-clave'); return; }
+  if (event === 'SIGNED_OUT') { Object.assign(S, { user: null, perfil: null, plan: null }); go('login'); }
+});
+
+async function loadPerfil() {
+  const [{ data: p, error }, { data: g }] = await Promise.all([
+    db.from('perfiles').select('*').eq('id', S.user.id).single(),
+    db.from('grupos').select('*').order('orden')
+  ]);
+  if (error) throw error;
+  S.perfil = p; S.grupos = g || [];
+}
+const grupoName = (id) => S.grupos.find((g) => g.id === id)?.nombre || 'Sin grupo';
+
+function render() {
+  const v = view();
+  if (v === 'nueva-clave') return renderNewPassword();
+  if (!S.user) {
+    if (v === 'registro') return renderSignup();
+    if (v === 'olvide') return renderForgot();
+    return renderLogin();
+  }
+  if (!S.perfil) return;
+  if (isPF() && !v.startsWith('pf') && v !== 'perfil') return go('pf');
+  if (v.startsWith('pf') && isPF()) return renderPF(v);
+  if (v === 'perfil') return renderPerfil();
+  if (!S.perfil.grupo_id || v === 'grupo') return renderGroupPick();
+  if (v === 'cierre') return renderCierre();
+  return renderEntreno();
+}
+
+// ===================== Auth =====================
+function authShell(eyebrow, title, sub, body) {
+  $('#app').innerHTML = `<div class="wrap stack">
+    <div class="top"><span class="brand">${FOX}CBMM</span><span class="muted" style="letter-spacing:.08em;font-weight:650">PLAN DE FUERZA</span></div>
+    <div class="hero">${FOX}<p class="eyebrow">${esc(eyebrow)}</p><h1>${title}</h1><p>${esc(sub)}</p></div>
+    ${body}</div>`;
+}
+function renderLogin() {
+  authShell('Bienvenido', 'Iniciar<br>sesión', 'Entrá para ver la rutina que te armó el PF.', `
+    <form id="f-login" class="stack">
+      <label class="field">Email<input type="email" name="email" autocomplete="email" required placeholder="nombre@mail.com"></label>
+      <label class="field">Contraseña<input type="password" name="pass" autocomplete="current-password" required placeholder="Tu contraseña"></label>
+      <div class="msg err" id="err" hidden></div>
+      <div class="row between"><span></span><a href="#olvide" class="small" style="color:var(--muted);font-weight:600">¿Olvidaste tu contraseña?</a></div>
+      <button class="btn" type="submit">Entrar</button>
+      <p class="small muted" style="text-align:center;margin:0">¿Es tu primera vez? <a href="#registro" style="font-weight:700">Creá tu cuenta</a></p>
+    </form>`);
+  $('#f-login').onsubmit = async (e) => {
+    e.preventDefault();
+    const f = new FormData(e.target), btn = e.target.querySelector('button[type=submit]');
+    btn.disabled = true;
+    const { data, error } = await db.auth.signInWithPassword({ email: f.get('email').trim(), password: f.get('pass') });
+    btn.disabled = false;
+    if (error) { showErr(error.message.includes('Invalid') ? 'El email o la contraseña no coinciden. Probá de nuevo.' : error.message.includes('confirm') ? 'Tenés que confirmar tu email antes de entrar.' : error.message); return; }
+    S.user = data.user; await loadPerfil(); go(isPF() ? 'pf' : 'entreno');
+  };
+}
+function showErr(m) { const e = $('#err'); if (e) { e.textContent = m; e.hidden = false; } }
+function renderSignup() {
+  authShell('Paso 1 de 2', 'Crear<br>cuenta', 'Tu rutina, tus cargas y tu historial en un solo lugar.', `
+    <form id="f-signup" class="stack">
+      <label class="field">Nombre y apellido<input name="nombre" autocomplete="name" required placeholder="Nombre y apellido"></label>
+      <label class="field">Email<input type="email" name="email" autocomplete="email" required placeholder="nombre@mail.com"></label>
+      <label class="field">Contraseña<input type="password" name="pass" autocomplete="new-password" minlength="8" required placeholder="Mínimo 8 caracteres"></label>
+      <div class="msg err" id="err" hidden></div>
+      <button class="btn" type="submit">Crear cuenta</button>
+      <p class="small muted" style="text-align:center;margin:0">¿Ya tenés cuenta? <a href="#login" style="font-weight:700">Iniciá sesión</a></p>
+    </form>`);
+  $('#f-signup').onsubmit = async (e) => {
+    e.preventDefault();
+    const f = new FormData(e.target), btn = e.target.querySelector('button[type=submit]');
+    btn.disabled = true;
+    const { data, error } = await db.auth.signUp({ email: f.get('email').trim(), password: f.get('pass'), options: { data: { nombre: f.get('nombre').trim() }, emailRedirectTo: location.origin + location.pathname } });
+    btn.disabled = false;
+    if (error) { showErr(error.message.includes('registered') ? 'Ya hay una cuenta con ese email. Iniciá sesión.' : error.message); return; }
+    if (!data.session) { authShell('Casi listo', 'Revisá<br>tu mail', 'Te mandamos un link para confirmar la cuenta. Después iniciá sesión.', '<a class="btn" href="#login">Ir a iniciar sesión</a>'); return; }
+    S.user = data.user; await loadPerfil(); go('grupo');
+  };
+}
+function renderForgot() {
+  authShell('Recuperar acceso', 'Olvidé mi<br>contraseña', 'Poné tu email y te mandamos un link para crear una nueva.', `
+    <form id="f-forgot" class="stack">
+      <label class="field">Email<input type="email" name="email" required placeholder="nombre@mail.com"></label>
+      <div class="msg err" id="err" hidden></div>
+      <button class="btn" type="submit">Mandame el link</button>
+      <a href="#login" class="small" style="text-align:center;color:var(--muted);font-weight:700">Volver</a>
+    </form>`);
+  $('#f-forgot').onsubmit = async (e) => {
+    e.preventDefault();
+    const email = new FormData(e.target).get('email').trim();
+    const { error } = await db.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname });
+    if (error) return showErr(error.message);
+    authShell('Listo', 'Revisá<br>tu mail', 'Si hay una cuenta con ese email, te llega un link. Fijate también en spam.', '<a class="btn" href="#login">Volver a iniciar sesión</a>');
+  };
+}
+function renderNewPassword() {
+  authShell('Recuperar acceso', 'Nueva<br>contraseña', 'Elegí una contraseña nueva para tu cuenta.', `
+    <form id="f-new" class="stack">
+      <label class="field">Contraseña nueva<input type="password" name="pass" minlength="8" required autocomplete="new-password"></label>
+      <div class="msg err" id="err" hidden></div>
+      <button class="btn" type="submit">Guardar</button>
+    </form>`);
+  $('#f-new').onsubmit = async (e) => {
+    e.preventDefault();
+    const { error } = await db.auth.updateUser({ password: new FormData(e.target).get('pass') });
+    if (error) return showErr(error.message);
+    toast('Contraseña actualizada'); await loadPerfil(); go(isPF() ? 'pf' : 'entreno');
+  };
+}
+
+// ===================== Elegir grupo =====================
+function renderGroupPick() {
+  let picked = S.perfil.grupo_id || S.grupos[0]?.id;
+  const draw = () => {
+    $('#app').innerHTML = `<div class="wrap stack">
+      <div class="top"><span class="brand">${FOX}CBMM</span><span class="muted" style="letter-spacing:.08em;font-weight:650">${S.perfil.grupo_id ? 'CAMBIAR GRUPO' : 'PASO 2 DE 2'}</span></div>
+      <div><p class="eyebrow">Hola${S.perfil.nombre ? ', ' + esc(S.perfil.nombre.split(' ')[0]) : ''}</p><h1 class="h1">¿Qué rutina<br>hacés?</h1><p class="muted" style="margin:0">Elegí tu grupo. Vas a ver el plan que cargó el PF para ese grupo.</p></div>
+      <div class="stack" role="radiogroup" aria-label="Grupo" style="gap:10px">
+        ${S.grupos.map((g) => `<button type="button" class="choice" role="radio" aria-checked="${g.id === picked}" data-g="${g.id}"><span><b>${esc(g.nombre)}</b><span>${g.nombre === 'Lesionados' ? 'Readaptación · el PF la ajusta a cada caso' : 'Plan del grupo · 4 semanas'}</span></span><span class="dot" aria-hidden="true"></span></button>`).join('')}
+      </div>
+      <button class="btn" id="go">Empezar</button>
+      ${S.perfil.grupo_id ? '<a href="#entreno" class="small" style="text-align:center;color:var(--muted);font-weight:700">Cancelar</a>' : ''}
+    </div>`;
+    document.querySelectorAll('[data-g]').forEach((b) => b.onclick = () => { picked = Number(b.dataset.g); draw(); });
+    $('#go').onclick = async () => {
+      const { error } = await db.from('perfiles').update({ grupo_id: picked }).eq('id', S.user.id);
+      if (error) return fail(error);
+      S.perfil.grupo_id = picked; S.plan = null; go('entreno');
+    };
+  };
+  draw();
+}
+
+// ===================== Plan del jugador =====================
+async function loadPlan(grupoId) {
+  const { data: plan, error } = await db.from('planes').select('*').eq('grupo_id', grupoId).eq('estado', 'activo').maybeSingle();
+  if (error) throw error;
+  if (!plan) return { plan: null, bloques: [], items: [] };
+  const { data: bloques } = await db.from('bloques').select('*').eq('plan_id', plan.id).order('dia').order('orden');
+  const ids = (bloques || []).map((b) => b.id);
+  const { data: items } = ids.length ? await db.from('items').select('*').in('bloque_id', ids).order('orden') : { data: [] };
+  return { plan, bloques: bloques || [], items: items || [] };
+}
+function currentWeek(plan) {
+  if (!plan?.inicio) return 0;
+  const diff = Math.floor((todayStart() - new Date(plan.inicio + 'T00:00:00')) / (7 * 86400000));
+  return Math.max(0, Math.min(plan.semanas - 1, diff));
+}
+async function ensurePlan() {
+  if (S.plan && S.plan.grupo_id === S.perfil.grupo_id) return;
+  const r = await loadPlan(S.perfil.grupo_id);
+  Object.assign(S, r);
+  S.week = LS.get('semana-' + (r.plan?.id || 0), currentWeek(r.plan));
+  S.day = LS.get('dia-' + (r.plan?.id || 0), 0);
+  const { data: mx } = await db.from('maximos').select('*').eq('jugador_id', S.user.id);
+  S.maximos = Object.fromEntries((mx || []).map((m) => [m.ejercicio, Number(m.kg)]));
+}
+async function loadSession() {
+  S.sesion = null; S.series = {}; S.prev = {};
+  if (!S.plan) return;
+  const { data: ses } = await db.from('sesiones').select('*').eq('jugador_id', S.user.id).eq('plan_id', S.plan.id).eq('semana', S.week + 1).eq('dia', S.day + 1).maybeSingle();
+  S.sesion = ses || null;
+  if (ses) {
+    const { data: ser } = await db.from('series').select('*').eq('sesion_id', ses.id);
+    for (const r of ser || []) S.series[r.item_id + ':' + r.numero] = r;
+  }
+  // Pesos de semanas anteriores (fila numero 0 = peso usado)
+  const { data: prevSes } = await db.from('sesiones').select('id,semana').eq('jugador_id', S.user.id).eq('plan_id', S.plan.id).eq('dia', S.day + 1).lt('semana', S.week + 1).order('semana', { ascending: false });
+  if (prevSes?.length) {
+    const { data: pw } = await db.from('series').select('sesion_id,item_id,kg').in('sesion_id', prevSes.map((s) => s.id)).eq('numero', 0).not('kg', 'is', null);
+    for (const s of prevSes) for (const r of (pw || []).filter((x) => x.sesion_id === s.id)) if (!S.prev[r.item_id]) S.prev[r.item_id] = { kg: r.kg, week: s.semana };
+  }
+  const { data: com } = await db.from('comentarios').select('*').eq('jugador_id', S.user.id).order('creado_en');
+  S.comentarios = com || [];
+}
+async function ensureSession() {
+  if (S.sesion) return S.sesion;
+  const { data, error } = await db.from('sesiones').upsert({ jugador_id: S.user.id, plan_id: S.plan.id, semana: S.week + 1, dia: S.day + 1 }, { onConflict: 'jugador_id,plan_id,semana,dia' }).select().single();
+  if (error) throw error;
+  S.sesion = data; return data;
+}
+
+// Series de un ejercicio en una semana: [{reps, pct, pcts, extra}]
+function setsFor(w) {
+  if (!w) return [];
+  const c = w.carga, pct = c && c.pct ? c.pct : null, s = w.series;
+  if (s && s.ramp) {
+    const n = s.ramp.length, out = [];
+    s.ramp.forEach((g, gi) => { const p = pct ? (c.range ? pct[0] + (pct[1] - pct[0]) * (n === 1 ? 1 : gi / (n - 1)) : pct[0]) : null; for (let k = 0; k < g.sets; k++) out.push({ reps: g.reps + ' reps', pct: p }); });
+    return out;
+  }
+  if (s && s.minutes) return [{ reps: s.minutes + ' min', amrap: true }];
+  const count = s && s.count ? s.count : 1, out = [];
+  for (let k = 0; k < count; k++) {
+    let reps = w.reps ? w.reps.text : '';
+    if (w.reps?.list) reps = (w.reps.list[k] ?? w.reps.list.at(-1)) + ' reps';
+    const extra = s && s.extra && k >= count - s.extra;
+    if (c && c.split) out.push({ reps, pcts: pct, extra });
+    else out.push({ reps, pct: pct ? (c.range ? pct[1] : pct[0]) : null, extra });
+  }
+  return out;
+}
+const roundKg = (kg) => Math.round(kg / (LS.get('paso', 1) || 1)) * (LS.get('paso', 1) || 1);
+function targetLine(blk, w) {
+  const s = w.series, r = w.reps, parts = [];
+  if (s?.ramp) parts.push(`${s.count} series · ${s.ramp.flatMap((g) => Array(g.sets).fill(g.reps)).join(' · ')} reps`);
+  else if (s?.minutes) parts.push(`${s.minutes} min, máximo de vueltas`);
+  else { if (s?.label) parts.push(`${s.label} series`); if (r) parts.push(r.unit === 'reps' && r.n != null && !r.perSide ? r.n + ' reps' : r.text); }
+  if (w.rest) parts.push(w.rest.seconds ? w.rest.label + ' descanso' : 'sin descanso');
+  if (w.carga?.note) parts.push(w.carga.note);
+  return parts.join(' · ');
+}
+function loadLine(item, w) {
+  const c = w.carga; if (!c?.pct) return '';
+  const mx = S.maximos[maxKey(item.nombre)];
+  const pctTxt = c.split ? `${c.pct[0]}% + ${c.pct[1]}%` : c.range ? `${c.pct[0]} a ${c.pct[1]}%` : `${Math.round(c.pct[0])}%`;
+  if (!mx) return `${pctTxt} de tu máximo · <button class="linkbtn red" data-act="max" data-key="${esc(maxKey(item.nombre))}" data-name="${esc(item.nombre)}">cargar máximo</button>`;
+  const kg = (q) => kgFmt(roundKg(mx * q / 100));
+  const val = c.split ? `${kg(c.pct[0])} + ${kg(c.pct[1])} kg` : c.range ? `${kg(c.pct[0])} → ${kg(c.pct[1])} kg` : `${kg(c.pct[0])} kg`;
+  return `${pctTxt} → ${val} <button class="linkbtn" data-act="max" data-key="${esc(maxKey(item.nombre))}" data-name="${esc(item.nombre)}">máx. ${kgFmt(mx)}</button>`;
+}
+const maxKey = (name) => catalogKey(name);
+
+let renderToken = 0;
+async function renderEntreno() {
+  const token = ++renderToken;
+  try { await ensurePlan(); await loadSession(); } catch (e) { return fail(e); }
+  if (token !== renderToken) return;
+  const p = S.plan;
+  const head = `<div class="top"><span class="brand">${FOX}CBMM</span>
+    <span class="row" style="gap:12px">${['pf', 'admin'].includes(S.perfil.rol) ? '<button class="link" data-act="back-pf">Vista PF</button>' : ''}<a href="#perfil">Mi perfil<span class="avatar">${esc(initials(S.perfil.nombre))}</span></a></span></div>`;
+  if (!p) {
+    $('#app').innerHTML = `<div class="wrap stack">${head}
+      <div class="hero">${FOX}<p class="eyebrow">${esc(grupoName(S.perfil.grupo_id))}</p><h1>Sin rutina<br>todavía</h1><p>El PF todavía no cargó el plan de tu grupo. Te va a aparecer acá apenas lo publique.</p></div>
+      <a class="btn ghost" href="#grupo">Cambiar de grupo</a></div>`;
+    return;
+  }
+  const dayBlocks = S.bloques.filter((b) => b.dia === S.day + 1);
+  let total = 0, done = 0, num = 0, cards = '';
+  for (const b of dayBlocks) {
+    const its = S.items.filter((i) => i.bloque_id === b.id);
+    if (!its.length) continue;
+    const w0 = its[0].semanas[S.week] || {};
+    const kind = b.tipo;
+    const title = kind === 'circuito' ? 'Estabilidad central · circuito' : kind === 'amrap' ? 'Circuito AMRAP · máximo de vueltas' : b.titulo + (its.length > 1 ? ' · superserie' : '');
+    cards += `<p class="group-label">${esc(title)}</p>`;
+    if (kind === 'circuito' || kind === 'amrap') {
+      num++;
+      const n = kind === 'amrap' ? 1 : (w0.series?.count || 1);
+      const lines = its.map((i) => { const w = i.semanas[S.week] || {}; return `<li><span>${esc(i.nombre)}</span><span>${esc(w.reps?.text || '')}${w.carga?.text ? ' · ' + esc(w.carga.text) : ''}</span></li>`; }).join('');
+      const key = its[0].id;
+      let d = 0; const btns = Array.from({ length: n }, (_, k) => { const on = !!S.series[key + ':' + (k + 1)]?.hecha; if (on) d++; return `<button class="set" data-act="set" data-item="${key}" data-n="${k + 1}" data-rest="0" aria-pressed="${on}" aria-label="Vuelta ${k + 1}">${on ? '✓' : k + 1}</button>`; }).join('');
+      total += n; done += d;
+      const lab = kind === 'amrap' ? `${w0.series?.minutes || ''} min · la mayor cantidad de vueltas` : `${w0.series?.label || n} vueltas · sin pausa entre ejercicios`;
+      cards += `<article class="card${d === n ? ' done' : ''}"><div class="card-top"><span class="num">${String(num).padStart(2, '0')}</span><div style="flex:1;min-width:0"><h3>${kind === 'amrap' ? 'Circuito AMRAP' : 'Circuito de estabilidad'}</h3><p class="target">${esc(lab)}</p><ul class="lines">${lines}</ul></div></div><div class="log"><div class="sets">${btns}</div></div>${commentBlock(key, kind === 'amrap' ? 'Circuito AMRAP' : 'Circuito de estabilidad')}</article>`;
+      continue;
+    }
+    for (const it of its) {
+      num++;
+      const w = it.semanas[S.week] || {};
+      const sets = setsFor(w);
+      const rest = w.rest?.seconds || 0;
+      let d = 0;
+      const btns = sets.map((s, k) => { const on = !!S.series[it.id + ':' + (k + 1)]?.hecha; if (on) d++; return `<button class="set" data-act="set" data-item="${it.id}" data-n="${k + 1}" data-rest="${rest}" data-name="${esc(it.nombre)}" aria-pressed="${on}" aria-label="Serie ${k + 1} de ${esc(it.nombre)}">${on ? '✓' : k + 1}</button>`; }).join('');
+      total += sets.length; done += d;
+      const ll = loadLine(it, w);
+      const mx = S.maximos[maxKey(it.nombre)];
+      const ramp = w.series?.ramp && mx && w.carga?.pct ? `<p class="ramp">${sets.map((s, k) => `S${k + 1} ${esc(s.reps.replace(' reps', ''))}×${kgFmt(roundKg(mx * s.pct / 100))}`).join(' · ')} kg</p>` : '';
+      const pv = S.prev[it.id] ? `<p class="prev">Semana ${S.prev[it.id].week}: ${kgFmt(S.prev[it.id].kg)} kg</p>` : '';
+      const wv = S.series[it.id + ':0']?.kg;
+      cards += `<article class="card${d === sets.length ? ' done' : ''}"><div class="card-top"><span class="num">${String(num).padStart(2, '0')}</span><div style="flex:1;min-width:0"><h3>${esc(it.nombre)}</h3><p class="target">${esc(targetLine(b, w))}</p>${ll ? `<p class="load">${ll}</p>` : ''}${pv}${ramp}</div></div>
+        <div class="log"><div class="sets">${btns}</div><label class="weight"><input inputmode="decimal" data-act="kg" data-item="${it.id}" value="${wv != null ? kgFmt(wv) : ''}" placeholder="—" aria-label="Peso usado en ${esc(it.nombre)}"> kg</label></div>
+        ${commentBlock(it.id, it.nombre)}</article>`;
+    }
+  }
+  const pctDone = total ? Math.round(done / total * 100) : 0;
+  const unread = S.comentarios.filter((c) => c.autor_id !== S.user.id && !c.respuesta_vista).length;
+  $('#app').innerHTML = `<div class="wrap">${head}
+    <div class="hero">${FOX}<p class="eyebrow">${esc(grupoName(p.grupo_id))} · ${esc(p.nombre)}</p><h1>Plan de<br>fuerza</h1><p>${p.semanas} semanas · ${p.dias} días por semana</p></div>
+    <p class="label" style="margin-top:22px">Semana</p>
+    <div class="grid" style="grid-template-columns:repeat(${Math.min(p.semanas, 6)},minmax(0,1fr))">${Array.from({ length: p.semanas }, (_, i) => `<button class="opt" data-act="week" data-i="${i}" aria-pressed="${i === S.week}">Semana ${i + 1}</button>`).join('')}</div>
+    <p class="label" style="margin-top:15px">Entrenamiento</p>
+    <div class="grid" style="grid-template-columns:repeat(${Math.min(p.dias, 7)},minmax(0,1fr))">${Array.from({ length: p.dias }, (_, i) => `<button class="opt" data-act="day" data-i="${i}" aria-pressed="${i === S.day}">Día ${i + 1}</button>`).join('')}</div>
+    <div class="session"><h2>Semana ${S.week + 1} · Día ${S.day + 1}</h2><span>${total && done === total ? 'Día completo ✓' : `${done} / ${total} series`}</span></div>
+    <div class="bar" aria-hidden="true"><span style="width:${pctDone}%"></span></div>
+    <p class="small muted" style="margin:0 0 6px">Movilidad básica y activación antes de empezar. Al marcar una serie, el descanso arranca solo.</p>
+    ${cards || '<p class="muted">Este día no tiene ejercicios cargados.</p>'}
+    <a class="btn" href="#cierre" style="margin-top:12px">Terminar el día</a>
+    ${timerHTML()}
+  </div>`;
+  bindTimer();
+}
+function commentBlock(itemId, name) {
+  const mine = S.comentarios.filter((c) => c.item_id === itemId && c.sesion_id === S.sesion?.id && !c.respuesta_a);
+  const replies = S.comentarios.filter((c) => mine.some((m) => m.id === c.respuesta_a));
+  const shown = mine.map((c) => `<p class="note"><small>Tu comentario</small>${esc(c.texto)}</p>` + replies.filter((r) => r.respuesta_a === c.id).map((r) => `<p class="note pf"><small>Respuesta del PF</small>${esc(r.texto)}</p>`).join('')).join('');
+  return `${shown}<div data-comment="${itemId}"><button class="linkbtn" data-act="comment" data-item="${itemId}" data-name="${esc(name)}">+ Comentario para el PF</button></div>`;
+}
+
+// Temporizador (igual que la app original)
+let deadline = 0, tick, audio;
+function timerHTML() {
+  return `<div class="timer" aria-label="Temporizador de descanso"><div class="timer-inner" id="timer-inner"><div class="timer-read"><div class="label">Descanso</div><output id="clock">0:00</output></div>
+    <button class="tbtn" data-sec="60">60 s</button><button class="tbtn" data-sec="90">90 s</button><button class="tbtn" data-sec="120">2 min</button><button class="tbtn" id="stop" style="color:var(--muted)">Parar</button></div><div id="timer-status" role="status"></div></div>`;
+}
+function bindTimer() { document.querySelectorAll('[data-sec]').forEach((b) => b.onclick = () => startTimer(Number(b.dataset.sec))); $('#stop').onclick = stopTimer; updateTimer(); }
+function unlockAudio() { try { audio ??= new (window.AudioContext || window.webkitAudioContext)(); if (audio.state === 'suspended') audio.resume(); } catch {} }
+function beep() { if (!audio) return; try { [0, .3, .6].forEach((o) => { const t = audio.currentTime + o, osc = audio.createOscillator(), g = audio.createGain(); osc.frequency.value = 880; g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.35, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + .2); osc.connect(g).connect(audio.destination); osc.start(t); osc.stop(t + .22); }); } catch {} }
+function updateTimer() {
+  const clock = $('#clock'); if (!clock) return;
+  const sec = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+  clock.textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
+  $('#timer-inner').classList.toggle('running', sec > 0);
+  if (sec === 0 && deadline) { clearInterval(tick); deadline = 0; $('#timer-status').textContent = 'Descanso terminado. ¡A la próxima serie!'; try { navigator.vibrate?.([250, 120, 250, 120, 250]); } catch {} beep(); }
+}
+let timerLabel = '';
+function startTimer(sec, name) { unlockAudio(); clearInterval(tick); deadline = Date.now() + sec * 1000; timerLabel = name || ''; const st = $('#timer-status'); if (st) st.textContent = name ? 'Descansando · ' + name : ''; updateTimer(); tick = setInterval(updateTimer, 250); }
+function stopTimer() { deadline = 0; clearInterval(tick); const st = $('#timer-status'); if (st) st.textContent = ''; updateTimer(); }
+document.addEventListener('visibilitychange', () => { if (deadline) updateTimer(); });
+
+// Acciones del jugador
+document.addEventListener('click', async (ev) => {
+  const t = ev.target.closest('[data-act]'); if (!t) return;
+  const a = t.dataset.act;
+  try {
+    if (a === 'week') { S.week = Number(t.dataset.i); LS.set('semana-' + S.plan.id, S.week); return renderEntreno(); }
+    if (a === 'day') { S.day = Number(t.dataset.i); LS.set('dia-' + S.plan.id, S.day); return renderEntreno(); }
+    if (a === 'back-pf') { S.asPlayer = false; return go('pf'); }
+    if (a === 'set') {
+      const item = Number(t.dataset.item), n = Number(t.dataset.n), key = item + ':' + n;
+      const on = !S.series[key]?.hecha;
+      t.setAttribute('aria-pressed', on); t.textContent = on ? '✓' : n;
+      if (on && Number(t.dataset.rest) > 0) startTimer(Number(t.dataset.rest), t.dataset.name);
+      const ses = await ensureSession();
+      const { data, error } = await db.from('series').upsert({ sesion_id: ses.id, item_id: item, numero: n, hecha: on }).select().single();
+      if (error) throw error;
+      S.series[key] = data;
+      updateCounts();
+      return;
+    }
+    if (a === 'comment') {
+      const box = t.parentElement;
+      box.innerHTML = `<div class="stack" style="gap:8px;margin-top:10px"><textarea class="input" maxlength="1000" placeholder="Ej.: me molestó el hombro en la última serie" aria-label="Comentario para el PF sobre ${esc(t.dataset.name)}"></textarea><div class="row"><button class="btn small" data-act="send-comment" data-item="${t.dataset.item}">Enviar al PF</button><button class="btn small ghost" data-act="cancel-comment">Cancelar</button></div></div>`;
+      box.querySelector('textarea').focus();
+      return;
+    }
+    if (a === 'cancel-comment') return renderEntreno();
+    if (a === 'send-comment') {
+      const txt = t.closest('.stack').querySelector('textarea').value.trim();
+      if (!txt) return;
+      const ses = await ensureSession();
+      const { error } = await db.from('comentarios').insert({ jugador_id: S.user.id, autor_id: S.user.id, item_id: Number(t.dataset.item), sesion_id: ses.id, texto: txt });
+      if (error) throw error;
+      toast('Comentario enviado al PF');
+      return renderEntreno();
+    }
+    if (a === 'max') {
+      const cur = S.maximos[t.dataset.key];
+      const holder = t.closest('.load');
+      holder.innerHTML = `<span class="row" style="gap:6px;margin-top:4px"><label class="weight" style="color:var(--muted)">Tu máximo (1RM) en ${esc(t.dataset.name)} <input inputmode="decimal" id="mx-in" value="${cur ? kgFmt(cur) : ''}" placeholder="kg"></label><button class="btn small" data-act="save-max" data-key="${esc(t.dataset.key)}">Guardar</button></span>`;
+      $('#mx-in').focus();
+      return;
+    }
+    if (a === 'save-max') {
+      const v = parseFloat($('#mx-in').value.replace(',', '.'));
+      if (!(v > 0)) return toast('Poné un número de kilos');
+      const { error } = await db.from('maximos').upsert({ jugador_id: S.user.id, ejercicio: t.dataset.key, kg: v, actualizado: new Date().toISOString() });
+      if (error) throw error;
+      S.maximos[t.dataset.key] = v; toast('Máximo guardado');
+      return view() === 'perfil' ? renderPerfil() : renderEntreno();
+    }
+  } catch (e) { fail(e); }
+});
+document.addEventListener('change', async (ev) => {
+  const t = ev.target;
+  if (t.dataset.act === 'kg') {
+    const item = Number(t.dataset.item), v = parseFloat(t.value.replace(',', '.'));
+    try {
+      const ses = await ensureSession();
+      const { data, error } = await db.from('series').upsert({ sesion_id: ses.id, item_id: item, numero: 0, hecha: false, kg: v > 0 ? v : null }).select().single();
+      if (error) throw error;
+      S.series[item + ':0'] = data; toast('Peso guardado');
+    } catch (e) { fail(e); }
+  }
+});
+function updateCounts() {
+  const btns = [...document.querySelectorAll('.set')];
+  const done = btns.filter((b) => b.getAttribute('aria-pressed') === 'true').length;
+  const sp = document.querySelector('.session span'); if (sp) sp.textContent = done === btns.length ? 'Día completo ✓' : `${done} / ${btns.length} series`;
+  const bar = document.querySelector('.bar>span'); if (bar) bar.style.width = (btns.length ? Math.round(done / btns.length * 100) : 0) + '%';
+  document.querySelectorAll('.card').forEach((c) => { const bs = [...c.querySelectorAll('.set')]; c.classList.toggle('done', bs.length && bs.every((b) => b.getAttribute('aria-pressed') === 'true')); });
+}
+
+// ===================== Cierre del día =====================
+async function renderCierre() {
+  try { await ensurePlan(); await loadSession(); } catch (e) { return fail(e); }
+  if (!S.plan) return go('entreno');
+  const its = S.items.filter((i) => S.bloques.find((b) => b.id === i.bloque_id && b.dia === S.day + 1));
+  const done = Object.values(S.series).filter((r) => r.hecha && r.numero > 0).length;
+  const loads = its.filter((i) => S.series[i.id + ':0']?.kg).map((i) => `<div class="list-row"><span>${esc(i.nombre)}</span><b style="color:var(--accent)">${kgFmt(S.series[i.id + ':0'].kg)} kg${S.prev[i.id] && S.series[i.id + ':0'].kg > S.prev[i.id].kg ? ' ↑' : ''}</b></div>`).join('');
+  const labels = ['Muy fácil', 'Fácil', 'Justo', 'Duro', 'Al límite'];
+  const e0 = S.sesion?.esfuerzo ? S.sesion.esfuerzo - 1 : S.effort;
+  $('#app').innerHTML = `<div class="wrap stack">
+    <div class="top"><span class="brand">${FOX}CBMM</span><a href="#entreno">Volver al día</a></div>
+    <div class="hero" style="border-color:#a8333a;background:linear-gradient(135deg,#3a1420,#17264b)">${FOX}<p class="eyebrow">Semana ${S.week + 1} · Día ${S.day + 1} · ${esc(grupoName(S.plan.grupo_id))}</p><h1>Día<br>completo</h1><p>${done} series marcadas</p></div>
+    ${loads ? `<div class="panel"><p class="label">Tus cargas de hoy</p>${loads}</div>` : ''}
+    <div><p class="label">¿Qué tan duro fue?</p><div class="effort" role="radiogroup" aria-label="Esfuerzo">${labels.map((l, i) => `<button type="button" role="radio" data-e="${i}" aria-pressed="${i === e0}" aria-checked="${i === e0}"><b>${i + 1}</b><span>${l}</span></button>`).join('')}</div></div>
+    <label class="field">Algo para el PF (opcional)<textarea id="nota" maxlength="1000" placeholder="Ej.: en la búlgara me molestó la rodilla">${esc(S.sesion?.nota || '')}</textarea></label>
+    <button class="btn" id="send">${S.sesion?.terminada ? 'Actualizar' : 'Enviar al PF'}</button>
+  </div>`;
+  let eff = e0;
+  document.querySelectorAll('[data-e]').forEach((b) => b.onclick = () => { eff = Number(b.dataset.e); S.effort = eff; document.querySelectorAll('[data-e]').forEach((x) => { const on = Number(x.dataset.e) === eff; x.setAttribute('aria-pressed', on); x.setAttribute('aria-checked', on); }); });
+  $('#send').onclick = async () => {
+    try {
+      const ses = await ensureSession();
+      const nota = $('#nota').value.trim() || null;
+      const { error } = await db.from('sesiones').update({ terminada: new Date().toISOString(), esfuerzo: eff + 1, nota }).eq('id', ses.id);
+      if (error) throw error;
+      if (nota && nota !== S.sesion?.nota) await db.from('comentarios').insert({ jugador_id: S.user.id, autor_id: S.user.id, sesion_id: ses.id, texto: nota });
+      S.sesion = null; toast('Enviado al PF ✓'); go('entreno');
+    } catch (e) { fail(e); }
+  };
+}
+
+// ===================== Perfil =====================
+async function renderPerfil() {
+  try { if (S.perfil.grupo_id) await ensurePlan(); } catch (e) { return fail(e); }
+  const { data: mx } = await db.from('maximos').select('*').eq('jugador_id', S.user.id).order('ejercicio');
+  S.maximos = Object.fromEntries((mx || []).map((m) => [m.ejercicio, Number(m.kg)]));
+  const fromPlan = [...new Map(S.items.filter((i) => i.semanas.some((w) => w?.carga?.pct)).map((i) => [maxKey(i.nombre), i.nombre])).entries()];
+  const keys = new Map(fromPlan); for (const m of mx || []) if (!keys.has(m.ejercicio)) keys.set(m.ejercicio, m.ejercicio);
+  const { data: com } = await db.from('comentarios').select('*').eq('jugador_id', S.user.id).order('creado_en', { ascending: false }).limit(20);
+  const paso = LS.get('paso', 1);
+  $('#app').innerHTML = `<div class="wrap stack">
+    <div class="top"><span class="brand">${FOX}CBMM</span><a href="#entreno">Volver al entrenamiento</a></div>
+    <div class="row" style="gap:14px"><span class="avatar" style="width:60px;height:60px;font-size:20px">${esc(initials(S.perfil.nombre))}</span><div><h1 style="margin:0;font-size:24px;letter-spacing:-.04em">${esc(S.perfil.nombre || 'Sin nombre')}</h1><p class="small muted" style="margin:2px 0 0">${esc(S.user.email)}</p></div></div>
+    <div class="panel row between"><div><p class="label" style="margin:0">Tu rutina</p><b style="font-size:20px;text-transform:uppercase">${esc(grupoName(S.perfil.grupo_id))}</b></div><a class="btn small ghost" href="#grupo">Cambiar</a></div>
+    <section class="panel"><h2 style="margin:0;font-size:18px">Mis máximos</h2><p class="small muted" style="margin:3px 0 8px">Tu mejor repetición (1RM). Con esto se calculan los kilos de cada ejercicio.</p>
+      ${keys.size ? [...keys.entries()].map(([k, n]) => `<div class="list-row"><span>${esc(n)}</span><span class="load" style="margin:0">${S.maximos[k] ? kgFmt(S.maximos[k]) + ' kg ' : ''}<button class="linkbtn${S.maximos[k] ? '' : ' red'}" data-act="max" data-key="${esc(k)}" data-name="${esc(n)}">${S.maximos[k] ? 'cambiar' : 'cargar'}</button></span></div>`).join('') : '<p class="small muted">Cuando tu plan tenga ejercicios con %, aparecen acá.</p>'}
+      <div class="row" style="margin-top:10px"><label class="small muted" for="paso">Redondear kilos a</label><select id="paso" class="input" style="width:auto;min-height:40px">${[0.5, 1, 2, 2.5].map((v) => `<option value="${v}"${v === paso ? ' selected' : ''}>${String(v).replace('.', ',')} kg</option>`).join('')}</select></div>
+    </section>
+    <section class="panel"><h2 style="margin:0 0 6px;font-size:18px">Mensajes con el PF</h2>
+      ${(com || []).length ? com.map((c) => `<div class="bubble${c.autor_id !== S.user.id ? ' pf' : ''}" style="margin-top:6px"><small>${c.autor_id !== S.user.id ? 'PF' : 'Vos'} · ${fmtDate(c.creado_en)}</small>${esc(c.texto)}</div>`).join('') : '<p class="small muted">Todavía no hay mensajes.</p>'}
+    </section>
+    ${['pf', 'admin'].includes(S.perfil.rol) ? '<button class="btn ghost" data-act="back-pf">Volver a la vista PF</button>' : ''}
+    <button class="btn ghost" id="logout">Cerrar sesión</button>
+  </div>`;
+  $('#paso').onchange = (e) => { LS.set('paso', Number(e.target.value)); toast('Listo'); };
+  $('#logout').onclick = () => db.auth.signOut();
+}
+
+// ===================== PF =====================
+const PF_TABS = [['pf', 'Inicio'], ['pf-jugadores', 'Jugadores'], ['pf-rutinas', 'Rutinas'], ['pf-subir', 'Subir Excel'], ['pf-comentarios', 'Comentarios']];
+let pfUnread = 0;
+function pfShell(v, body) {
+  $('#app').innerHTML = `<div class="pf-layout">
+    <nav class="side" aria-label="Secciones"><div class="brand">${FOX}CBMM<span class="badge" style="margin-left:auto">${S.perfil.rol === 'admin' ? 'ADMIN' : 'PF'}</span></div>
+      ${PF_TABS.map(([h, n]) => `<a href="#${h}"${v === h ? ' aria-current="page"' : ''}>${n}${h === 'pf-comentarios' && pfUnread ? `<span class="count">${pfUnread}</span>` : ''}</a>`).join('')}
+      <a href="#" data-act="as-player">Ver como jugador</a>
+      <a href="#" id="pf-logout">Cerrar sesión</a>
+    </nav>
+    <main class="pf-main"><div class="stack" style="max-width:1100px">${body}</div></main></div>`;
+  $('#pf-logout').onclick = (e) => { e.preventDefault(); db.auth.signOut(); };
+}
+document.addEventListener('click', (e) => { const t = e.target.closest('[data-act="as-player"]'); if (!t) return; e.preventDefault(); S.asPlayer = true; S.plan = null; go(S.perfil.grupo_id ? 'entreno' : 'grupo'); });
+
+async function pfData() {
+  const [per, ses, com, pla] = await Promise.all([
+    db.from('perfiles').select('*').order('nombre'),
+    db.from('sesiones').select('id,jugador_id,empezada,terminada,esfuerzo,semana,dia,plan_id').gte('empezada', new Date(Date.now() - 28 * 86400000).toISOString()).order('empezada', { ascending: false }),
+    db.from('comentarios').select('*').order('creado_en', { ascending: false }).limit(200),
+    db.from('planes').select('*').neq('estado', 'archivado').order('creado_en', { ascending: false })
+  ]);
+  for (const r of [per, ses, com, pla]) if (r.error) throw r.error;
+  const perfiles = per.data, byId = Object.fromEntries(perfiles.map((p) => [p.id, p]));
+  const comentarios = com.data;
+  const answered = new Set(comentarios.filter((c) => c.respuesta_a).map((c) => c.respuesta_a));
+  const pending = comentarios.filter((c) => !c.respuesta_a && c.autor_id === c.jugador_id && !answered.has(c.id) && !c.leido);
+  pfUnread = pending.length;
+  return { perfiles, byId, sesiones: ses.data, comentarios, pending, planes: pla.data };
+}
+
+async function renderPF(v) {
+  const token = ++renderToken;
+  let D; try { D = await pfData(); } catch (e) { return fail(e); }
+  if (token !== renderToken) return;
+  if (v === 'pf-jugadores') return pfJugadores(D);
+  if (v === 'pf-rutinas') return pfRutinas(D);
+  if (v === 'pf-subir') return pfSubir(D);
+  if (v === 'pf-comentarios') return pfComentarios(D);
+  return pfInicio(D);
+}
+
+function lastByPlayer(D) { const m = {}; for (const s of D.sesiones) if (!m[s.jugador_id]) m[s.jugador_id] = s; return m; }
+function pfInicio(D) {
+  const jug = D.perfiles.filter((p) => p.rol === 'jugador');
+  const today = todayStart();
+  const jugIds = new Set(jug.map((p) => p.id));
+  const hoy = new Set(D.sesiones.filter((s) => jugIds.has(s.jugador_id) && new Date(s.empezada) >= today).map((s) => s.jugador_id));
+  const last = lastByPlayer(D);
+  const weekAgo = new Date(Date.now() - 7 * 86400000);
+  const inactive = jug.filter((p) => !last[p.id] || new Date(last[p.id].empezada) < weekAgo);
+  const activeWeek = new Set(D.sesiones.filter((s) => jugIds.has(s.jugador_id) && new Date(s.empezada) >= weekAgo).map((s) => s.jugador_id));
+  const hard = D.sesiones.filter((s) => s.esfuerzo === 5 && new Date(s.empezada) >= weekAgo);
+  const rows = S.grupos.map((g) => {
+    const ps = jug.filter((p) => p.grupo_id === g.id);
+    const pct = ps.length ? Math.round(ps.filter((p) => activeWeek.has(p.id)).length / ps.length * 100) : 0;
+    const plan = D.planes.find((pl) => pl.grupo_id === g.id && pl.estado === 'activo');
+    return `<tr><td><b style="text-transform:uppercase">${esc(g.nombre)}</b></td><td>${ps.length}</td><td><span class="row" style="gap:10px;flex-wrap:nowrap"><span class="bar" style="flex:1;margin:0;height:8px"><span style="width:${pct}%"></span></span><b style="min-width:40px">${pct}%</b></span></td><td>${plan ? `<span class="pill ok">Activo</span><small>${esc(plan.nombre)}</small>` : '<span class="pill warn">Sin plan</span>'}</td></tr>`;
+  }).join('');
+  const attend = [
+    ...D.pending.slice(0, 4).map((c) => `<a href="#pf-comentarios" class="issue error" style="color:var(--ink);text-decoration:none"><b>${esc(D.byId[c.jugador_id]?.nombre || 'Jugador')} · ${esc(grupoName(D.byId[c.jugador_id]?.grupo_id))}</b><span class="muted">“${esc(c.texto)}”</span></a>`),
+    ...hard.slice(0, 3).map((s) => `<a href="#pf-jugadores" class="issue error" style="color:var(--ink);text-decoration:none"><b>${esc(D.byId[s.jugador_id]?.nombre || 'Jugador')}</b><span class="muted">Marcó "Al límite" el ${fmtDate(s.empezada)}</span></a>`),
+    ...S.grupos.filter((g) => !D.planes.some((pl) => pl.grupo_id === g.id && pl.estado === 'activo')).map((g) => `<a href="#pf-subir" class="issue" style="color:var(--ink);text-decoration:none"><b>${esc(g.nombre)} no tiene plan</b><span class="muted">Subí el Excel para que lo vean.</span></a>`),
+    inactive.length ? `<a href="#pf-jugadores" class="issue" style="color:var(--ink);text-decoration:none"><b>${inactive.length} jugador${inactive.length === 1 ? '' : 'es'} sin entrenar</b><span class="muted">Hace más de una semana que no cargan nada.</span></a>` : ''
+  ].filter(Boolean).join('');
+  pfShell('pf', `
+    <div class="row between" style="align-items:flex-end"><div><p class="eyebrow">${new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })}</p><h1 class="h1">Hoy en el gimnasio</h1></div><a class="btn small" href="#pf-subir">Subir Excel</a></div>
+    <div class="tiles">
+      <div class="tile"><b>${hoy.size}<span class="muted" style="font-size:16px"> / ${jug.length}</span></b><span>entrenaron hoy</span></div>
+      <div class="tile"><b>${jug.length ? Math.round(activeWeek.size / jug.length * 100) : 0}%</b><span>entrenó en los últimos 7 días</span></div>
+      <div class="tile"><b style="color:var(--accent)">${D.pending.length}</b><span>comentarios sin responder</span></div>
+      <div class="tile"><b style="color:var(--warn)">${inactive.length}</b><span>sin entrenar hace +7 días</span></div>
+    </div>
+    <div class="row" style="align-items:flex-start;gap:18px">
+      <section class="panel" style="flex:3 1 460px;min-width:0"><div class="row between"><h2 style="margin:0;font-size:18px">Grupos</h2><a href="#pf-rutinas" class="small" style="font-weight:700">Ver rutinas</a></div>
+        <div style="overflow-x:auto;margin-top:8px"><table><thead><tr><th>Grupo</th><th>Jugadores</th><th>Entrenaron esta semana</th><th>Plan</th></tr></thead><tbody>${rows}</tbody></table></div></section>
+      <section class="stack" style="flex:2 1 300px;min-width:0;gap:8px"><h2 style="margin:0;font-size:18px">Para atender</h2>${attend || '<p class="muted small">Nada pendiente.</p>'}</section>
+    </div>`);
+}
+
+function pfJugadores(D) {
+  let filter = 'Todos', sel = null;
+  const last = lastByPlayer(D);
+  const weekAgo = new Date(Date.now() - 7 * 86400000);
+  const draw = async () => {
+    const list = D.perfiles.filter((p) => filter === 'Todos' || (filter === 'Sin grupo' ? !p.grupo_id : grupoName(p.grupo_id) === filter));
+    const status = (p) => { const l = last[p.id]; if (!l) return ['Sin entrenar', 'warn']; if (new Date(l.empezada) < weekAgo) return ['+7 días', 'warn']; if (l.esfuerzo === 5) return ['Revisar', 'bad']; return ['Al día', 'ok']; };
+    let detail = '<p class="muted small">Tocá un jugador para ver su ficha.</p>';
+    if (sel) {
+      const p = D.byId[sel];
+      const [{ data: mx }, { data: ss }] = await Promise.all([db.from('maximos').select('*').eq('jugador_id', sel).order('ejercicio'), db.from('sesiones').select('*').eq('jugador_id', sel).order('empezada', { ascending: false }).limit(8)]);
+      const labels = ['Muy fácil', 'Fácil', 'Justo', 'Duro', 'Al límite'];
+      detail = `<div class="row" style="gap:12px"><span class="avatar" style="width:48px;height:48px;font-size:16px;background:var(--line)">${esc(initials(p.nombre))}</span><div><h2 style="margin:0;font-size:20px">${esc(p.nombre || 'Sin nombre')}</h2><p class="small muted" style="margin:0">${esc(grupoName(p.grupo_id))} · último entreno ${ago(last[p.id]?.empezada)}</p></div></div>
+        <div><p class="label">Grupo</p><div class="grid">${S.grupos.map((g) => `<button class="opt" data-move="${g.id}" aria-pressed="${p.grupo_id === g.id}">${esc(g.nombre)}</button>`).join('')}</div></div>
+        ${S.perfil.rol === 'admin' && p.id !== S.user.id ? `<div><p class="label">Rol</p><div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))">${['jugador', 'pf', 'admin'].map((r) => `<button class="opt" data-role="${r}" aria-pressed="${p.rol === r}">${r === 'pf' ? 'PF' : r[0].toUpperCase() + r.slice(1)}</button>`).join('')}</div></div>` : ''}
+        <div><p class="label">Máximos</p>${(mx || []).length ? mx.map((m) => `<div class="list-row"><span>${esc(m.ejercicio)}</span><b>${kgFmt(m.kg)} kg</b></div>`).join('') : '<p class="small muted" style="margin:0">Todavía no cargó máximos.</p>'}</div>
+        <div><p class="label">Últimos entrenamientos</p>${(ss || []).length ? ss.map((s) => `<div class="list-row"><span>Sem ${s.semana} · Día ${s.dia}</span><span class="muted">${fmtDate(s.empezada)}${s.esfuerzo ? ' · ' + labels[s.esfuerzo - 1] : ''}${s.terminada ? '' : ' · sin terminar'}</span></div>`).join('') : '<p class="small muted" style="margin:0">Todavía no entrenó.</p>'}</div>`;
+    }
+    pfShell('pf-jugadores', `
+      <div class="row between" style="align-items:flex-end"><h1 class="h1">Jugadores</h1><span class="muted small">${D.perfiles.length} cuentas</span></div>
+      <div class="row" style="gap:6px">${['Todos', ...S.grupos.map((g) => g.nombre), 'Sin grupo'].map((n) => `<button class="opt" style="padding:0 13px;border-radius:999px" data-filter="${esc(n)}" aria-pressed="${n === filter}">${esc(n)}</button>`).join('')}</div>
+      <div class="row" style="align-items:flex-start;gap:18px">
+        <div class="table-wrap" style="flex:3 1 480px;min-width:0"><table><thead><tr><th>Jugador</th><th>Grupo</th><th>Último entreno</th><th>Estado</th></tr></thead><tbody>
+          ${list.map((p) => { const [st, cl] = status(p); return `<tr${p.id === sel ? ' style="background:#1a2544"' : ''}><td><button class="linkbtn" style="color:var(--ink);font-size:14px;text-align:left" data-sel="${p.id}">${esc(p.nombre || 'Sin nombre')}</button>${p.rol !== 'jugador' ? `<small>${p.rol === 'pf' ? 'PF' : 'Admin'}</small>` : ''}</td><td>${esc(grupoName(p.grupo_id))}</td><td>${ago(last[p.id]?.empezada)}</td><td><span class="pill ${cl}">${st}</span></td></tr>`; }).join('') || '<tr><td colspan="4" class="muted">No hay jugadores en este filtro.</td></tr>'}
+        </tbody></table></div>
+        <aside class="panel stack" style="flex:2 1 300px;min-width:0">${detail}</aside>
+      </div>`);
+    document.querySelectorAll('[data-filter]').forEach((b) => b.onclick = () => { filter = b.dataset.filter; draw(); });
+    document.querySelectorAll('[data-sel]').forEach((b) => b.onclick = () => { sel = b.dataset.sel; draw(); });
+    document.querySelectorAll('[data-move]').forEach((b) => b.onclick = async () => { const { error } = await db.from('perfiles').update({ grupo_id: Number(b.dataset.move) }).eq('id', sel); if (error) return fail(error); D.byId[sel].grupo_id = Number(b.dataset.move); toast('Grupo cambiado'); draw(); });
+    document.querySelectorAll('[data-role]').forEach((b) => b.onclick = async () => { const { error } = await db.from('perfiles').update({ rol: b.dataset.role }).eq('id', sel); if (error) return fail(error); D.byId[sel].rol = b.dataset.role; toast('Rol cambiado'); draw(); });
+  };
+  draw();
+}
+
+async function pfRutinas(D) {
+  let gid = LS.get('pf-grupo', S.grupos[0]?.id), week = 0;
+  const draw = async () => {
+    const plan = D.planes.find((p) => p.grupo_id === gid && p.estado === 'activo');
+    let body = '';
+    if (!plan) body = `<section class="panel" style="text-align:center;padding:40px 20px"><h2 style="margin:0 0 6px">${esc(grupoName(gid))} no tiene rutina</h2><p class="muted" style="margin:0 0 16px">Los jugadores de este grupo no ven ningún plan. Subí el Excel para publicarlo.</p><a class="btn small" href="#pf-subir">Subir Excel</a></section>`;
+    else {
+      const r = await loadPlan(gid);
+      const doneBy = {};
+      for (const s of D.sesiones.filter((s) => s.plan_id === plan.id && s.semana === week + 1)) (doneBy[s.dia] ||= new Set()).add(s.jugador_id);
+      const nGroup = D.perfiles.filter((p) => p.grupo_id === gid && p.rol === 'jugador').length;
+      body = `<section class="panel row between" style="background:linear-gradient(135deg,#17264b,#0f1a33)"><div><p class="eyebrow">${esc(grupoName(gid))} · activo</p><h2 style="margin:6px 0 2px;font-size:24px">${esc(plan.nombre)}</h2><p class="small muted" style="margin:0">${plan.inicio ? 'Empezó el ' + fmtDate(plan.inicio) + ' · ' : ''}${plan.semanas} semanas · ${plan.dias} días · ${plan.origen === 'excel' ? 'desde Excel' : 'creado en la app'}</p></div>
+        <div class="row"><a class="btn small ghost" href="#pf-subir">Reemplazar con Excel</a><button class="btn small ghost" id="archive">Quitar plan</button></div></section>
+        <div class="row" style="gap:6px"><span class="label" style="margin:0">Semana</span>${Array.from({ length: plan.semanas }, (_, i) => `<button class="opt" style="padding:0 14px;border-radius:999px" data-w="${i}" aria-pressed="${i === week}">Semana ${i + 1}${i === currentWeek(plan) ? ' · ahora' : ''}</button>`).join('')}</div>
+        <div class="days">${Array.from({ length: plan.dias }, (_, d) => `<section class="panel"><div class="row between"><h3 style="margin:0;font-size:20px;text-transform:uppercase">Día ${d + 1}</h3><span class="small ${doneBy[d + 1]?.size ? '' : 'muted'}" style="font-weight:800;${doneBy[d + 1]?.size ? 'color:var(--ok)' : ''}">${doneBy[d + 1]?.size || 0} de ${nGroup}</span></div>
+          ${r.bloques.filter((b) => b.dia === d + 1).map((b) => `<div style="border-top:1px solid var(--line);margin-top:8px;padding-top:8px"><p class="eyebrow" style="font-size:10px;margin-bottom:4px">${esc(b.titulo)}</p>${r.items.filter((i) => i.bloque_id === b.id).map((i) => { const w = i.semanas[week] || {}; return `<div class="row between" style="flex-wrap:nowrap;font-size:13px;padding:2px 0"><span>${esc(i.nombre)}</span><span class="muted" style="text-align:right;flex:none">${esc(prescription(w))}${w.carga?.text ? `<br><b style="color:#ff8a8a">${esc(w.carga.text)}</b>` : ''}</span></div>`; }).join('')}</div>`).join('')}</section>`).join('')}</div>`;
+    }
+    pfShell('pf-rutinas', `<div class="row between" style="align-items:flex-end"><h1 class="h1">Rutinas actuales</h1><div class="row" style="gap:6px">${S.grupos.map((g) => `<button class="opt" style="padding:0 16px" data-g="${g.id}" aria-pressed="${g.id === gid}">${esc(g.nombre)}</button>`).join('')}</div></div>${body}`);
+    document.querySelectorAll('[data-g]').forEach((b) => b.onclick = () => { gid = Number(b.dataset.g); LS.set('pf-grupo', gid); week = 0; draw(); });
+    document.querySelectorAll('[data-w]').forEach((b) => b.onclick = () => { week = Number(b.dataset.w); draw(); });
+    const ar = $('#archive'); if (ar) {
+      ar.onclick = async () => {
+        if (ar.dataset.armed) { const { error } = await db.from('planes').update({ estado: 'archivado' }).eq('id', plan.id); if (error) return fail(error); toast('Plan quitado'); D.planes = D.planes.filter((p) => p.id !== plan.id); draw(); }
+        else { ar.dataset.armed = '1'; ar.textContent = 'Tocá de nuevo para quitar'; setTimeout(() => { if (ar.isConnected) { delete ar.dataset.armed; ar.textContent = 'Quitar plan'; } }, 4000); }
+      };
+    }
+  };
+  draw();
+}
+function prescription(w) {
+  const s = w.series; if (!s && !w.reps) return '—';
+  if (s?.ramp) return s.ramp.map((g) => `${g.sets}×${g.reps}`).join(' ');
+  if (s?.minutes) return `${s.minutes} min · ${w.reps?.text || ''}`;
+  return `${s ? s.label + ' × ' : ''}${w.reps?.text || '?'}`;
+}
+
+function pfSubir(D) {
+  let gid = LS.get('pf-grupo', S.grupos[0]?.id), parsed = null, fileName = '', pday = 0;
+  const monday = () => { const d = new Date(); const k = (8 - d.getDay()) % 7 || 7; d.setDate(d.getDate() + (d.getDay() === 1 ? 0 : k)); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+  let start = monday();
+  const draw = () => {
+    const issues = parsed ? grouped(parsed.issues) : [];
+    const day = parsed?.plan.days[pday];
+    pfShell('pf-subir', `
+      <div><h1 class="h1">Subir Excel</h1><p class="muted" style="margin:0">Subí la planilla del plan de fuerza como la venís armando. La app la lee, te marca lo que haya que corregir y la publica para el grupo.</p></div>
+      <div class="row" style="align-items:flex-start;gap:18px">
+        <section class="stack" style="flex:2 1 320px;min-width:0">
+          <div class="panel"><p class="label">1 · Grupo</p><div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">${S.grupos.map((g) => `<button class="opt" data-g="${g.id}" aria-pressed="${g.id === gid}">${esc(g.nombre)}</button>`).join('')}</div></div>
+          <label class="drop" id="drop" for="file"><b>${parsed ? esc(fileName) : '2 · Arrastrá el Excel acá'}</b><span class="muted small">${parsed ? 'Leído · tocá para cambiar el archivo' : 'o hacé clic para elegirlo (.xlsx)'}</span></label>
+          <input type="file" id="file" accept=".xlsx" hidden>
+          <div class="panel"><label class="row between small"><span><span class="label" style="display:block;margin:0">3 · Empieza el</span>Lunes de la semana 1</span><input type="date" id="start" value="${start}" class="input" style="width:auto;min-height:42px"></label></div>
+          <div class="msg err" id="err" hidden></div>
+          <button class="btn" id="publish"${parsed ? '' : ' disabled'}>Publicar para ${esc(grupoName(gid))}</button>
+          <p class="small muted" style="margin:0">Si el grupo ya tenía un plan activo, queda reemplazado por este. Lo que cargaron los jugadores en el plan anterior se guarda.</p>
+        </section>
+        <section class="panel stack" style="flex:3 1 460px;min-width:0">
+          ${!parsed ? '<p class="muted" style="text-align:center;padding:60px 10px;margin:0">Cuando subas el Excel, acá vas a ver qué hay que corregir y cómo quedó leído el plan.</p>' : `
+          <div class="row" style="gap:12px"><span class="avatar" style="width:40px;height:40px;font-size:16px;background:${issues.length ? 'rgba(255,92,92,.15);color:var(--accent)' : 'rgba(95,210,154,.15);color:var(--ok)'}">${issues.length || '✓'}</span><div><b>${issues.length ? (issues.length === 1 ? '1 cosa para revisar' : issues.length + ' cosas para revisar') : 'Todo bien'}</b><p class="small muted" style="margin:0">${parsed.plan.days.length} días · 4 semanas · ${parsed.plan.days.reduce((t, d) => t + d.blocks.reduce((u, b) => u + b.exercises.length, 0), 0)} ejercicios</p></div></div>
+          ${issues.length ? `<div class="days" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">${issues.map((i) => `<div class="issue ${i.level}"><b>Día ${i.day} · ${esc(i.exercise)}</b><span class="muted">${esc(i.text)}</span><br><span class="small" style="font-weight:800">Semana ${i.weeks.join(', ')} · celda ${esc(i.refs.join(', '))}</span></div>`).join('')}</div><p class="small muted" style="margin:0">Podés corregir el Excel y volver a subirlo, o publicarlo así.</p>` : ''}
+          <div class="row between"><h2 style="margin:0;font-size:17px">Cómo quedó leído</h2><div class="row" style="gap:5px">${parsed.plan.days.map((d, i) => `<button class="opt" style="padding:0 12px" data-pd="${i}" aria-pressed="${i === pday}">Día ${d.n}</button>`).join('')}</div></div>
+          <div class="table-wrap"><table><thead><tr><th>Ejercicio</th><th>Sem 1</th><th>Sem 2</th><th>Sem 3</th><th>Sem 4</th></tr></thead><tbody>
+            ${day.blocks.map((b) => `<tr><td colspan="5" style="color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:var(--panel2)">${esc(b.label)}</td></tr>` + b.exercises.map((e) => `<tr><td><b>${esc(e.name)}</b>${squash(e.raw).toUpperCase() !== e.name.toUpperCase() ? `<small>Excel: ${esc(squash(e.raw))}</small>` : ''}</td>${e.weeks.map((w) => `<td>${esc(prescription(w))}<small>${esc([w.carga && (w.carga.text || w.carga.note), w.rest && w.rest.label].filter(Boolean).join(' · '))}</small></td>`).join('')}</tr>`).join('')).join('')}
+          </tbody></table></div>`}
+        </section>
+      </div>`);
+    document.querySelectorAll('[data-g]').forEach((b) => b.onclick = () => { gid = Number(b.dataset.g); LS.set('pf-grupo', gid); draw(); });
+    document.querySelectorAll('[data-pd]').forEach((b) => b.onclick = () => { pday = Number(b.dataset.pd); draw(); });
+    $('#start').onchange = (e) => (start = e.target.value);
+    const drop = $('#drop');
+    ['dragenter', 'dragover'].forEach((n) => drop.addEventListener(n, (e) => { e.preventDefault(); drop.classList.add('over'); }));
+    ['dragleave', 'drop'].forEach((n) => drop.addEventListener(n, (e) => { e.preventDefault(); drop.classList.remove('over'); }));
+    drop.addEventListener('drop', (e) => { const f = e.dataTransfer.files[0]; if (f) readXlsx(f); });
+    $('#file').onchange = (e) => { const f = e.target.files[0]; if (f) readXlsx(f); };
+    $('#publish').onclick = publish;
+  };
+  async function readXlsx(f) {
+    if (!window.XLSX) return toast('Cargando el lector de Excel, probá en un segundo');
+    try {
+      const res = readPlan(XLSX, await f.arrayBuffer(), f.name);
+      if (!res.plan.days.length) { parsed = null; draw(); return showErr('No encontré los días ("DIA 1", "DIA 2"…). ¿Es la planilla del plan de fuerza?'); }
+      parsed = res; fileName = f.name; pday = 0;
+      const g = S.grupos.find((x) => (res.plan.group || '').toUpperCase().replace('FOWARDS', 'FORWARDS').includes(x.nombre.toUpperCase()));
+      if (g) gid = g.id;
+      draw();
+    } catch (e) { parsed = null; draw(); showErr('No pude leer el archivo. Tiene que ser un Excel .xlsx.'); }
+  }
+  async function publish() {
+    const btn = $('#publish'); btn.disabled = true; btn.textContent = 'Publicando…';
+    try {
+      const p = parsed.plan;
+      const old = D.planes.filter((x) => x.grupo_id === gid && x.estado === 'activo');
+      const name = 'Plan de ' + grupoName(gid) + ' · ' + (start ? new Date(start + 'T00:00:00').toLocaleDateString('es-AR', { day: 'numeric', month: 'short' }) : '');
+      const { data: plan, error: e1 } = await db.from('planes').insert({ grupo_id: gid, nombre: name, inicio: start || null, semanas: 4, dias: p.days.length, estado: 'borrador', origen: 'excel', archivo: fileName, creado_por: S.user.id }).select().single();
+      if (e1) throw e1;
+      for (const d of p.days) {
+        const rows = d.blocks.map((b, bi) => ({ plan_id: plan.id, dia: d.n, orden: bi, titulo: b.kind === 'core' ? 'Estabilidad central' : b.kind === 'amrap' ? 'Circuito AMRAP' : (b.label.match(/BLOQUE\s*\d+/i) || [b.label])[0].replace(/BLOQUE/i, 'Bloque'), tipo: b.kind === 'core' ? 'circuito' : b.kind === 'amrap' ? 'amrap' : b.exercises.length > 1 ? 'superserie' : 'bloque', semanas: b.weeks }));
+        const { data: bl, error: e2 } = await db.from('bloques').insert(rows).select();
+        if (e2) throw e2;
+        const items = [];
+        d.blocks.forEach((b, bi) => { const blk = bl.find((x) => x.orden === bi); b.exercises.forEach((e, ei) => items.push({ bloque_id: blk.id, orden: ei, nombre: e.name, semanas: e.weeks })); });
+        const { error: e3 } = await db.from('items').insert(items);
+        if (e3) throw e3;
+      }
+      // Recién cuando está todo cargado: se archiva el plan anterior y se activa el nuevo
+      if (old.length) { const { error } = await db.from('planes').update({ estado: 'archivado' }).in('id', old.map((o) => o.id)); if (error) throw error; }
+      const { error: e4 } = await db.from('planes').update({ estado: 'activo' }).eq('id', plan.id);
+      if (e4) throw e4;
+      toast('Publicado para ' + grupoName(gid) + ' ✓');
+      S.plan = null; go('pf-rutinas');
+    } catch (e) { btn.disabled = false; btn.textContent = 'Publicar para ' + grupoName(gid); fail(e); }
+  }
+  draw();
+}
+function grouped(issues) {
+  const m = new Map();
+  for (const i of issues) { const k = [i.level, i.day, i.exercise, i.text].join('|'); if (!m.has(k)) m.set(k, { ...i, weeks: [], refs: [] }); m.get(k).weeks.push(i.week); m.get(k).refs.push(i.ref); }
+  return [...m.values()].sort((a, b) => (a.level === 'error' ? 0 : 1) - (b.level === 'error' ? 0 : 1) || a.day - b.day);
+}
+
+async function pfComentarios(D) {
+  const roots = D.comentarios.filter((c) => !c.respuesta_a && c.autor_id === c.jugador_id);
+  const itemIds = [...new Set(roots.map((c) => c.item_id).filter(Boolean))];
+  const { data: its } = itemIds.length ? await db.from('items').select('id,nombre').in('id', itemIds) : { data: [] };
+  const itemName = Object.fromEntries((its || []).map((i) => [i.id, i.nombre]));
+  const sesById = Object.fromEntries(D.sesiones.map((s) => [s.id, s]));
+  pfShell('pf-comentarios', `<div class="row between" style="align-items:flex-end"><h1 class="h1">Comentarios</h1><span class="small" style="color:var(--accent);font-weight:800">${D.pending.length} sin responder</span></div>
+    ${roots.length ? roots.map((c) => {
+      const p = D.byId[c.jugador_id], s = sesById[c.sesion_id];
+      const reps = D.comentarios.filter((r) => r.respuesta_a === c.id).reverse();
+      const pending = D.pending.includes(c);
+      return `<article class="panel" style="${pending ? 'border-color:var(--accent)' : ''}"><div class="row between"><b>${esc(p?.nombre || 'Jugador')}</b><span class="small muted">${fmtDate(c.creado_en)}</span></div>
+        <p class="small muted" style="margin:2px 0 0">${esc(grupoName(p?.grupo_id))}${s ? ` · Semana ${s.semana}, Día ${s.dia}` : ''}${c.item_id ? ' · ' + esc(itemName[c.item_id] || '') : ''}</p>
+        <p style="margin:8px 0 0">“${esc(c.texto)}”</p>
+        <div class="chat">${reps.map((r) => `<div class="bubble pf"><small>${esc(D.byId[r.autor_id]?.nombre || 'PF')} · ${fmtDate(r.creado_en)}</small>${esc(r.texto)}</div>`).join('')}</div>
+        <div class="row" style="margin-top:10px;flex-wrap:nowrap"><input class="input" data-reply-in="${c.id}" placeholder="Escribile una respuesta" aria-label="Respuesta para ${esc(p?.nombre || 'el jugador')}" style="min-height:42px"><button class="btn small" data-reply="${c.id}" data-j="${c.jugador_id}">Responder</button></div>
+        ${pending ? `<button class="linkbtn" data-read="${c.id}">Marcar como visto</button>` : ''}</article>`;
+    }).join('') : '<p class="muted">Todavía no hay comentarios de jugadores.</p>'}`);
+  document.querySelectorAll('[data-reply]').forEach((b) => b.onclick = async () => {
+    const inp = document.querySelector(`[data-reply-in="${b.dataset.reply}"]`), txt = inp.value.trim(); if (!txt) return;
+    const { error } = await db.from('comentarios').insert({ jugador_id: b.dataset.j, autor_id: S.user.id, respuesta_a: Number(b.dataset.reply), texto: txt });
+    if (error) return fail(error);
+    await db.from('comentarios').update({ leido: true }).eq('id', Number(b.dataset.reply));
+    toast('Respuesta enviada'); renderPF('pf-comentarios');
+  });
+  document.querySelectorAll('[data-read]').forEach((b) => b.onclick = async () => { const { error } = await db.from('comentarios').update({ leido: true }).eq('id', Number(b.dataset.read)); if (error) return fail(error); renderPF('pf-comentarios'); });
+}
+
+boot().catch(fail);
+</script>
+</body>
+</html>
