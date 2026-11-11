@@ -135,6 +135,7 @@ td small{display:block;color:var(--muted);font-size:12px}
 .drop.over{border-color:var(--accent)}
 .drop b{font-size:17px}
 .toast{position:fixed;left:50%;bottom:max(90px,calc(env(safe-area-inset-bottom) + 80px));transform:translateX(-50%);z-index:20;background:var(--ink);color:var(--bg);font-weight:700;font-size:14px;padding:10px 16px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.4);max-width:calc(100% - 32px)}
+.net{position:fixed;top:0;left:0;right:0;z-index:30;background:var(--warn);color:#0a1122;font-weight:700;font-size:13px;text-align:center;padding:calc(6px + env(safe-area-inset-top)) 16px 6px}
 .loading{display:grid;place-items:center;min-height:60vh;color:var(--muted)}
 .chat{display:flex;flex-direction:column;gap:6px;margin-top:8px}
 .bubble{padding:8px 10px;border-radius:10px;background:var(--bg);border:1px solid var(--line);font-size:14px}
@@ -146,6 +147,7 @@ td small{display:block;color:var(--muted);font-size:12px}
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="fox" viewBox="0 0 2835 3415"><path fill="currentColor" d="M 1792 640 C 1804 596 1868 545 1900 511 C 2008 396 2125 290 2257 259 C 2208 335 2173 427 2162 517 C 2043 569 1917 607 1792 640 M 1490 803 C 1487 813 1375 834 1360 838 C 1331 846 1256 872 1232 851 C 1249 828 1273 806 1295 788 C 1320 765 1351 747 1385 746 C 1417 746 1446 762 1474 778 C 1483 784 1494 793 1490 803 M 2469 1047 C 2573 1005 2685 977 2796 967 C 2639 872 2474 786 2295 746 C 2217 729 2137 718 2057 710 C 2113 667 2183 634 2248 606 C 2277 452 2331 304 2407 167 C 2425 134 2448 98 2475 73 C 2291 113 2114 186 1955 286 C 1900 321 1847 359 1797 401 C 1754 437 1709 471 1670 512 C 1677 474 1689 432 1700 396 C 1703 388 1701 379 1696 373 C 1691 368 1685 364 1680 360 C 1664 348 1657 327 1650 309 C 1629 256 1602 205 1566 162 C 1500 295 1424 420 1333 537 C 1350 545 1367 549 1386 548 C 1379 570 1360 585 1338 592 C 1317 600 1300 597 1278 594 C 1223 652 1162 713 1107 770 C 1031 848 955 920 856 965 C 830 976 801 993 776 1005 C 730 1027 684 1047 637 1065 C 577 1089 517 1103 453 1103 C 420 1103 377 1111 344 1110 C 268 1109 203 1100 128 1085 C 129 1118 120 1155 130 1187 C 136 1205 148 1218 161 1231 C 188 1258 227 1264 264 1259 C 346 1248 412 1214 484 1174 C 473 1212 443 1242 408 1261 C 374 1280 340 1287 302 1297 C 334 1314 367 1332 402 1341 C 427 1347 452 1353 477 1358 C 533 1369 589 1385 646 1394 C 689 1401 730 1408 773 1410 C 825 1411 876 1412 927 1418 C 1012 1429 1098 1415 1183 1415 C 1241 1414 1299 1403 1356 1395 C 1455 1382 1546 1369 1639 1333 C 1499 1366 1353 1361 1209 1355 C 1157 1353 1099 1354 1047 1351 C 1228 1265 1436 1194 1609 1078 C 1668 1039 1728 999 1763 938 C 1828 945 1894 953 1959 961 C 1993 964 2027 968 2061 969 C 2133 969 2208 956 2275 982 C 2108 1016 1964 1117 1847 1242 C 1939 1245 2030 1250 2122 1252 C 2063 1277 2008 1311 1956 1349 C 1837 1436 1735 1554 1702 1697 C 1803 1576 1929 1475 2069 1402 C 2151 1359 2238 1326 2325 1294 C 2474 1238 2625 1188 2776 1137 C 2704 1124 2632 1107 2562 1088 C 2529 1079 2496 1067 2469 1047 M 1314 1576 C 1323 1569 1331 1561 1334 1550 C 1299 1566 1254 1596 1214 1631 C 1199 1643 1184 1661 1172 1676 C 1149 1705 1131 1725 1109 1755 C 1088 1786 1071 1823 1066 1860 C 1130 1796 1204 1757 1291 1735 C 1242 1790 1215 1843 1179 1908 C 1165 1934 1152 1971 1150 2000 C 1199 1963 1244 1939 1303 1918 C 1271 2074 1301 2238 1377 2377 C 1362 2252 1322 2150 1356 2032 C 1375 1964 1394 1900 1431 1853 C 1363 1853 1301 1867 1239 1895 C 1245 1859 1265 1827 1289 1800 C 1314 1773 1343 1751 1373 1730 C 1397 1712 1422 1695 1451 1687 C 1433 1676 1411 1676 1390 1677 C 1339 1678 1288 1679 1240 1696 C 1230 1700 1215 1703 1205 1708 C 1220 1652 1271 1614 1314 1576 M 2442 2879 C 2442 2879 2442 2879 2442 2879 C 2442 2879 2442 2879 2442 2879 M 2444 2877 C 2444 2877 2444 2877 2444 2877 M 2444 2877 C 2444 2877 2444 2877 2444 2877 C 2444 2877 2444 2877 2444 2877 M 2444 2877 C 2444 2877 2444 2877 2444 2877 C 2444 2877 2444 2877 2444 2877 M 2442 2879 C 2443 2878 2444 2878 2444 2877 C 2444 2878 2443 2878 2442 2879 M 2440 2882 C 2440 2882 2440 2882 2440 2882 C 2440 2882 2440 2882 2440 2882 M 2440 2881 C 2440 2881 2440 2881 2440 2882 C 2440 2881 2440 2881 2440 2881 M 2440 2882 C 2439 2882 2439 2882 2440 2882 M 2154 2311 C 2114 2138 2096 1964 2072 1788 C 2060 1697 2078 1587 2064 1494 C 1982 1581 1872 1629 1788 1712 C 1704 1794 1617 1909 1587 2035 C 1556 2160 1563 2293 1595 2418 C 1753 2262 1886 2076 1979 1875 C 1953 1997 1903 2133 1861 2251 C 1815 2377 1742 2414 1658 2534 C 1779 2635 1896 2744 1999 2862 C 2023 2890 2052 2921 2089 2921 C 2115 2922 2139 2906 2164 2903 C 2152 2919 2136 2933 2118 2944 C 2090 2961 2057 2970 2024 2964 C 1974 2956 1936 2915 1901 2878 C 1792 2758 1675 2644 1542 2552 C 1409 2461 1258 2391 1098 2368 C 1070 2364 1043 2362 1016 2360 C 967 2358 918 2358 869 2362 C 921 2378 973 2393 1024 2409 C 1068 2422 1111 2435 1153 2454 C 1277 2509 1378 2614 1429 2739 C 1349 2691 1260 2658 1173 2626 C 1144 2616 1115 2606 1085 2600 C 1014 2585 941 2587 868 2589 C 844 2590 820 2590 796 2591 C 751 2593 705 2594 665 2615 C 840 2635 1005 2729 1106 2872 C 999 2850 888 2847 780 2863 C 851 2883 914 2931 966 2984 C 1017 3037 1059 3099 1097 3162 C 987 3111 878 3059 765 3016 C 652 2974 538 2936 419 2918 C 319 2902 217 2902 116 2916 C 192 2749 323 2607 479 2511 C 531 2480 588 2452 630 2408 C 370 2533 150 2738 10 2990 C 211 2933 425 2986 620 3059 C 816 3131 1014 3217 1214 3279 C 1391 3334 1563 3349 1749 3340 C 1803 3337 1888 3300 1939 3284 C 2059 3248 2146 3193 2234 3105 C 2314 3022 2366 2966 2442 2879 C 2411 2820 2384 2806 2358 2769 C 2259 2626 2193 2480 2154 2311"/></symbol></defs></svg>
 <div class="bg-logo" aria-hidden="true"><svg viewBox="0 0 2835 3415"><use href="#fox"/></svg></div>
 <div id="app"><div class="loading">Cargando…</div></div>
+<div class="net" id="net" role="status" hidden></div>
 <div class="toast" id="toast" role="status" hidden></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
@@ -406,7 +408,7 @@ const S = {
   user: null, perfil: null, grupos: [],
   plan: null, bloques: [], items: [], week: 0, day: 0,
   sesion: null, series: {}, prev: {}, maximos: {}, comentarios: [],
-  effort: 2, asPlayer: false,
+  effort: 2, asPlayer: LS.get('as-player', false),
   pf: { tab: 'inicio' }
 };
 const isPF = () => S.perfil && ['pf', 'admin'].includes(S.perfil.rol) && !S.asPlayer;
@@ -421,6 +423,7 @@ async function boot() {
   S.user = data.session?.user || null;
   if (S.user) await loadPerfil();
   render();
+  flush();
 }
 db.auth.onAuthStateChange(async (event, session) => {
   if (event === 'PASSWORD_RECOVERY') { S.user = session?.user || null; go('nueva-clave'); return; }
@@ -428,12 +431,17 @@ db.auth.onAuthStateChange(async (event, session) => {
 });
 
 async function loadPerfil() {
-  const [{ data: p, error }, { data: g }] = await Promise.all([
-    db.from('perfiles').select('*').eq('id', S.user.id).single(),
-    db.from('grupos').select('*').order('orden')
-  ]);
-  if (error) throw error;
-  S.perfil = p; S.grupos = g || [];
+  try {
+    const [{ data: p, error }, { data: g, error: e2 }] = await Promise.all([
+      db.from('perfiles').select('*').eq('id', S.user.id).single(),
+      db.from('grupos').select('*').order('orden')
+    ]);
+    if (error) throw error; if (e2) throw e2;
+    S.perfil = p; S.grupos = g || []; LS.set('perfil-cache', { p, g: S.grupos });
+  } catch (e) {
+    const c = LS.get('perfil-cache', null);
+    if (c && c.p?.id === S.user.id) { S.perfil = c.p; S.grupos = c.g; } else throw e;
+  }
 }
 const grupoName = (id) => S.grupos.find((g) => g.id === id)?.nombre || 'Sin grupo';
 
@@ -504,20 +512,13 @@ function renderSignup() {
   };
 }
 function renderForgot() {
-  authShell('Recuperar acceso', 'Olvidé mi<br>contraseña', 'Poné tu email y te mandamos un link para crear una nueva.', `
-    <form id="f-forgot" class="stack">
-      <label class="field">Email<input type="email" name="email" required placeholder="nombre@mail.com"></label>
-      <div class="msg err" id="err" hidden></div>
-      <button class="btn" type="submit">Mandame el link</button>
-      <a href="#login" class="small" style="text-align:center;color:var(--muted);font-weight:700">Volver</a>
-    </form>`);
-  $('#f-forgot').onsubmit = async (e) => {
-    e.preventDefault();
-    const email = new FormData(e.target).get('email').trim();
-    const { error } = await db.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname });
-    if (error) return showErr(error.message);
-    authShell('Listo', 'Revisá<br>tu mail', 'Si hay una cuenta con ese email, te llega un link. Fijate también en spam.', '<a class="btn" href="#login">Volver a iniciar sesión</a>');
-  };
+  authShell('Recuperar acceso', 'Olvidé mi<br>contraseña', 'Te damos una contraseña nueva en el momento.', `
+    <div class="panel stack" style="gap:10px">
+      <p style="margin:0"><b>1.</b> Avisale a tu PF que te olvidaste la contraseña.</p>
+      <p style="margin:0"><b>2.</b> Él te genera una <b>contraseña temporal</b> desde su panel y te la pasa.</p>
+      <p style="margin:0"><b>3.</b> Entrá con esa y cambiala desde <b>Mi perfil → Cambiar contraseña</b>.</p>
+    </div>
+    <a class="btn" href="#login">Volver a iniciar sesión</a>`);
 }
 function renderNewPassword() {
   authShell('Recuperar acceso', 'Nueva<br>contraseña', 'Elegí una contraseña nueva para tu cuenta.', `
@@ -551,7 +552,7 @@ function renderGroupPick() {
     $('#go').onclick = async () => {
       const { error } = await db.from('perfiles').update({ grupo_id: picked }).eq('id', S.user.id);
       if (error) return fail(error);
-      S.perfil.grupo_id = picked; S.plan = null; go('entreno');
+      S.perfil.grupo_id = picked; S.plan = null; LS.set('perfil-cache', { p: S.perfil, g: S.grupos }); go('entreno');
     };
   };
   draw();
@@ -559,13 +560,25 @@ function renderGroupPick() {
 
 // ===================== Plan del jugador =====================
 async function loadPlan(grupoId) {
-  const { data: plan, error } = await db.from('planes').select('*').eq('grupo_id', grupoId).eq('estado', 'activo').maybeSingle();
-  if (error) throw error;
-  if (!plan) return { plan: null, bloques: [], items: [] };
-  const { data: bloques } = await db.from('bloques').select('*').eq('plan_id', plan.id).order('dia').order('orden');
-  const ids = (bloques || []).map((b) => b.id);
-  const { data: items } = ids.length ? await db.from('items').select('*').in('bloque_id', ids).order('orden') : { data: [] };
-  return { plan, bloques: bloques || [], items: items || [] };
+  try {
+    const { data: plan, error } = await db.from('planes').select('*').eq('grupo_id', grupoId).eq('estado', 'activo').maybeSingle();
+    if (error) throw error;
+    let r = { plan: null, bloques: [], items: [] };
+    if (plan) {
+      const { data: bloques, error: e2 } = await db.from('bloques').select('*').eq('plan_id', plan.id).order('dia').order('orden');
+      if (e2) throw e2;
+      const ids = (bloques || []).map((b) => b.id);
+      const { data: items, error: e3 } = ids.length ? await db.from('items').select('*').in('bloque_id', ids).order('orden') : { data: [] };
+      if (e3) throw e3;
+      r = { plan, bloques: bloques || [], items: items || [] };
+    }
+    LS.set('plan-cache-' + grupoId, r);
+    return r;
+  } catch (e) {
+    const c = LS.get('plan-cache-' + grupoId, null);
+    if (c) return c;
+    throw e;
+  }
 }
 function currentWeek(plan) {
   if (!plan?.inicio) return 0;
@@ -576,35 +589,109 @@ async function ensurePlan() {
   if (S.plan && S.plan.grupo_id === S.perfil.grupo_id) return;
   const r = await loadPlan(S.perfil.grupo_id);
   Object.assign(S, r);
-  S.week = LS.get('semana-' + (r.plan?.id || 0), currentWeek(r.plan));
-  S.day = LS.get('dia-' + (r.plan?.id || 0), 0);
-  const { data: mx } = await db.from('maximos').select('*').eq('jugador_id', S.user.id);
-  S.maximos = Object.fromEntries((mx || []).map((m) => [m.ejercicio, Number(m.kg)]));
+  S.week = Math.min(LS.get('semana-' + (r.plan?.id || 0), currentWeek(r.plan)), (r.plan?.semanas || 1) - 1);
+  S.day = Math.min(LS.get('dia-' + (r.plan?.id || 0), 0), (r.plan?.dias || 1) - 1);
+  try {
+    const { data: mx, error } = await db.from('maximos').select('*').eq('jugador_id', S.user.id);
+    if (error) throw error;
+    S.maximos = Object.fromEntries((mx || []).map((m) => [m.ejercicio, Number(m.kg)]));
+    LS.set('max-cache', S.maximos);
+  } catch { S.maximos = LS.get('max-cache', {}); }
 }
+
+// ---------- Sesión del día, con copia local para cuando no hay señal ----------
+const keyOf = () => S.plan.id + '-' + (S.week + 1) + '-' + (S.day + 1);
+const sesIds = () => LS.get('ses-ids', {});
 async function loadSession() {
-  S.sesion = null; S.series = {}; S.prev = {};
+  S.sesion = null; S.series = {}; S.prev = {}; S.comentarios = [];
   if (!S.plan) return;
-  const { data: ses } = await db.from('sesiones').select('*').eq('jugador_id', S.user.id).eq('plan_id', S.plan.id).eq('semana', S.week + 1).eq('dia', S.day + 1).maybeSingle();
-  S.sesion = ses || null;
-  if (ses) {
-    const { data: ser } = await db.from('series').select('*').eq('sesion_id', ses.id);
-    for (const r of ser || []) S.series[r.item_id + ':' + r.numero] = r;
+  const key = keyOf();
+  try {
+    const { data: ses, error } = await db.from('sesiones').select('*').eq('jugador_id', S.user.id).eq('plan_id', S.plan.id).eq('semana', S.week + 1).eq('dia', S.day + 1).maybeSingle();
+    if (error) throw error;
+    S.sesion = ses || null;
+    if (ses) {
+      const ids = sesIds(); ids[key] = ses.id; LS.set('ses-ids', ids);
+      const { data: ser, error: e2 } = await db.from('series').select('*').eq('sesion_id', ses.id);
+      if (e2) throw e2;
+      for (const r of ser || []) S.series[r.item_id + ':' + r.numero] = r;
+    }
+    // Pesos de semanas anteriores (fila numero 0 = peso usado)
+    const { data: prevSes } = await db.from('sesiones').select('id,semana').eq('jugador_id', S.user.id).eq('plan_id', S.plan.id).eq('dia', S.day + 1).lt('semana', S.week + 1).order('semana', { ascending: false });
+    if (prevSes?.length) {
+      const { data: pw } = await db.from('series').select('sesion_id,item_id,kg').in('sesion_id', prevSes.map((s) => s.id)).eq('numero', 0).not('kg', 'is', null);
+      for (const s of prevSes) for (const r of (pw || []).filter((x) => x.sesion_id === s.id)) if (!S.prev[r.item_id]) S.prev[r.item_id] = { kg: r.kg, week: s.semana };
+    }
+    const { data: com } = await db.from('comentarios').select('*').eq('jugador_id', S.user.id).order('creado_en');
+    S.comentarios = com || [];
+    LS.set('ses-cache-' + key, { sesion: S.sesion, series: S.series, prev: S.prev, comentarios: S.comentarios });
+  } catch (e) {
+    const c = LS.get('ses-cache-' + key, null);
+    if (c) Object.assign(S, { sesion: c.sesion, series: c.series, prev: c.prev, comentarios: c.comentarios || [] });
   }
-  // Pesos de semanas anteriores (fila numero 0 = peso usado)
-  const { data: prevSes } = await db.from('sesiones').select('id,semana').eq('jugador_id', S.user.id).eq('plan_id', S.plan.id).eq('dia', S.day + 1).lt('semana', S.week + 1).order('semana', { ascending: false });
-  if (prevSes?.length) {
-    const { data: pw } = await db.from('series').select('sesion_id,item_id,kg').in('sesion_id', prevSes.map((s) => s.id)).eq('numero', 0).not('kg', 'is', null);
-    for (const s of prevSes) for (const r of (pw || []).filter((x) => x.sesion_id === s.id)) if (!S.prev[r.item_id]) S.prev[r.item_id] = { kg: r.kg, week: s.semana };
-  }
-  const { data: com } = await db.from('comentarios').select('*').eq('jugador_id', S.user.id).order('creado_en');
-  S.comentarios = com || [];
+  for (const op of queue()) if (op.key === key && op.uid === S.user.id) applyLocal(op);
 }
-async function ensureSession() {
-  if (S.sesion) return S.sesion;
-  const { data, error } = await db.from('sesiones').upsert({ jugador_id: S.user.id, plan_id: S.plan.id, semana: S.week + 1, dia: S.day + 1 }, { onConflict: 'jugador_id,plan_id,semana,dia' }).select().single();
+function applyLocal(op) {
+  if (op.t === 'set') S.series[op.item + ':' + op.n] = { ...(S.series[op.item + ':' + op.n] || {}), hecha: op.hecha, numero: op.n };
+  if (op.t === 'kg') S.series[op.item + ':0'] = { ...(S.series[op.item + ':0'] || {}), kg: op.kg, numero: 0 };
+  if (op.t === 'comment') S.comentarios.push({ id: 'p' + op.id, jugador_id: S.user.id, autor_id: S.user.id, item_id: op.item, texto: op.texto, pendiente: true, key: op.key });
+}
+
+// ---------- Cola de cambios: todo lo que marca el jugador pasa por acá ----------
+const queue = () => LS.get('cola-v1', []);
+function saveQueue(q) { LS.set('cola-v1', q); updateNet(); }
+function enqueue(op) {
+  Object.assign(op, { id: Date.now() + '-' + Math.random().toString(36).slice(2, 7), uid: S.user.id, key: keyOf(), plan_id: S.plan.id, semana: S.week + 1, dia: S.day + 1 });
+  const q = queue();
+  const i = q.findIndex((x) => x.uid === op.uid && x.key === op.key && x.t === op.t && ((op.t === 'set' && x.item === op.item && x.n === op.n) || (op.t === 'kg' && x.item === op.item) || op.t === 'cierre'));
+  if (i >= 0) q[i] = op; else q.push(op);
+  saveQueue(q);
+  applyLocal(op);
+  LS.set('ses-cache-' + op.key, { sesion: S.sesion, series: S.series, prev: S.prev, comentarios: S.comentarios.filter((c) => !c.pendiente) });
+  flush();
+}
+const netErr = (e) => !navigator.onLine || /fetch|network|load failed|timeout/i.test(e?.message || String(e));
+async function sesIdFor(op) {
+  const ids = sesIds(); if (ids[op.key]) return ids[op.key];
+  const { data, error } = await db.from('sesiones').upsert({ jugador_id: op.uid, plan_id: op.plan_id, semana: op.semana, dia: op.dia }, { onConflict: 'jugador_id,plan_id,semana,dia' }).select().single();
   if (error) throw error;
-  S.sesion = data; return data;
+  ids[op.key] = data.id; LS.set('ses-ids', ids); return data.id;
 }
+let flushing = false;
+async function flush() {
+  if (flushing || !S.user || !navigator.onLine) return updateNet();
+  flushing = true;
+  try {
+    for (;;) {
+      const op = queue().find((x) => x.uid === S.user.id);
+      if (!op) break;
+      try {
+        const sid = await sesIdFor(op);
+        let r;
+        if (op.t === 'set') r = await db.from('series').upsert({ sesion_id: sid, item_id: op.item, numero: op.n, hecha: op.hecha });
+        else if (op.t === 'kg') r = await db.from('series').upsert({ sesion_id: sid, item_id: op.item, numero: 0, hecha: false, kg: op.kg });
+        else if (op.t === 'comment') r = await db.from('comentarios').insert({ jugador_id: op.uid, autor_id: op.uid, item_id: op.item || null, sesion_id: sid, texto: op.texto });
+        else if (op.t === 'cierre') r = await db.from('sesiones').update({ terminada: op.terminada, esfuerzo: op.esfuerzo, nota: op.nota }).eq('id', sid);
+        if (r?.error) throw r.error;
+      } catch (e) {
+        if (netErr(e)) break; // sin señal: queda en la cola y se reintenta
+        console.error('Cambio descartado', op, e);
+      }
+      saveQueue(queue().filter((x) => x.id !== op.id));
+    }
+  } finally { flushing = false; updateNet(); }
+}
+function updateNet() {
+  const el = $('#net'); if (!el) return;
+  const n = S.user ? queue().filter((o) => o.uid === S.user.id).length : 0;
+  const pl = n === 1 ? '' : 's';
+  if (!navigator.onLine) { el.hidden = false; el.textContent = n ? `Sin señal · ${n} cambio${pl} guardado${pl} en el teléfono. Se suben solos cuando vuelva la conexión.` : 'Sin señal · podés seguir marcando, se guarda en el teléfono.'; }
+  else if (n) { el.hidden = false; el.textContent = `Subiendo ${n} cambio${pl}…`; }
+  else el.hidden = true;
+}
+window.addEventListener('online', () => { updateNet(); flush(); });
+window.addEventListener('offline', updateNet);
+setInterval(() => { if (navigator.onLine && queue().length) flush(); }, 20000);
 
 // Series de un ejercicio en una semana: [{reps, pct, pcts, extra}]
 function setsFor(w) {
@@ -717,9 +804,10 @@ async function renderEntreno() {
   bindTimer();
 }
 function commentBlock(itemId, name) {
-  const mine = S.comentarios.filter((c) => c.item_id === itemId && c.sesion_id === S.sesion?.id && !c.respuesta_a);
+  const sid = S.sesion?.id || sesIds()[keyOf()];
+  const mine = S.comentarios.filter((c) => c.item_id === itemId && !c.respuesta_a && (c.pendiente ? c.key === keyOf() : sid && c.sesion_id === sid));
   const replies = S.comentarios.filter((c) => mine.some((m) => m.id === c.respuesta_a));
-  const shown = mine.map((c) => `<p class="note"><small>Tu comentario</small>${esc(c.texto)}</p>` + replies.filter((r) => r.respuesta_a === c.id).map((r) => `<p class="note pf"><small>Respuesta del PF</small>${esc(r.texto)}</p>`).join('')).join('');
+  const shown = mine.map((c) => `<p class="note"><small>Tu comentario${c.pendiente ? ' · se envía cuando haya señal' : ''}</small>${esc(c.texto)}</p>` + replies.filter((r) => r.respuesta_a === c.id).map((r) => `<p class="note pf"><small>Respuesta del PF</small>${esc(r.texto)}</p>`).join('')).join('');
   return `${shown}<div data-comment="${itemId}"><button class="linkbtn" data-act="comment" data-item="${itemId}" data-name="${esc(name)}">+ Comentario para el PF</button></div>`;
 }
 
@@ -751,16 +839,13 @@ document.addEventListener('click', async (ev) => {
   try {
     if (a === 'week') { S.week = Number(t.dataset.i); LS.set('semana-' + S.plan.id, S.week); return renderEntreno(); }
     if (a === 'day') { S.day = Number(t.dataset.i); LS.set('dia-' + S.plan.id, S.day); return renderEntreno(); }
-    if (a === 'back-pf') { S.asPlayer = false; return go('pf'); }
+    if (a === 'back-pf') { S.asPlayer = false; LS.set('as-player', false); return go('pf'); }
     if (a === 'set') {
       const item = Number(t.dataset.item), n = Number(t.dataset.n), key = item + ':' + n;
       const on = !S.series[key]?.hecha;
       t.setAttribute('aria-pressed', on); t.textContent = on ? '✓' : n;
       if (on && Number(t.dataset.rest) > 0) startTimer(Number(t.dataset.rest), t.dataset.name);
-      const ses = await ensureSession();
-      const { data, error } = await db.from('series').upsert({ sesion_id: ses.id, item_id: item, numero: n, hecha: on }).select().single();
-      if (error) throw error;
-      S.series[key] = data;
+      enqueue({ t: 'set', item, n, hecha: on });
       updateCounts();
       return;
     }
@@ -774,10 +859,8 @@ document.addEventListener('click', async (ev) => {
     if (a === 'send-comment') {
       const txt = t.closest('.stack').querySelector('textarea').value.trim();
       if (!txt) return;
-      const ses = await ensureSession();
-      const { error } = await db.from('comentarios').insert({ jugador_id: S.user.id, autor_id: S.user.id, item_id: Number(t.dataset.item), sesion_id: ses.id, texto: txt });
-      if (error) throw error;
-      toast('Comentario enviado al PF');
+      enqueue({ t: 'comment', item: Number(t.dataset.item), texto: txt });
+      toast(navigator.onLine ? 'Comentario enviado al PF' : 'Guardado · se envía cuando haya señal');
       return renderEntreno();
     }
     if (a === 'max') {
@@ -797,16 +880,12 @@ document.addEventListener('click', async (ev) => {
     }
   } catch (e) { fail(e); }
 });
-document.addEventListener('change', async (ev) => {
+document.addEventListener('change', (ev) => {
   const t = ev.target;
   if (t.dataset.act === 'kg') {
-    const item = Number(t.dataset.item), v = parseFloat(t.value.replace(',', '.'));
-    try {
-      const ses = await ensureSession();
-      const { data, error } = await db.from('series').upsert({ sesion_id: ses.id, item_id: item, numero: 0, hecha: false, kg: v > 0 ? v : null }).select().single();
-      if (error) throw error;
-      S.series[item + ':0'] = data; toast('Peso guardado');
-    } catch (e) { fail(e); }
+    const v = parseFloat(t.value.replace(',', '.'));
+    enqueue({ t: 'kg', item: Number(t.dataset.item), kg: v > 0 ? v : null });
+    toast(navigator.onLine ? 'Peso guardado' : 'Peso guardado en el teléfono');
   }
 });
 function updateCounts() {
@@ -836,15 +915,12 @@ async function renderCierre() {
   </div>`;
   let eff = e0;
   document.querySelectorAll('[data-e]').forEach((b) => b.onclick = () => { eff = Number(b.dataset.e); S.effort = eff; document.querySelectorAll('[data-e]').forEach((x) => { const on = Number(x.dataset.e) === eff; x.setAttribute('aria-pressed', on); x.setAttribute('aria-checked', on); }); });
-  $('#send').onclick = async () => {
-    try {
-      const ses = await ensureSession();
-      const nota = $('#nota').value.trim() || null;
-      const { error } = await db.from('sesiones').update({ terminada: new Date().toISOString(), esfuerzo: eff + 1, nota }).eq('id', ses.id);
-      if (error) throw error;
-      if (nota && nota !== S.sesion?.nota) await db.from('comentarios').insert({ jugador_id: S.user.id, autor_id: S.user.id, sesion_id: ses.id, texto: nota });
-      S.sesion = null; toast('Enviado al PF ✓'); go('entreno');
-    } catch (e) { fail(e); }
+  $('#send').onclick = () => {
+    const nota = $('#nota').value.trim() || null;
+    enqueue({ t: 'cierre', terminada: new Date().toISOString(), esfuerzo: eff + 1, nota });
+    if (nota && nota !== S.sesion?.nota) enqueue({ t: 'comment', item: null, texto: nota });
+    toast(navigator.onLine ? 'Enviado al PF ✓' : 'Guardado · se envía cuando haya señal');
+    go('entreno');
   };
 }
 
@@ -868,15 +944,23 @@ async function renderPerfil() {
     <section class="panel"><h2 style="margin:0 0 6px;font-size:18px">Mensajes con el PF</h2>
       ${(com || []).length ? com.map((c) => `<div class="bubble${c.autor_id !== S.user.id ? ' pf' : ''}" style="margin-top:6px"><small>${c.autor_id !== S.user.id ? 'PF' : 'Vos'} · ${fmtDate(c.creado_en)}</small>${esc(c.texto)}</div>`).join('') : '<p class="small muted">Todavía no hay mensajes.</p>'}
     </section>
+    <section class="panel"><h2 style="margin:0 0 8px;font-size:18px">Cambiar contraseña</h2>
+      <form id="f-pass" class="row" style="flex-wrap:nowrap"><input class="input" type="password" name="pass" minlength="8" required autocomplete="new-password" placeholder="Contraseña nueva (mín. 8)" aria-label="Contraseña nueva"><button class="btn small" type="submit">Guardar</button></form></section>
     ${['pf', 'admin'].includes(S.perfil.rol) ? '<button class="btn ghost" data-act="back-pf">Volver a la vista PF</button>' : ''}
     <button class="btn ghost" id="logout">Cerrar sesión</button>
   </div>`;
   $('#paso').onchange = (e) => { LS.set('paso', Number(e.target.value)); toast('Listo'); };
   $('#logout').onclick = () => db.auth.signOut();
+  $('#f-pass').onsubmit = async (e) => {
+    e.preventDefault();
+    const { error } = await db.auth.updateUser({ password: new FormData(e.target).get('pass') });
+    if (error) return fail(error);
+    e.target.reset(); toast('Contraseña cambiada ✓');
+  };
 }
 
 // ===================== PF =====================
-const PF_TABS = [['pf', 'Inicio'], ['pf-jugadores', 'Jugadores'], ['pf-rutinas', 'Rutinas'], ['pf-subir', 'Subir Excel'], ['pf-comentarios', 'Comentarios']];
+const PF_TABS = [['pf', 'Inicio'], ['pf-jugadores', 'Jugadores'], ['pf-rutinas', 'Rutinas'], ['pf-crear', 'Crear rutina'], ['pf-subir', 'Subir Excel'], ['pf-comentarios', 'Comentarios']];
 let pfUnread = 0;
 function pfShell(v, body) {
   $('#app').innerHTML = `<div class="pf-layout">
@@ -888,7 +972,7 @@ function pfShell(v, body) {
     <main class="pf-main"><div class="stack" style="max-width:1100px">${body}</div></main></div>`;
   $('#pf-logout').onclick = (e) => { e.preventDefault(); db.auth.signOut(); };
 }
-document.addEventListener('click', (e) => { const t = e.target.closest('[data-act="as-player"]'); if (!t) return; e.preventDefault(); S.asPlayer = true; S.plan = null; go(S.perfil.grupo_id ? 'entreno' : 'grupo'); });
+document.addEventListener('click', (e) => { const t = e.target.closest('[data-act="as-player"]'); if (!t) return; e.preventDefault(); S.asPlayer = true; LS.set('as-player', true); S.plan = null; go(S.perfil.grupo_id ? 'entreno' : 'grupo'); });
 
 async function pfData() {
   const [per, ses, com, pla] = await Promise.all([
@@ -913,6 +997,7 @@ async function renderPF(v) {
   if (v === 'pf-jugadores') return pfJugadores(D);
   if (v === 'pf-rutinas') return pfRutinas(D);
   if (v === 'pf-subir') return pfSubir(D);
+  if (v === 'pf-crear') return pfCrear(D);
   if (v === 'pf-comentarios') return pfComentarios(D);
   return pfInicio(D);
 }
@@ -941,7 +1026,7 @@ function pfInicio(D) {
     inactive.length ? `<a href="#pf-jugadores" class="issue" style="color:var(--ink);text-decoration:none"><b>${inactive.length} jugador${inactive.length === 1 ? '' : 'es'} sin entrenar</b><span class="muted">Hace más de una semana que no cargan nada.</span></a>` : ''
   ].filter(Boolean).join('');
   pfShell('pf', `
-    <div class="row between" style="align-items:flex-end"><div><p class="eyebrow">${new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })}</p><h1 class="h1">Hoy en el gimnasio</h1></div><a class="btn small" href="#pf-subir">Subir Excel</a></div>
+    <div class="row between" style="align-items:flex-end"><div><p class="eyebrow">${new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })}</p><h1 class="h1">Hoy en el gimnasio</h1></div><div class="row"><a class="btn small ghost" href="#pf-subir">Subir Excel</a><a class="btn small" href="#pf-crear">+ Crear rutina</a></div></div>
     <div class="tiles">
       <div class="tile"><b>${hoy.size}<span class="muted" style="font-size:16px"> / ${jug.length}</span></b><span>entrenaron hoy</span></div>
       <div class="tile"><b>${jug.length ? Math.round(activeWeek.size / jug.length * 100) : 0}%</b><span>entrenó en los últimos 7 días</span></div>
@@ -970,6 +1055,7 @@ function pfJugadores(D) {
       detail = `<div class="row" style="gap:12px"><span class="avatar" style="width:48px;height:48px;font-size:16px;background:var(--line)">${esc(initials(p.nombre))}</span><div><h2 style="margin:0;font-size:20px">${esc(p.nombre || 'Sin nombre')}</h2><p class="small muted" style="margin:0">${esc(grupoName(p.grupo_id))} · último entreno ${ago(last[p.id]?.empezada)}</p></div></div>
         <div><p class="label">Grupo</p><div class="grid">${S.grupos.map((g) => `<button class="opt" data-move="${g.id}" aria-pressed="${p.grupo_id === g.id}">${esc(g.nombre)}</button>`).join('')}</div></div>
         ${S.perfil.rol === 'admin' && p.id !== S.user.id ? `<div><p class="label">Rol</p><div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))">${['jugador', 'pf', 'admin'].map((r) => `<button class="opt" data-role="${r}" aria-pressed="${p.rol === r}">${r === 'pf' ? 'PF' : r[0].toUpperCase() + r.slice(1)}</button>`).join('')}</div></div>` : ''}
+        ${(S.perfil.rol === 'admin' || p.rol === 'jugador') && p.id !== S.user.id ? `<div><p class="label">Contraseña</p><button class="btn small ghost" id="temp-pass">Generar contraseña temporal</button><div id="temp-out"></div></div>` : ''}
         <div><p class="label">Máximos</p>${(mx || []).length ? mx.map((m) => `<div class="list-row"><span>${esc(m.ejercicio)}</span><b>${kgFmt(m.kg)} kg</b></div>`).join('') : '<p class="small muted" style="margin:0">Todavía no cargó máximos.</p>'}</div>
         <div><p class="label">Últimos entrenamientos</p>${(ss || []).length ? ss.map((s) => `<div class="list-row"><span>Sem ${s.semana} · Día ${s.dia}</span><span class="muted">${fmtDate(s.empezada)}${s.esfuerzo ? ' · ' + labels[s.esfuerzo - 1] : ''}${s.terminada ? '' : ' · sin terminar'}</span></div>`).join('') : '<p class="small muted" style="margin:0">Todavía no entrenó.</p>'}</div>`;
     }
@@ -985,6 +1071,12 @@ function pfJugadores(D) {
     document.querySelectorAll('[data-filter]').forEach((b) => b.onclick = () => { filter = b.dataset.filter; draw(); });
     document.querySelectorAll('[data-sel]').forEach((b) => b.onclick = () => { sel = b.dataset.sel; draw(); });
     document.querySelectorAll('[data-move]').forEach((b) => b.onclick = async () => { const { error } = await db.from('perfiles').update({ grupo_id: Number(b.dataset.move) }).eq('id', sel); if (error) return fail(error); D.byId[sel].grupo_id = Number(b.dataset.move); toast('Grupo cambiado'); draw(); });
+    const tp = $('#temp-pass'); if (tp) tp.onclick = async () => {
+      const abc = 'abcdefghjkmnpqrstuvwxyz23456789'; let pw = ''; const r = crypto.getRandomValues(new Uint32Array(8)); for (const n of r) pw += abc[n % abc.length];
+      const { error } = await db.rpc('dar_clave_temporal', { uid: sel, nueva: pw });
+      if (error) return fail(error);
+      $('#temp-out').innerHTML = `<div class="msg ok" style="margin-top:8px">Pasale esta contraseña: <b style="font-size:18px;letter-spacing:.06em;user-select:all">${pw}</b><br><span class="small">Entra con su email y esta contraseña, y después la cambia desde Mi perfil.</span></div>`;
+    };
     document.querySelectorAll('[data-role]').forEach((b) => b.onclick = async () => { const { error } = await db.from('perfiles').update({ rol: b.dataset.role }).eq('id', sel); if (error) return fail(error); D.byId[sel].rol = b.dataset.role; toast('Rol cambiado'); draw(); });
   };
   draw();
@@ -1002,7 +1094,7 @@ async function pfRutinas(D) {
       for (const s of D.sesiones.filter((s) => s.plan_id === plan.id && s.semana === week + 1)) (doneBy[s.dia] ||= new Set()).add(s.jugador_id);
       const nGroup = D.perfiles.filter((p) => p.grupo_id === gid && p.rol === 'jugador').length;
       body = `<section class="panel row between" style="background:linear-gradient(135deg,#17264b,#0f1a33)"><div><p class="eyebrow">${esc(grupoName(gid))} · activo</p><h2 style="margin:6px 0 2px;font-size:24px">${esc(plan.nombre)}</h2><p class="small muted" style="margin:0">${plan.inicio ? 'Empezó el ' + fmtDate(plan.inicio) + ' · ' : ''}${plan.semanas} semanas · ${plan.dias} días · ${plan.origen === 'excel' ? 'desde Excel' : 'creado en la app'}</p></div>
-        <div class="row"><a class="btn small ghost" href="#pf-subir">Reemplazar con Excel</a><button class="btn small ghost" id="archive">Quitar plan</button></div></section>
+        <div class="row"><button class="btn small" data-edit-plan="${gid}">Editar rutina</button><a class="btn small ghost" href="#pf-subir">Reemplazar con Excel</a><button class="btn small ghost" id="archive">Quitar plan</button></div></section>
         <div class="row" style="gap:6px"><span class="label" style="margin:0">Semana</span>${Array.from({ length: plan.semanas }, (_, i) => `<button class="opt" style="padding:0 14px;border-radius:999px" data-w="${i}" aria-pressed="${i === week}">Semana ${i + 1}${i === currentWeek(plan) ? ' · ahora' : ''}</button>`).join('')}</div>
         <div class="days">${Array.from({ length: plan.dias }, (_, d) => `<section class="panel"><div class="row between"><h3 style="margin:0;font-size:20px;text-transform:uppercase">Día ${d + 1}</h3><span class="small ${doneBy[d + 1]?.size ? '' : 'muted'}" style="font-weight:800;${doneBy[d + 1]?.size ? 'color:var(--ok)' : ''}">${doneBy[d + 1]?.size || 0} de ${nGroup}</span></div>
           ${r.bloques.filter((b) => b.dia === d + 1).map((b) => `<div style="border-top:1px solid var(--line);margin-top:8px;padding-top:8px"><p class="eyebrow" style="font-size:10px;margin-bottom:4px">${esc(b.titulo)}</p>${r.items.filter((i) => i.bloque_id === b.id).map((i) => { const w = i.semanas[week] || {}; return `<div class="row between" style="flex-wrap:nowrap;font-size:13px;padding:2px 0"><span>${esc(i.nombre)}</span><span class="muted" style="text-align:right;flex:none">${esc(prescription(w))}${w.carga?.text ? `<br><b style="color:#ff8a8a">${esc(w.carga.text)}</b>` : ''}</span></div>`; }).join('')}</div>`).join('')}</section>`).join('')}</div>`;
@@ -1010,6 +1102,7 @@ async function pfRutinas(D) {
     pfShell('pf-rutinas', `<div class="row between" style="align-items:flex-end"><h1 class="h1">Rutinas actuales</h1><div class="row" style="gap:6px">${S.grupos.map((g) => `<button class="opt" style="padding:0 16px" data-g="${g.id}" aria-pressed="${g.id === gid}">${esc(g.nombre)}</button>`).join('')}</div></div>${body}`);
     document.querySelectorAll('[data-g]').forEach((b) => b.onclick = () => { gid = Number(b.dataset.g); LS.set('pf-grupo', gid); week = 0; draw(); });
     document.querySelectorAll('[data-w]').forEach((b) => b.onclick = () => { week = Number(b.dataset.w); draw(); });
+    document.querySelectorAll('[data-edit-plan]').forEach((b) => b.onclick = async () => { const r = await loadPlan(gid); LS.set('editor-v1', planToEditor(r, gid)); go('pf-crear'); });
     const ar = $('#archive'); if (ar) {
       ar.onclick = async () => {
         if (ar.dataset.armed) { const { error } = await db.from('planes').update({ estado: 'archivado' }).eq('id', plan.id); if (error) return fail(error); toast('Plan quitado'); D.planes = D.planes.filter((p) => p.id !== plan.id); draw(); }
@@ -1109,6 +1202,161 @@ function grouped(issues) {
   return [...m.values()].sort((a, b) => (a.level === 'error' ? 0 : 1) - (b.level === 'error' ? 0 : 1) || a.day - b.day);
 }
 
+
+// ===================== Editor de rutinas =====================
+const BLOCK_TYPES = [['bloque', 'Normal'], ['superserie', 'Superserie'], ['circuito', 'Circuito'], ['amrap', 'AMRAP']];
+function newBlock(dia, n, semanas) { return { dia, tipo: 'bloque', titulo: 'Bloque ' + n, descanso: '2 min', series: Array(semanas).fill('3'), items: [newItem(semanas)] }; }
+function newItem(semanas) { return { nombre: '', reps: Array(semanas).fill(''), pct: Array(semanas).fill('') }; }
+function emptyEditor(gid) {
+  const monday = (() => { const d = new Date(); const k = (8 - d.getDay()) % 7 || 7; d.setDate(d.getDate() + (d.getDay() === 1 ? 0 : k)); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); })();
+  return { gid, nombre: 'Plan de ' + grupoName(gid), inicio: monday, semanas: 4, dias: 4, dia: 0, bloques: [1, 2, 3, 4].map((d) => newBlock(d, 1, 4)) };
+}
+function seriesText(s) { if (!s) return ''; if (s.ramp) return s.ramp.map((g) => g.sets + '*' + g.reps).join(' '); if (s.minutes) return s.minutes + ' min'; return s.label || ''; }
+function cargaText(c) { if (!c) return ''; if (c.pct) return c.range ? c.pct[0] + '-' + c.pct[1] : c.split ? c.pct[0] + '+' + c.pct[1] : String(Math.round(c.pct[0] * 10) / 10); return c.note || ''; }
+function planToEditor(r, gid) {
+  if (!r.plan) return emptyEditor(gid);
+  const n = r.plan.semanas;
+  return {
+    gid, nombre: r.plan.nombre, inicio: r.plan.inicio || '', semanas: n, dias: r.plan.dias, dia: 0,
+    bloques: r.bloques.map((b) => {
+      const its = r.items.filter((i) => i.bloque_id === b.id);
+      const w = (k) => b.semanas?.[k] || its[0]?.semanas?.[k] || {};
+      return {
+        dia: b.dia, tipo: b.tipo, titulo: b.titulo, descanso: w(0).rest ? (w(0).rest.seconds === 0 ? 'sin pausa' : w(0).rest.label) : '',
+        series: Array.from({ length: n }, (_, k) => seriesText(w(k).series)),
+        items: its.map((i) => ({ nombre: i.nombre, reps: Array.from({ length: n }, (_, k) => i.semanas[k]?.series?.ramp ? '' : (i.semanas[k]?.reps?.text || '')), pct: Array.from({ length: n }, (_, k) => cargaText(i.semanas[k]?.carga)) }))
+      };
+    })
+  };
+}
+function cargaFrom(txt) {
+  const t = String(txt || '').trim().replace('%', '').replace(',', '.');
+  if (!t) return null;
+  let m;
+  if ((m = t.match(/^(\d+(?:\.\d+)?)\s*(?:-|–|a)\s*(\d+(?:\.\d+)?)$/i))) return { pct: [Number(m[1]), Number(m[2])], range: true, text: `${m[1]} a ${m[2]}%` };
+  if ((m = t.match(/^(\d+(?:\.\d+)?)\s*\+\s*(\d+(?:\.\d+)?)$/))) return { pct: [Number(m[1]), Number(m[2])], split: true, text: `${m[1]}% + ${m[2]}%` };
+  if ((m = t.match(/^(\d+(?:\.\d+)?)$/))) return { pct: [Number(m[1])], text: `${m[1]}%` };
+  return { note: String(txt).trim() };
+}
+function restFrom(txt) {
+  const t = String(txt || '').trim().toLowerCase();
+  if (!t) return null;
+  if (/sin|no hay|^0/.test(t)) return { seconds: 0, label: 'Sin pausa' };
+  let m;
+  if ((m = t.match(/^(\d+(?:[.,]\d+)?)\s*(min|m|´|')/))) { const sec = Math.round(parseFloat(m[1].replace(',', '.')) * 60); return { seconds: sec, label: sec % 60 ? sec + ' s' : sec / 60 + ' min' }; }
+  if ((m = t.match(/^(\d+)\s*(s|seg|")?$/))) return { seconds: Number(m[1]), label: m[1] + ' s' };
+  return { label: txt };
+}
+function editorToRows(ed) {
+  return ed.bloques.filter((b) => b.items.some((i) => i.nombre.trim())).map((b) => {
+    const rest = restFrom(b.descanso);
+    const series = b.series.map((x) => (String(x).trim() ? parseSeries(b.tipo === 'amrap' && /^\d+$/.test(String(x).trim()) ? x + ' min' : String(x)) : null));
+    return {
+      dia: b.dia, tipo: b.tipo, titulo: b.titulo.trim() || 'Bloque',
+      semanas: series.map((se) => ({ series: se, rest })),
+      items: b.items.filter((i) => i.nombre.trim()).map((i) => ({
+        nombre: i.nombre.trim(),
+        semanas: series.map((se, k) => ({ series: se, rest, reps: String(i.reps[k] || '').trim() ? parseReps(String(i.reps[k]).trim()) : (se?.ramp ? { text: se.ramp.map((g) => `${g.sets}×${g.reps}`).join(' · ') } : null), carga: cargaFrom(i.pct[k]) }))
+      }))
+    };
+  });
+}
+
+async function pfCrear(D) {
+  let ed = LS.get('editor-v1', null) || emptyEditor(LS.get('pf-grupo', S.grupos[0]?.id));
+  const names = [...new Set((await db.from('items').select('nombre').limit(1000)).data?.map((i) => i.nombre) || [])].sort();
+  const save = () => LS.set('editor-v1', ed);
+  const resize = () => {
+    const n = ed.semanas;
+    const fit = (a, fill) => Array.from({ length: n }, (_, k) => a[k] ?? (a.length ? a[a.length - 1] : fill));
+    ed.bloques.forEach((b) => { b.series = fit(b.series, '3'); b.items.forEach((i) => { i.reps = fit(i.reps, ''); i.pct = fit(i.pct, ''); }); });
+    for (let d = 1; d <= ed.dias; d++) if (!ed.bloques.some((b) => b.dia === d)) ed.bloques.push(newBlock(d, 1, n));
+    ed.bloques = ed.bloques.filter((b) => b.dia <= ed.dias);
+    ed.dia = Math.min(ed.dia, ed.dias - 1);
+  };
+  resize();
+  const draw = () => {
+    save();
+    const dayBlocks = ed.bloques.map((b, bi) => ({ b, bi })).filter((x) => x.b.dia === ed.dia + 1);
+    const wk = Array.from({ length: ed.semanas }, (_, k) => k);
+    const cell = 'min-height:34px;padding:4px 6px;border:1px solid var(--line2);border-radius:8px;background:var(--bg);color:var(--ink);font-size:13px;width:100%';
+    pfShell('pf-crear', `
+      <datalist id="ej-list">${names.map((n) => `<option value="${esc(n)}">`).join('')}</datalist>
+      <div class="row between" style="align-items:flex-end"><div style="flex:1;min-width:260px"><p class="eyebrow">Crear rutina · se guarda sola como borrador</p>
+        <input data-f="nombre" value="${esc(ed.nombre)}" aria-label="Nombre de la rutina" style="width:100%;max-width:560px;border:0;border-bottom:2px dashed var(--line2);background:transparent;color:var(--ink);font:900 34px system-ui;letter-spacing:-.04em;padding:2px 0"></div>
+        <div class="row"><button class="btn small ghost" id="ed-reset">Empezar de cero</button><button class="btn small" id="ed-publish">Publicar para ${esc(grupoName(ed.gid))}</button></div></div>
+      <div class="panel row" style="gap:14px">
+        <span class="row" style="gap:6px"><span class="label" style="margin:0">Grupo</span>${S.grupos.map((g) => `<button class="opt" style="padding:0 12px" data-gid="${g.id}" aria-pressed="${g.id === ed.gid}">${esc(g.nombre)}</button>`).join('')}</span>
+        <label class="row small muted" style="gap:6px">Semanas <select data-f="semanas" class="input" style="width:auto;min-height:38px">${[1, 2, 3, 4, 5, 6, 8].map((n) => `<option${n === ed.semanas ? ' selected' : ''}>${n}</option>`).join('')}</select></label>
+        <label class="row small muted" style="gap:6px">Días <select data-f="dias" class="input" style="width:auto;min-height:38px">${[1, 2, 3, 4, 5, 6].map((n) => `<option${n === ed.dias ? ' selected' : ''}>${n}</option>`).join('')}</select></label>
+        <label class="row small muted" style="gap:6px">Empieza <input type="date" data-f="inicio" value="${esc(ed.inicio)}" class="input" style="width:auto;min-height:38px"></label>
+      </div>
+      <div class="row between"><div class="row" style="gap:6px" role="tablist">${Array.from({ length: ed.dias }, (_, d) => `<button class="opt" style="padding:0 16px" role="tab" data-day="${d}" aria-pressed="${d === ed.dia}">Día ${d + 1}</button>`).join('')}</div>
+        <div class="row"><button class="btn small ghost" id="ed-copy">Copiar semana 1 a todas</button><button class="btn small ghost" id="ed-prog">Subir 5% por semana</button></div></div>
+      <p class="small muted" style="margin:0">En <b>Series</b> podés poner 3, 3+1, una escalera como <b>1*10 1*8 2*6</b> o, en AMRAP, los minutos. En <b>%</b> poné 75, un rango como 60-80 o dos cargas como 85+55. Los kilos de cada jugador se calculan solos con su máximo.</p>
+      ${dayBlocks.map(({ b, bi }) => `<article class="panel">
+        <div class="row between" style="margin-bottom:8px"><div class="row" style="gap:8px"><input data-b="${bi}" data-k="titulo" value="${esc(b.titulo)}" aria-label="Nombre del bloque" style="${cell};width:160px;font-weight:800;text-transform:uppercase">
+          ${BLOCK_TYPES.map(([v, l]) => `<button class="opt" style="padding:0 10px;min-height:34px;font-size:12px" data-bt="${bi}" data-v="${v}" aria-pressed="${b.tipo === v}">${l}</button>`).join('')}</div>
+          <div class="row" style="gap:8px"><label class="small muted row" style="gap:6px">Descanso <input data-b="${bi}" data-k="descanso" value="${esc(b.descanso)}" placeholder="2 min" style="${cell};width:90px"></label><button class="linkbtn red" data-delb="${bi}">Quitar bloque</button></div></div>
+        <div style="overflow-x:auto"><table style="min-width:${260 + ed.semanas * 140}px"><thead><tr><th style="width:240px">Ejercicio</th>${wk.map((k) => `<th>Sem ${k + 1}</th>`).join('')}<th></th></tr></thead><tbody>
+          <tr><td class="muted small" style="font-weight:700">${b.tipo === 'circuito' ? 'Vueltas' : b.tipo === 'amrap' ? 'Minutos' : 'Series'}</td>${wk.map((k) => `<td><input data-b="${bi}" data-k="series" data-w="${k}" value="${esc(b.series[k])}" aria-label="Series semana ${k + 1}" style="${cell}"></td>`).join('')}<td></td></tr>
+          ${b.items.map((it, ii) => `<tr><td><input list="ej-list" data-b="${bi}" data-i="${ii}" data-k="nombre" value="${esc(it.nombre)}" placeholder="Nombre del ejercicio" aria-label="Ejercicio" style="${cell};font-weight:700"></td>
+            ${wk.map((k) => `<td><input data-b="${bi}" data-i="${ii}" data-k="reps" data-w="${k}" value="${esc(it.reps[k])}" placeholder="reps" aria-label="Reps semana ${k + 1}" style="${cell}"><span class="row" style="gap:4px;margin-top:4px;flex-wrap:nowrap;color:var(--accent);font-weight:700;font-size:12px"><input data-b="${bi}" data-i="${ii}" data-k="pct" data-w="${k}" value="${esc(it.pct[k])}" placeholder="—" aria-label="Porcentaje semana ${k + 1}" style="${cell};width:70px;color:#ff8a8a;text-align:center">%</span></td>`).join('')}
+            <td><button class="linkbtn" data-deli="${bi}:${ii}" aria-label="Quitar ejercicio">✕</button></td></tr>`).join('')}
+        </tbody></table></div>
+        <button class="linkbtn red" data-addi="${bi}">+ Agregar ejercicio</button></article>`).join('')}
+      <button class="btn ghost" id="ed-addb" style="border-style:dashed">+ Agregar bloque al día ${ed.dia + 1}</button>
+      <div class="msg err" id="err" hidden></div>`);
+    // edición sin redibujar (para no perder el foco)
+    document.querySelectorAll('[data-f]').forEach((el) => el.onchange = el.oninput = (e) => {
+      const f = el.dataset.f;
+      if (f === 'semanas' || f === 'dias') { if (e.type !== 'change') return; ed[f] = Number(el.value); resize(); return draw(); }
+      ed[f] = el.value; save();
+    });
+    document.querySelectorAll('[data-k]').forEach((el) => el.oninput = () => {
+      const b = ed.bloques[Number(el.dataset.b)], k = el.dataset.k, w = el.dataset.w != null ? Number(el.dataset.w) : null;
+      if (el.dataset.i != null) { const it = b.items[Number(el.dataset.i)]; if (w == null) it[k] = el.value; else it[k][w] = el.value; }
+      else if (w == null) b[k] = el.value; else b[k][w] = el.value;
+      save();
+    });
+    document.querySelectorAll('[data-gid]').forEach((x) => x.onclick = () => { ed.gid = Number(x.dataset.gid); if (/^Plan de /.test(ed.nombre)) ed.nombre = 'Plan de ' + grupoName(ed.gid); LS.set('pf-grupo', ed.gid); draw(); });
+    document.querySelectorAll('[data-day]').forEach((x) => x.onclick = () => { ed.dia = Number(x.dataset.day); draw(); });
+    document.querySelectorAll('[data-bt]').forEach((x) => x.onclick = () => { ed.bloques[Number(x.dataset.bt)].tipo = x.dataset.v; draw(); });
+    document.querySelectorAll('[data-delb]').forEach((x) => x.onclick = () => { ed.bloques.splice(Number(x.dataset.delb), 1); draw(); });
+    document.querySelectorAll('[data-addi]').forEach((x) => x.onclick = () => { ed.bloques[Number(x.dataset.addi)].items.push(newItem(ed.semanas)); draw(); });
+    document.querySelectorAll('[data-deli]').forEach((x) => x.onclick = () => { const [bi, ii] = x.dataset.deli.split(':').map(Number); ed.bloques[bi].items.splice(ii, 1); draw(); });
+    $('#ed-addb').onclick = () => { const n = ed.bloques.filter((b) => b.dia === ed.dia + 1).length + 1; ed.bloques.push(newBlock(ed.dia + 1, n, ed.semanas)); draw(); };
+    $('#ed-copy').onclick = () => { ed.bloques.filter((b) => b.dia === ed.dia + 1).forEach((b) => { b.series = b.series.map(() => b.series[0]); b.items.forEach((i) => { i.reps = i.reps.map(() => i.reps[0]); i.pct = i.pct.map(() => i.pct[0]); }); }); toast('Copié la semana 1 en todas las semanas del día ' + (ed.dia + 1)); draw(); };
+    $('#ed-prog').onclick = () => { ed.bloques.filter((b) => b.dia === ed.dia + 1).forEach((b) => b.items.forEach((i) => { const base = parseFloat(String(i.pct[0]).replace(',', '.')); if (!isNaN(base) && /^\s*\d+([.,]\d+)?\s*$/.test(i.pct[0])) i.pct = i.pct.map((_, k) => String(Math.min(95, base + 5 * k))); })); toast('Subí 5% por semana desde la semana 1 (hasta 95%)'); draw(); };
+    $('#ed-reset').onclick = (e) => { const b = e.currentTarget; if (!b.dataset.armed) { b.dataset.armed = 1; b.textContent = 'Tocá de nuevo para borrar todo'; return; } ed = emptyEditor(ed.gid); draw(); };
+    $('#ed-publish').onclick = publish;
+  };
+  async function publish() {
+    const rows = editorToRows(ed);
+    if (!rows.length) return showErr('La rutina no tiene ejercicios. Escribí al menos uno.');
+    const btn = $('#ed-publish'); btn.disabled = true; btn.textContent = 'Publicando…';
+    try {
+      const { data: plan, error: e1 } = await db.from('planes').insert({ grupo_id: ed.gid, nombre: ed.nombre.trim() || 'Plan de ' + grupoName(ed.gid), inicio: ed.inicio || null, semanas: ed.semanas, dias: ed.dias, estado: 'borrador', origen: 'app', creado_por: S.user.id }).select().single();
+      if (e1) throw e1;
+      const order = {};
+      const { data: bl, error: e2 } = await db.from('bloques').insert(rows.map((r) => ({ plan_id: plan.id, dia: r.dia, orden: (order[r.dia] = (order[r.dia] ?? -1) + 1), titulo: r.titulo, tipo: r.tipo, semanas: r.semanas }))).select();
+      if (e2) throw e2;
+      const items = [];
+      const used = {};
+      rows.forEach((r) => { const o = (used[r.dia] = (used[r.dia] ?? -1) + 1); const blk = bl.find((x) => x.dia === r.dia && x.orden === o); r.items.forEach((it, ii) => items.push({ bloque_id: blk.id, orden: ii, nombre: it.nombre, semanas: it.semanas })); });
+      const { error: e3 } = await db.from('items').insert(items);
+      if (e3) throw e3;
+      const old = D.planes.filter((x) => x.grupo_id === ed.gid && x.estado === 'activo');
+      if (old.length) { const { error } = await db.from('planes').update({ estado: 'archivado' }).in('id', old.map((o) => o.id)); if (error) throw error; }
+      const { error: e4 } = await db.from('planes').update({ estado: 'activo' }).eq('id', plan.id);
+      if (e4) throw e4;
+      LS.set('editor-v1', null); S.plan = null;
+      toast('Rutina publicada para ' + grupoName(ed.gid) + ' ✓'); go('pf-rutinas');
+    } catch (e) { btn.disabled = false; btn.textContent = 'Publicar para ' + grupoName(ed.gid); fail(e); }
+  }
+  draw();
+}
+
 async function pfComentarios(D) {
   const roots = D.comentarios.filter((c) => !c.respuesta_a && c.autor_id === c.jugador_id);
   const itemIds = [...new Set(roots.map((c) => c.item_id).filter(Boolean))];
@@ -1138,6 +1386,7 @@ async function pfComentarios(D) {
 }
 
 boot().catch(fail);
+if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 </script>
 </body>
 </html>
