@@ -175,9 +175,10 @@ td small{display:block;color:var(--muted);font-size:12px}
 .chart .hit{fill:transparent;cursor:pointer}
 .chart .hit:focus{outline:none}
 .chart .hit:focus-visible+.dot,.chart .dot.on{stroke:var(--ink)}
-.ex-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+.ex-table{width:100%;min-width:0;table-layout:fixed;border-collapse:collapse;font-size:13px;margin-top:6px}
 .ex-table td,.ex-table th{padding:5px 0;border-top:1px solid var(--line);text-align:left}
-.ex-table th{color:var(--muted);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.ex-table th{color:var(--muted);font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:none;border-top:0}
+.ex-table th:last-child,.ex-table td:last-child{text-align:right}
 details.tbl summary{cursor:pointer;color:var(--muted);font-size:12px;font-weight:750;margin-top:8px}
 .loading{display:grid;place-items:center;min-height:60vh;color:var(--muted)}
 .chat{display:flex;flex-direction:column;gap:6px;margin-top:8px}
@@ -1636,7 +1637,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.se
 // ---------- Aviso de versión nueva ----------
 // Cada vez que se publica un cambio: subir APP_VERSION acá y el mismo número en version.json
 // (primero este archivo, después version.json).
-const APP_VERSION = 4;
+const APP_VERSION = 5;
 async function checkVersion() {
   if (!navigator.onLine || document.querySelector('.overlay.update')) return;
   try {
