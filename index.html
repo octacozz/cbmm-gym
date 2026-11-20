@@ -159,6 +159,26 @@ td small{display:block;color:var(--muted);font-size:12px}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.overlay,.sheet{animation:none}.confetti{display:none}}
 .overlay.update{z-index:60}
+.prog-head{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.prog-head div{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:11px 10px}
+.prog-head b{display:block;font-size:22px;font-weight:900;letter-spacing:-.03em}
+.prog-head span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:800}
+.ex-card h3{margin:0;font-size:16px;letter-spacing:-.01em}
+.ex-card .kpi{display:flex;align-items:baseline;gap:8px;margin:4px 0 2px}
+.ex-card .kpi b{font-size:26px;font-weight:900;letter-spacing:-.04em}
+.delta{font-size:13px;font-weight:800}
+.delta.up{color:var(--ok)} .delta.down{color:var(--warn)} .delta.flat{color:var(--muted)}
+.chart{position:relative;margin-top:6px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart .tip{position:absolute;transform:translate(-50%,-115%);background:var(--ink);color:var(--bg);font-size:12px;font-weight:800;padding:5px 8px;border-radius:8px;white-space:nowrap;pointer-events:none}
+.chart .tip small{display:block;font-weight:650;opacity:.75;font-size:10px}
+.chart .hit{fill:transparent;cursor:pointer}
+.chart .hit:focus{outline:none}
+.chart .hit:focus-visible+.dot,.chart .dot.on{stroke:var(--ink)}
+.ex-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+.ex-table td,.ex-table th{padding:5px 0;border-top:1px solid var(--line);text-align:left}
+.ex-table th{color:var(--muted);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+details.tbl summary{cursor:pointer;color:var(--muted);font-size:12px;font-weight:750;margin-top:8px}
 .loading{display:grid;place-items:center;min-height:60vh;color:var(--muted)}
 .chat{display:flex;flex-direction:column;gap:6px;margin-top:8px}
 .bubble{padding:8px 10px;border-radius:10px;background:var(--bg);border:1px solid var(--line);font-size:14px}
@@ -477,9 +497,10 @@ function render() {
     return renderLogin();
   }
   if (!S.perfil) return;
-  if (isPF() && !v.startsWith('pf') && v !== 'perfil') return go('pf');
+  if (isPF() && !v.startsWith('pf') && v !== 'perfil' && v !== 'progreso') return go('pf');
   if (v.startsWith('pf') && isPF()) return renderPF(v);
   if (v === 'perfil') return renderPerfil();
+  if (v === 'progreso') return renderProgreso();
   if (!S.perfil.grupo_id || v === 'grupo') return renderGroupPick();
   if (v === 'cierre') return renderCierre();
   return renderEntreno();
@@ -1054,6 +1075,7 @@ async function renderPerfil() {
     <div class="top"><span class="brand">${FOX}CBMM</span><a href="#entreno">Volver al entrenamiento</a></div>
     <div class="row" style="gap:14px"><span class="avatar" style="width:60px;height:60px;font-size:20px">${esc(initials(S.perfil.nombre))}</span><div><h1 style="margin:0;font-size:24px;letter-spacing:-.04em">${esc(S.perfil.nombre || 'Sin nombre')}</h1><p class="small muted" style="margin:2px 0 0">${esc(S.user.email)}</p></div></div>
     <div class="panel row between"><div><p class="label" style="margin:0">Tu rutina</p><b style="font-size:20px;text-transform:uppercase">${esc(grupoName(S.perfil.grupo_id))}</b></div><a class="btn small ghost" href="#grupo">Cambiar</a></div>
+    <a class="panel row between" href="#progreso" style="text-decoration:none;color:var(--ink);border-color:var(--line2)"><div><p class="label" style="margin:0">Mi progreso</p><b style="font-size:17px">Ver cómo vienen tus pesos</b></div><svg viewBox="0 0 48 28" width="48" height="28" aria-hidden="true"><polyline points="2,24 14,18 26,20 38,9 46,4" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="46" cy="4" r="3" fill="var(--accent)"/></svg></a>
     <section class="panel"><h2 style="margin:0;font-size:18px">Mis máximos</h2><p class="small muted" style="margin:3px 0 8px">Tu mejor repetición (1RM). Con esto se calculan los kilos de cada ejercicio.</p>
       ${keys.size ? [...keys.entries()].map(([k, n]) => `<div class="list-row"><span>${esc(n)}</span><span class="load" style="margin:0">${S.maximos[k] ? kgFmt(S.maximos[k]) + ' kg ' : ''}<button class="linkbtn${S.maximos[k] ? '' : ' red'}" data-act="max" data-key="${esc(k)}" data-name="${esc(n)}">${S.maximos[k] ? 'cambiar' : 'cargar'}</button></span></div>`).join('') : '<p class="small muted">Cuando tu plan tenga ejercicios con %, aparecen acá.</p>'}
       <div class="row" style="margin-top:10px"><label class="small muted" for="paso">Redondear kilos a</label><select id="paso" class="input" style="width:auto;min-height:40px">${[0.5, 1, 2, 2.5].map((v) => `<option value="${v}"${v === paso ? ' selected' : ''}>${String(v).replace('.', ',')} kg</option>`).join('')}</select></div>
@@ -1074,6 +1096,112 @@ async function renderPerfil() {
     if (error) return fail(error);
     e.target.reset(); toast('Contraseña cambiada ✓');
   };
+}
+
+// ===================== Mi progreso =====================
+async function renderProgreso() {
+  $('#app').innerHTML = `<div class="wrap"><div class="loading">Cargando tu progreso…</div></div>`;
+  let series = [];
+  try {
+    const { data: ses, error } = await db.from('sesiones').select('id,plan_id,semana,dia,empezada').eq('jugador_id', S.user.id);
+    if (error) throw error;
+    const sesById = Object.fromEntries((ses || []).map((x) => [x.id, x]));
+    const ids = Object.keys(sesById).map(Number);
+    let rows = [];
+    for (let i = 0; i < ids.length; i += 150) {
+      const { data, error: e2 } = await db.from('series').select('sesion_id,item_id,kg').in('sesion_id', ids.slice(i, i + 150)).eq('numero', 0).not('kg', 'is', null);
+      if (e2) throw e2; rows = rows.concat(data || []);
+    }
+    const itemIds = [...new Set(rows.map((r) => r.item_id))];
+    const names = {};
+    for (let i = 0; i < itemIds.length; i += 150) {
+      const { data } = await db.from('items').select('id,nombre').in('id', itemIds.slice(i, i + 150));
+      for (const it of data || []) names[it.id] = it.nombre;
+    }
+    const byEx = new Map();
+    for (const r of rows) {
+      const sx = sesById[r.sesion_id]; const nombre = names[r.item_id]; if (!sx || !nombre || !(Number(r.kg) > 0)) continue;
+      const key = maxKey(nombre);
+      if (!byEx.has(key)) byEx.set(key, { nombre, pts: [] });
+      byEx.get(key).pts.push({ kg: Number(r.kg), fecha: sx.empezada, semana: sx.semana, plan: sx.plan_id, dia: sx.dia });
+    }
+    series = [...byEx.values()].map((e) => {
+      e.pts.sort((a, b) => (a.fecha && b.fecha ? new Date(a.fecha) - new Date(b.fecha) : (a.plan - b.plan) || (a.semana - b.semana) || (a.dia - b.dia)));
+      const first = e.pts[0].kg, last = e.pts[e.pts.length - 1].kg;
+      return { ...e, first, last, best: Math.max(...e.pts.map((p) => p.kg)), diff: last - first };
+    }).sort((a, b) => b.pts.length - a.pts.length || a.nombre.localeCompare(b.nombre));
+  } catch (e) { fail(e); }
+  const up = series.filter((x) => x.pts.length > 1 && x.diff > 0).length;
+  const top = series.filter((x) => x.pts.length > 1 && x.first > 0).sort((a, b) => b.diff / b.first - a.diff / a.first)[0];
+  const totalPts = series.reduce((t, x) => t + x.pts.length, 0);
+  $('#app').innerHTML = `<div class="wrap stack">
+    <div class="top"><span class="brand">${FOX}CBMM</span><a href="#perfil">Volver al perfil</a></div>
+    <div><p class="eyebrow">${esc(S.perfil.nombre || '')}</p><h1 class="h1">Mi progreso</h1><p class="small muted" style="margin:0">Los kilos que anotaste en cada ejercicio, entrenamiento por entrenamiento.</p></div>
+    ${series.length ? `<div class="prog-head">
+      <div><b>${series.length}</b><span>Ejercicios</span></div>
+      <div><b>${up}</b><span>Subiste peso</span></div>
+      <div><b>${top && top.diff > 0 ? '+' + Math.round(top.diff / top.first * 100) + '%' : totalPts}</b><span>${top && top.diff > 0 ? 'Mejor suba' : 'Registros'}</span></div>
+    </div>
+    ${top && top.diff > 0 ? `<p class="small" style="margin:-4px 0 0;color:var(--muted)">Mejor suba: <b style="color:var(--ink)">${esc(top.nombre)}</b>, de ${kgFmt(top.first)} a ${kgFmt(top.last)} kg.</p>` : ''}
+    ${series.map((x, i) => exCard(x, i)).join('')}` : `<div class="panel" style="text-align:center;padding:34px 18px"><svg viewBox="0 0 48 28" width="64" height="38" aria-hidden="true" style="opacity:.6"><polyline points="2,24 14,18 26,20 38,9 46,4" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><h2 style="margin:10px 0 6px;font-size:19px">Todavía no hay datos</h2><p class="small muted" style="margin:0">Cuando entrenes, anotá los kilos en el casillero <b>kg</b> de cada ejercicio. Acá vas a ver cómo suben semana a semana.</p></div>`}
+  </div>`;
+  bindCharts();
+}
+function exCard(x, i) {
+  const cls = x.pts.length < 2 ? 'flat' : x.diff > 0 ? 'up' : x.diff < 0 ? 'down' : 'flat';
+  const delta = x.pts.length < 2 ? 'un solo registro' : x.diff > 0 ? `↑ +${kgFmt(x.diff)} kg desde el inicio` : x.diff < 0 ? `↓ ${kgFmt(x.diff)} kg desde el inicio` : '= igual que al inicio';
+  const lab = (p) => (p.fecha ? fmtDate(p.fecha) : 'Sem ' + p.semana);
+  return `<section class="panel ex-card">
+    <h3>${esc(x.nombre)}</h3>
+    <div class="kpi"><b>${kgFmt(x.last)} kg</b><span class="delta ${cls}">${delta}</span></div>
+    ${x.pts.length > 1 ? chartSVG(x, i) : '<p class="small muted" style="margin:6px 0 0">Anotá el peso otra semana para ver la línea.</p>'}
+    <details class="tbl"><summary>Ver como tabla</summary><table class="ex-table"><thead><tr><th>Fecha</th><th>Semana</th><th style="text-align:right">Kilos</th></tr></thead><tbody>${x.pts.map((p) => `<tr><td>${lab(p)}</td><td>Sem ${p.semana} · Día ${p.dia}</td><td style="text-align:right;font-weight:800">${kgFmt(p.kg)} kg</td></tr>`).join('')}</tbody></table></details>
+  </section>`;
+}
+function niceTicks(min, max) {
+  if (min === max) { min = Math.max(0, min - 5); max = max + 5; }
+  const raw = (max - min) / 3, mag = Math.pow(10, Math.floor(Math.log10(raw))), step = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((s) => s >= raw);
+  const lo = Math.floor(min / step) * step, hi = Math.ceil(max / step) * step, t = [];
+  for (let v = lo; v <= hi + 1e-9; v += step) t.push(Math.round(v * 100) / 100);
+  return t;
+}
+function chartSVG(x, idx) {
+  const W = 320, H = 150, L = 34, R = 14, T = 14, B = 24;
+  const ks = x.pts.map((p) => p.kg), ticks = niceTicks(Math.min(...ks), Math.max(...ks));
+  const y0 = ticks[0], y1 = ticks[ticks.length - 1], n = x.pts.length;
+  const X = (i) => L + (n === 1 ? (W - L - R) / 2 : (i * (W - L - R)) / (n - 1));
+  const Y = (v) => T + (H - T - B) * (1 - (v - y0) / (y1 - y0 || 1));
+  const lab = (p) => (p.fecha ? fmtDate(p.fecha) : 'Sem ' + p.semana);
+  const pts = x.pts.map((p, i) => [X(i), Y(p.kg)]);
+  const grid = ticks.map((t) => `<line x1="${L}" x2="${W - R}" y1="${Y(t)}" y2="${Y(t)}" stroke="var(--line)" stroke-width="1"/><text x="${L - 6}" y="${Y(t) + 3.5}" text-anchor="end" font-size="10" fill="var(--faint)">${kgFmt(t)}</text>`).join('');
+  const last = pts[n - 1];
+  const step = Math.max(1, Math.ceil(n / 5));
+  const xl = x.pts.map((p, i) => (i % step === 0 || i === n - 1) && !(i !== n - 1 && n - 1 - i < step) ? `<text x="${X(i)}" y="${H - 6}" text-anchor="${i === 0 ? 'start' : i === n - 1 ? 'end' : 'middle'}" font-size="10" fill="var(--faint)">${lab(p)}</text>` : '').join('');
+  const hitW = Math.max(18, (W - L - R) / Math.max(1, n - 1));
+  return `<div class="chart" data-chart="${idx}">
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(x.nombre)}: de ${kgFmt(x.first)} a ${kgFmt(x.last)} kg en ${n} entrenamientos">
+      ${grid}${xl}
+      <polyline points="${pts.map((p) => p.join(',')).join(' ')}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      ${pts.map((p, i) => `<g><rect class="hit" x="${p[0] - hitW / 2}" y="${T - 6}" width="${hitW}" height="${H - T - B + 12}" tabindex="0" data-i="${i}" data-kg="${kgFmt(x.pts[i].kg)}" data-l="${esc(lab(x.pts[i]))} · Sem ${x.pts[i].semana}" aria-label="${esc(lab(x.pts[i]))}: ${kgFmt(x.pts[i].kg)} kg"/><circle class="dot" cx="${p[0]}" cy="${p[1]}" r="${i === n - 1 ? 4.5 : 3.5}" fill="var(--accent)" stroke="var(--panel)" stroke-width="2" pointer-events="none"/></g>`).join('')}
+      <text x="${Math.min(last[0], W - R)}" y="${last[1] - 10}" text-anchor="end" font-size="11" font-weight="800" fill="var(--ink)">${kgFmt(x.last)} kg</text>
+    </svg><div class="tip" hidden></div></div>`;
+}
+function bindCharts() {
+  document.querySelectorAll('.chart').forEach((c) => {
+    const tip = c.querySelector('.tip'), svg = c.querySelector('svg');
+    const show = (h) => {
+      c.querySelectorAll('.dot.on').forEach((d) => d.classList.remove('on'));
+      const dot = h.nextElementSibling; dot.classList.add('on');
+      const r = svg.getBoundingClientRect(), k = r.width / svg.viewBox.baseVal.width;
+      tip.innerHTML = `${h.dataset.kg} kg<small>${h.dataset.l}</small>`;
+      tip.style.left = Math.min(Math.max(dot.cx.baseVal.value * k, 40), r.width - 40) + 'px';
+      tip.style.top = dot.cy.baseVal.value * k + 'px';
+      tip.hidden = false;
+    };
+    const hide = () => { tip.hidden = true; c.querySelectorAll('.dot.on').forEach((d) => d.classList.remove('on')); };
+    c.querySelectorAll('.hit').forEach((h) => { h.addEventListener('pointerenter', () => show(h)); h.addEventListener('click', () => show(h)); h.addEventListener('focus', () => show(h)); h.addEventListener('blur', hide); });
+    c.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') hide(); });
+  });
 }
 
 // ===================== PF =====================
@@ -1508,7 +1636,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.se
 // ---------- Aviso de versión nueva ----------
 // Cada vez que se publica un cambio: subir APP_VERSION acá y el mismo número en version.json
 // (primero este archivo, después version.json).
-const APP_VERSION = 3;
+const APP_VERSION = 4;
 async function checkVersion() {
   if (!navigator.onLine || document.querySelector('.overlay.update')) return;
   try {
