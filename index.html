@@ -138,6 +138,26 @@ td small{display:block;color:var(--muted);font-size:12px}
 .drop b{font-size:17px}
 .toast{position:fixed;left:50%;bottom:max(90px,calc(env(safe-area-inset-bottom) + 80px));transform:translateX(-50%);z-index:20;background:var(--ink);color:var(--bg);font-weight:700;font-size:14px;padding:10px 16px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.4);max-width:calc(100% - 32px)}
 .net{position:fixed;top:0;left:0;right:0;z-index:30;background:var(--warn);color:#0a1122;font-weight:700;font-size:13px;text-align:center;padding:calc(6px + env(safe-area-inset-top)) 16px 6px}
+.overlay{position:fixed;inset:0;z-index:40;display:grid;place-items:center;padding:20px;background:rgba(5,10,22,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:fade .2s ease-out}
+.sheet{position:relative;width:100%;max-width:420px;max-height:calc(100dvh - 40px);overflow:auto;background:var(--panel);border:1px solid var(--line2);border-radius:22px;padding:24px 20px 20px;display:flex;flex-direction:column;gap:14px;animation:pop .28s cubic-bezier(.2,.9,.3,1.2)}
+.sheet h2{margin:0;font-size:30px;line-height:.95;letter-spacing:-.05em;font-weight:950;text-transform:uppercase}
+.sheet p{margin:0}
+.sheet .pending{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.sheet .pending li{display:flex;justify-content:space-between;gap:10px;padding:9px 12px;border-radius:10px;background:var(--bg);border:1px solid var(--line);font-size:14px;font-weight:650}
+.sheet .pending li span{color:var(--accent);font-weight:800;white-space:nowrap}
+.celebrate{text-align:center;overflow:hidden;border-color:#a8333a;background:linear-gradient(160deg,#3a1420,#17264b 70%)}
+.celebrate .trophy{font-size:58px;line-height:1;margin:4px 0 0}
+.celebrate h2{font-size:clamp(40px,12vw,56px)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stats div{background:rgba(5,10,22,.45);border:1px solid var(--line);border-radius:12px;padding:10px 4px}
+.stats b{display:block;font-size:22px;font-weight:900;letter-spacing:-.03em}
+.stats span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:800}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:41;overflow:hidden}
+.confetti i{position:absolute;top:-14px;width:8px;height:14px;border-radius:2px;opacity:.95;animation:fall linear forwards}
+@keyframes fall{to{transform:translate3d(var(--dx),110vh,0) rotate(var(--r));opacity:.9}}
+@keyframes pop{from{transform:scale(.9) translateY(12px);opacity:0}to{transform:none;opacity:1}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.overlay,.sheet{animation:none}.confetti{display:none}}
 .loading{display:grid;place-items:center;min-height:60vh;color:var(--muted)}
 .chat{display:flex;flex-direction:column;gap:6px;margin-top:8px}
 .bubble{padding:8px 10px;border-radius:10px;background:var(--bg);border:1px solid var(--line);font-size:14px}
@@ -805,10 +825,66 @@ async function renderEntreno() {
     <div class="bar" aria-hidden="true"><span style="width:${pctDone}%"></span></div>
     <p class="small muted" style="margin:0 0 6px">Movilidad básica y activación antes de empezar. Al marcar una serie, el descanso arranca solo.</p>
     ${cards || '<p class="muted">Este día no tiene ejercicios cargados.</p>'}
-    <a class="btn" href="#cierre" style="margin-top:12px">Terminar el día</a>
+    <button class="btn" data-act="finish" style="margin-top:12px">Terminar el día</button>
     ${timerHTML()}
   </div>`;
   bindTimer();
+}
+// ---------- Felicitaciones y confirmación al terminar el día ----------
+function pendingSets() {
+  const list = [];
+  let total = 0, done = 0;
+  document.querySelectorAll('article.card').forEach((c) => {
+    const b = [...c.querySelectorAll('.set')];
+    const d = b.filter((x) => x.getAttribute('aria-pressed') === 'true').length;
+    total += b.length; done += d;
+    if (d < b.length) list.push({ name: c.querySelector('h3')?.textContent || 'Ejercicio', left: b.length - d });
+  });
+  return { total, done, list };
+}
+function closeOverlay() { document.querySelectorAll('.overlay,.confetti').forEach((e) => e.remove()); document.removeEventListener('keydown', overlayKey); }
+function overlayKey(e) { if (e.key === 'Escape') closeOverlay(); }
+function openOverlay(html, cls = '') {
+  closeOverlay();
+  const o = document.createElement('div');
+  o.className = 'overlay';
+  o.innerHTML = `<div class="sheet ${cls}" role="dialog" aria-modal="true" aria-labelledby="ov-title">${html}</div>`;
+  o.addEventListener('click', (e) => { if (e.target === o) closeOverlay(); });
+  document.body.appendChild(o);
+  document.addEventListener('keydown', overlayKey);
+  o.querySelector('.btn')?.focus();
+}
+function showConfirmFinish(p) {
+  const s = (n) => (n === 1 ? '' : 's');
+  const left = p.total - p.done;
+  openOverlay(`<p class="eyebrow">Semana ${S.week + 1} · Día ${S.day + 1}</p>
+    <h2 id="ov-title">¿Terminás<br>el día?</h2>
+    <p class="muted">Te falta${left === 1 ? '' : 'n'} <b style="color:var(--ink)">${left} serie${s(left)}</b> de ${p.total}. Si terminás ahora, el día queda cerrado así.</p>
+    <ul class="pending">${p.list.slice(0, 6).map((x) => `<li>${esc(x.name)}<span>falta${x.left === 1 ? '' : 'n'} ${x.left}</span></li>`).join('')}${p.list.length > 6 ? `<li class="muted">y ${p.list.length - 6} ejercicio${s(p.list.length - 6)} más</li>` : ''}</ul>
+    <button class="btn" data-act="close-overlay">Seguir entrenando</button>
+    <button class="btn ghost" data-act="go-cierre">Terminar igual</button>`);
+}
+function showCelebration() {
+  const p = pendingSets();
+  const its = S.items.filter((i) => S.bloques.find((b) => b.id === i.bloque_id && b.dia === S.day + 1));
+  const ups = its.filter((i) => S.prev[i.id] && S.series[i.id + ':0']?.kg > S.prev[i.id].kg).length;
+  const name = S.perfil?.nombre ? ', ' + esc(S.perfil.nombre.split(' ')[0]) : '';
+  openOverlay(`<p class="eyebrow">Semana ${S.week + 1} · Día ${S.day + 1}</p>
+    <div class="trophy" aria-hidden="true">🏆</div>
+    <h2 id="ov-title">¡Día<br>completo!</h2>
+    <p class="muted">Bien ahí${name}. Hiciste todas las series del día.</p>
+    <div class="stats"><div><b>${p.total}</b><span>Series</span></div><div><b>${its.length}</b><span>Ejercicios</span></div><div><b>${ups}</b><span>Con más peso</span></div></div>
+    ${ups ? `<p class="small" style="color:var(--ok);font-weight:750">↑ Subiste peso en ${ups} ejercicio${ups === 1 ? '' : 's'} respecto de la semana pasada</p>` : ''}
+    <button class="btn" data-act="go-cierre">Cerrar el día</button>
+    <button class="linkbtn" data-act="close-overlay">Seguir viendo el entrenamiento</button>`, 'celebrate');
+  try { navigator.vibrate?.([80, 60, 80, 60, 200]); } catch {}
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const c = document.createElement('div'); c.className = 'confetti'; c.setAttribute('aria-hidden', 'true');
+    const cols = ['#ff5c5c', '#ffffff', '#5fd29a', '#8fb4e0', '#ffcf5c'];
+    c.innerHTML = Array.from({ length: 70 }, () => `<i style="left:${Math.random() * 100}%;background:${cols[Math.floor(Math.random() * cols.length)]};--dx:${Math.round(Math.random() * 160 - 80)}px;--r:${Math.round(Math.random() * 720 - 360)}deg;animation-duration:${(2.2 + Math.random() * 1.8).toFixed(2)}s;animation-delay:${(Math.random() * .5).toFixed(2)}s"></i>`).join('');
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 5000);
+  }
 }
 function noteBlock(itemId, name) {
   const txt = S.series[itemId + ':0']?.nota;
@@ -858,8 +934,17 @@ document.addEventListener('click', async (ev) => {
       if (on && Number(t.dataset.rest) > 0) startTimer(Number(t.dataset.rest), t.dataset.name);
       enqueue({ t: 'set', item, n, hecha: on });
       updateCounts();
+      const all = [...document.querySelectorAll('.set')];
+      if (on && all.length && all.every((b) => b.getAttribute('aria-pressed') === 'true')) { stopTimer(); showCelebration(); }
       return;
     }
+    if (a === 'finish') {
+      const p = pendingSets();
+      if (!p.total || !p.list.length) return go('cierre');
+      return showConfirmFinish(p);
+    }
+    if (a === 'close-overlay') return closeOverlay();
+    if (a === 'go-cierre') { closeOverlay(); return go('cierre'); }
     if (a === 'comment') {
       const box = t.parentElement;
       box.innerHTML = `<div class="stack" style="gap:8px;margin-top:10px"><textarea class="input" maxlength="1000" placeholder="Ej.: me molestó el hombro en la última serie" aria-label="Comentario para el PF sobre ${esc(t.dataset.name)}"></textarea><div class="row"><button class="btn small" data-act="send-comment" data-item="${t.dataset.item}">Enviar al PF</button><button class="btn small ghost" data-act="cancel-comment">Cancelar</button></div></div>`;
@@ -926,12 +1011,19 @@ async function renderCierre() {
   if (!S.plan) return go('entreno');
   const its = S.items.filter((i) => S.bloques.find((b) => b.id === i.bloque_id && b.dia === S.day + 1));
   const done = Object.values(S.series).filter((r) => r.hecha && r.numero > 0).length;
+  let total = 0;
+  for (const b of S.bloques.filter((x) => x.dia === S.day + 1)) {
+    const bi = its.filter((i) => i.bloque_id === b.id); if (!bi.length) continue;
+    if (b.tipo === 'circuito' || b.tipo === 'amrap') total += b.tipo === 'amrap' ? 1 : ((bi[0].semanas[S.week] || {}).series?.count || 1);
+    else for (const i of bi) total += setsFor(i.semanas[S.week]).length;
+  }
+  const full = total > 0 && done >= total;
   const loads = its.filter((i) => S.series[i.id + ':0']?.kg).map((i) => `<div class="list-row"><span>${esc(i.nombre)}</span><b style="color:var(--accent)">${kgFmt(S.series[i.id + ':0'].kg)} kg${S.prev[i.id] && S.series[i.id + ':0'].kg > S.prev[i.id].kg ? ' ↑' : ''}</b></div>`).join('');
   const labels = ['Muy fácil', 'Fácil', 'Justo', 'Duro', 'Al límite'];
   const e0 = S.sesion?.esfuerzo ? S.sesion.esfuerzo - 1 : S.effort;
   $('#app').innerHTML = `<div class="wrap stack">
     <div class="top"><span class="brand">${FOX}CBMM</span><a href="#entreno">Volver al día</a></div>
-    <div class="hero" style="border-color:#a8333a;background:linear-gradient(135deg,#3a1420,#17264b)">${FOX}<p class="eyebrow">Semana ${S.week + 1} · Día ${S.day + 1} · ${esc(grupoName(S.plan.grupo_id))}</p><h1>Día<br>completo</h1><p>${done} series marcadas</p></div>
+    <div class="hero" style="border-color:#a8333a;background:linear-gradient(135deg,#3a1420,#17264b)">${FOX}<p class="eyebrow">Semana ${S.week + 1} · Día ${S.day + 1} · ${esc(grupoName(S.plan.grupo_id))}</p><h1>Día<br>${full ? 'completo' : 'terminado'}</h1><p>${full ? `${done} series marcadas · todas ✓` : `${done} de ${total} series marcadas`}</p></div>
     ${loads ? `<div class="panel"><p class="label">Tus cargas de hoy</p>${loads}</div>` : ''}
     <div><p class="label">¿Qué tan duro fue?</p><div class="effort" role="radiogroup" aria-label="Esfuerzo">${labels.map((l, i) => `<button type="button" role="radio" data-e="${i}" aria-pressed="${i === e0}" aria-checked="${i === e0}"><b>${i + 1}</b><span>${l}</span></button>`).join('')}</div></div>
     <label class="field">Algo para el PF (opcional)<textarea id="nota" maxlength="1000" placeholder="Ej.: en la búlgara me molestó la rodilla">${esc(S.sesion?.nota || '')}</textarea></label>
