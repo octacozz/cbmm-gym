@@ -158,6 +158,7 @@ td small{display:block;color:var(--muted);font-size:12px}
 @keyframes pop{from{transform:scale(.9) translateY(12px);opacity:0}to{transform:none;opacity:1}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.overlay,.sheet{animation:none}.confetti{display:none}}
+.overlay.update{z-index:60}
 .loading{display:grid;place-items:center;min-height:60vh;color:var(--muted)}
 .chat{display:flex;flex-direction:column;gap:6px;margin-top:8px}
 .bubble{padding:8px 10px;border-radius:10px;background:var(--bg);border:1px solid var(--line);font-size:14px}
@@ -842,7 +843,7 @@ function pendingSets() {
   });
   return { total, done, list };
 }
-function closeOverlay() { document.querySelectorAll('.overlay,.confetti').forEach((e) => e.remove()); document.removeEventListener('keydown', overlayKey); }
+function closeOverlay() { document.querySelectorAll('.overlay:not(.update),.confetti').forEach((e) => e.remove()); document.removeEventListener('keydown', overlayKey); }
 function overlayKey(e) { if (e.key === 'Escape') closeOverlay(); }
 function openOverlay(html, cls = '') {
   closeOverlay();
@@ -1503,6 +1504,43 @@ async function pfComentarios(D) {
 
 boot().catch(fail);
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+
+// ---------- Aviso de versión nueva ----------
+// Cada vez que se publica un cambio: subir APP_VERSION acá y el mismo número en version.json
+// (primero este archivo, después version.json).
+const APP_VERSION = 3;
+async function checkVersion() {
+  if (!navigator.onLine || document.querySelector('.overlay.update')) return;
+  try {
+    const r = await fetch('version.json?t=' + Date.now(), { cache: 'no-store' });
+    if (!r.ok) return;
+    const { version } = await r.json();
+    if (Number(version) > APP_VERSION) showUpdate();
+  } catch {}
+}
+function showUpdate() {
+  const o = document.createElement('div');
+  o.className = 'overlay update';
+  o.innerHTML = `<div class="sheet" role="alertdialog" aria-modal="true" aria-labelledby="up-title" aria-describedby="up-text" style="text-align:center">
+    <div style="font-size:46px;line-height:1" aria-hidden="true">🔄</div>
+    <h2 id="up-title">Hay una<br>versión nueva</h2>
+    <p class="muted" id="up-text">Actualizá la app para seguir. Lo que ya marcaste queda guardado.</p>
+    <button class="btn" id="up-btn">Actualizar ahora</button></div>`;
+  document.body.appendChild(o);
+  const btn = o.querySelector('#up-btn');
+  btn.focus();
+  btn.onclick = async () => {
+    btn.disabled = true; btn.textContent = 'Actualizando…';
+    try { await flush(); } catch {}
+    try { const regs = await navigator.serviceWorker?.getRegistrations() || []; await Promise.all(regs.map((g) => g.update())); } catch {}
+    try { const ks = await caches.keys(); await Promise.all(ks.map((k) => caches.delete(k))); } catch {}
+    location.replace(location.pathname + '?v=' + Date.now() + location.hash);
+  };
+}
+setTimeout(checkVersion, 2000);
+setInterval(checkVersion, 5 * 60 * 1000);
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') checkVersion(); });
+window.addEventListener('online', checkVersion);
 </script>
 </body>
 </html>
