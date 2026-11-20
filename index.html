@@ -87,6 +87,8 @@ textarea.input,.field textarea{min-height:76px;resize:vertical}
 .note{margin:10px 0 0;padding:8px 10px;border-radius:9px;background:var(--bg);border:1px solid var(--line);font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}
 .note small{display:block;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
 .note.pf{border-color:#a8333a}
+.note.mine{border-color:#2f5c8f}
+.note.mine small{color:#8fb4e0}
 .timer{position:sticky;bottom:0;z-index:5;margin-top:14px;padding:8px 0 max(10px,env(safe-area-inset-bottom));background:var(--bg)}
 .timer-inner{border:1px solid var(--line);border-radius:14px;padding:8px;display:flex;gap:5px;align-items:center;background:var(--panel2)}
 .timer-inner.running{border-color:var(--accent)}
@@ -407,7 +409,7 @@ const LS = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; 
 const S = {
   user: null, perfil: null, grupos: [],
   plan: null, bloques: [], items: [], week: 0, day: 0,
-  sesion: null, series: {}, prev: {}, maximos: {}, comentarios: [],
+  sesion: null, series: {}, prev: {}, prevNota: {}, maximos: {}, comentarios: [],
   effort: 2, asPlayer: LS.get('as-player', false),
   pf: { tab: 'inicio' }
 };
@@ -603,7 +605,7 @@ async function ensurePlan() {
 const keyOf = () => S.plan.id + '-' + (S.week + 1) + '-' + (S.day + 1);
 const sesIds = () => LS.get('ses-ids', {});
 async function loadSession() {
-  S.sesion = null; S.series = {}; S.prev = {}; S.comentarios = [];
+  S.sesion = null; S.series = {}; S.prev = {}; S.prevNota = {}; S.comentarios = [];
   if (!S.plan) return;
   const key = keyOf();
   try {
@@ -616,24 +618,28 @@ async function loadSession() {
       if (e2) throw e2;
       for (const r of ser || []) S.series[r.item_id + ':' + r.numero] = r;
     }
-    // Pesos de semanas anteriores (fila numero 0 = peso usado)
+    // Peso y nota de semanas anteriores (fila numero 0 = peso usado y nota del jugador)
     const { data: prevSes } = await db.from('sesiones').select('id,semana').eq('jugador_id', S.user.id).eq('plan_id', S.plan.id).eq('dia', S.day + 1).lt('semana', S.week + 1).order('semana', { ascending: false });
     if (prevSes?.length) {
-      const { data: pw } = await db.from('series').select('sesion_id,item_id,kg').in('sesion_id', prevSes.map((s) => s.id)).eq('numero', 0).not('kg', 'is', null);
-      for (const s of prevSes) for (const r of (pw || []).filter((x) => x.sesion_id === s.id)) if (!S.prev[r.item_id]) S.prev[r.item_id] = { kg: r.kg, week: s.semana };
+      const { data: pw } = await db.from('series').select('sesion_id,item_id,kg,nota').in('sesion_id', prevSes.map((s) => s.id)).eq('numero', 0).or('kg.not.is.null,nota.not.is.null');
+      for (const s of prevSes) for (const r of (pw || []).filter((x) => x.sesion_id === s.id)) {
+        if (r.kg != null && !S.prev[r.item_id]) S.prev[r.item_id] = { kg: r.kg, week: s.semana };
+        if (r.nota && !S.prevNota[r.item_id]) S.prevNota[r.item_id] = { texto: r.nota, week: s.semana };
+      }
     }
     const { data: com } = await db.from('comentarios').select('*').eq('jugador_id', S.user.id).order('creado_en');
     S.comentarios = com || [];
-    LS.set('ses-cache-' + key, { sesion: S.sesion, series: S.series, prev: S.prev, comentarios: S.comentarios });
+    LS.set('ses-cache-' + key, { sesion: S.sesion, series: S.series, prev: S.prev, prevNota: S.prevNota, comentarios: S.comentarios });
   } catch (e) {
     const c = LS.get('ses-cache-' + key, null);
-    if (c) Object.assign(S, { sesion: c.sesion, series: c.series, prev: c.prev, comentarios: c.comentarios || [] });
+    if (c) Object.assign(S, { sesion: c.sesion, series: c.series, prev: c.prev, prevNota: c.prevNota || {}, comentarios: c.comentarios || [] });
   }
   for (const op of queue()) if (op.key === key && op.uid === S.user.id) applyLocal(op);
 }
 function applyLocal(op) {
   if (op.t === 'set') S.series[op.item + ':' + op.n] = { ...(S.series[op.item + ':' + op.n] || {}), hecha: op.hecha, numero: op.n };
   if (op.t === 'kg') S.series[op.item + ':0'] = { ...(S.series[op.item + ':0'] || {}), kg: op.kg, numero: 0 };
+  if (op.t === 'nota') S.series[op.item + ':0'] = { ...(S.series[op.item + ':0'] || {}), nota: op.nota, numero: 0 };
   if (op.t === 'comment') S.comentarios.push({ id: 'p' + op.id, jugador_id: S.user.id, autor_id: S.user.id, item_id: op.item, texto: op.texto, pendiente: true, key: op.key });
 }
 
@@ -643,11 +649,11 @@ function saveQueue(q) { LS.set('cola-v1', q); updateNet(); }
 function enqueue(op) {
   Object.assign(op, { id: Date.now() + '-' + Math.random().toString(36).slice(2, 7), uid: S.user.id, key: keyOf(), plan_id: S.plan.id, semana: S.week + 1, dia: S.day + 1 });
   const q = queue();
-  const i = q.findIndex((x) => x.uid === op.uid && x.key === op.key && x.t === op.t && ((op.t === 'set' && x.item === op.item && x.n === op.n) || (op.t === 'kg' && x.item === op.item) || op.t === 'cierre'));
+  const i = q.findIndex((x) => x.uid === op.uid && x.key === op.key && x.t === op.t && ((op.t === 'set' && x.item === op.item && x.n === op.n) || (op.t === 'kg' && x.item === op.item) || (op.t === 'nota' && x.item === op.item) || op.t === 'cierre'));
   if (i >= 0) q[i] = op; else q.push(op);
   saveQueue(q);
   applyLocal(op);
-  LS.set('ses-cache-' + op.key, { sesion: S.sesion, series: S.series, prev: S.prev, comentarios: S.comentarios.filter((c) => !c.pendiente) });
+  LS.set('ses-cache-' + op.key, { sesion: S.sesion, series: S.series, prev: S.prev, prevNota: S.prevNota, comentarios: S.comentarios.filter((c) => !c.pendiente) });
   flush();
 }
 const netErr = (e) => !navigator.onLine || /fetch|network|load failed|timeout/i.test(e?.message || String(e));
@@ -670,6 +676,7 @@ async function flush() {
         let r;
         if (op.t === 'set') r = await db.from('series').upsert({ sesion_id: sid, item_id: op.item, numero: op.n, hecha: op.hecha });
         else if (op.t === 'kg') r = await db.from('series').upsert({ sesion_id: sid, item_id: op.item, numero: 0, hecha: false, kg: op.kg });
+        else if (op.t === 'nota') r = await db.from('series').upsert({ sesion_id: sid, item_id: op.item, numero: 0, hecha: false, nota: op.nota });
         else if (op.t === 'comment') r = await db.from('comentarios').insert({ jugador_id: op.uid, autor_id: op.uid, item_id: op.item || null, sesion_id: sid, texto: op.texto });
         else if (op.t === 'cierre') r = await db.from('sesiones').update({ terminada: op.terminada, esfuerzo: op.esfuerzo, nota: op.nota }).eq('id', sid);
         if (r?.error) throw r.error;
@@ -779,11 +786,11 @@ async function renderEntreno() {
       const ll = loadLine(it, w);
       const mx = S.maximos[maxKey(it.nombre)];
       const ramp = w.series?.ramp && mx && w.carga?.pct ? `<p class="ramp">${sets.map((s, k) => `S${k + 1} ${esc(s.reps.replace(' reps', ''))}×${kgFmt(roundKg(mx * s.pct / 100))}`).join(' · ')} kg</p>` : '';
-      const pv = S.prev[it.id] ? `<p class="prev">Semana ${S.prev[it.id].week}: ${kgFmt(S.prev[it.id].kg)} kg</p>` : '';
+      const pv = (S.prev[it.id] ? `<p class="prev">Semana ${S.prev[it.id].week}: ${kgFmt(S.prev[it.id].kg)} kg</p>` : '') + (S.prevNota[it.id] ? `<p class="note mine"><small>Tu nota · semana ${S.prevNota[it.id].week}</small>${esc(S.prevNota[it.id].texto)}</p>` : '');
       const wv = S.series[it.id + ':0']?.kg;
       cards += `<article class="card${d === sets.length ? ' done' : ''}"><div class="card-top"><span class="num">${String(num).padStart(2, '0')}</span><div style="flex:1;min-width:0"><h3>${esc(it.nombre)}</h3><p class="target">${esc(targetLine(b, w))}</p>${ll ? `<p class="load">${ll}</p>` : ''}${pv}${ramp}</div></div>
         <div class="log"><div class="sets">${btns}</div><label class="weight"><input inputmode="decimal" data-act="kg" data-item="${it.id}" value="${wv != null ? kgFmt(wv) : ''}" placeholder="—" aria-label="Peso usado en ${esc(it.nombre)}"> kg</label></div>
-        ${commentBlock(it.id, it.nombre)}</article>`;
+        ${noteBlock(it.id, it.nombre)}${commentBlock(it.id, it.nombre)}</article>`;
     }
   }
   const pctDone = total ? Math.round(done / total * 100) : 0;
@@ -802,6 +809,10 @@ async function renderEntreno() {
     ${timerHTML()}
   </div>`;
   bindTimer();
+}
+function noteBlock(itemId, name) {
+  const txt = S.series[itemId + ':0']?.nota;
+  return `<div data-note="${itemId}">${txt ? `<p class="note mine"><small>Tu nota de hoy</small>${esc(txt)}</p>` : ''}<button class="linkbtn" data-act="note" data-item="${itemId}" data-name="${esc(name)}">${txt ? 'Editar nota' : '+ Nota para mí (pesos, sensaciones…)'}</button></div>`;
 }
 function commentBlock(itemId, name) {
   const sid = S.sesion?.id || sesIds()[keyOf()];
@@ -856,6 +867,19 @@ document.addEventListener('click', async (ev) => {
       return;
     }
     if (a === 'cancel-comment') return renderEntreno();
+    if (a === 'note') {
+      const item = Number(t.dataset.item), cur = S.series[item + ':0']?.nota || '';
+      const box = t.closest('[data-note]');
+      box.innerHTML = `<div class="stack" style="gap:8px;margin-top:10px"><textarea class="input" maxlength="500" placeholder="Ej.: S1 80 · S2 85 · S3 90 kg" aria-label="Nota para vos sobre ${esc(t.dataset.name)}">${esc(cur)}</textarea><div class="row"><button class="btn small" data-act="save-note" data-item="${item}">Guardar nota</button><button class="btn small ghost" data-act="cancel-comment">Cancelar</button></div><span class="small muted">Solo la ves vos. Te aparece en este ejercicio la semana que viene.</span></div>`;
+      box.querySelector('textarea').focus();
+      return;
+    }
+    if (a === 'save-note') {
+      const txt = t.closest('.stack').querySelector('textarea').value.trim();
+      enqueue({ t: 'nota', item: Number(t.dataset.item), nota: txt || null });
+      toast(navigator.onLine ? (txt ? 'Nota guardada' : 'Nota borrada') : 'Nota guardada en el teléfono');
+      return renderEntreno();
+    }
     if (a === 'send-comment') {
       const txt = t.closest('.stack').querySelector('textarea').value.trim();
       if (!txt) return;
