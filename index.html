@@ -849,6 +849,7 @@ async function renderEntreno() {
     <p class="small muted" style="margin:0 0 6px">Movilidad básica y activación antes de empezar. Al marcar una serie, el descanso arranca solo.</p>
     ${cards || '<p class="muted">Este día no tiene ejercicios cargados.</p>'}
     <button class="btn" data-act="finish" style="margin-top:12px">Terminar el día</button>
+    <button class="linkbtn" data-act="reset-day" style="align-self:center;margin:6px auto 0;display:block">↺ Reiniciar este día</button>
     ${timerHTML()}
   </div>`;
   bindTimer();
@@ -967,6 +968,30 @@ document.addEventListener('click', async (ev) => {
       return showConfirmFinish(p);
     }
     if (a === 'close-overlay') return closeOverlay();
+    if (a === 'reset-day') {
+      const has = Object.values(S.series).some((r) => (r.numero > 0 && r.hecha) || (r.numero === 0 && (r.kg != null || r.nota))) || S.sesion?.terminada;
+      if (!has) return toast('Este día no tiene nada cargado');
+      return openOverlay(`<p class="eyebrow">Semana ${S.week + 1} · Día ${S.day + 1}</p>
+        <h2 id="ov-title">¿Reiniciar<br>el día?</h2>
+        <p class="muted">Se desmarcan todas las series y se borran los kilos y las notas de este día. Los comentarios que mandaste al PF no se borran.</p>
+        <button class="btn" data-act="confirm-reset">Sí, reiniciar</button>
+        <button class="btn ghost" data-act="close-overlay">Cancelar</button>`);
+    }
+    if (a === 'confirm-reset') {
+      for (const [k, r] of Object.entries(S.series)) {
+        const item = Number(k.split(':')[0]);
+        if (!item) continue;
+        if (r.numero > 0 && r.hecha) enqueue({ t: 'set', item, n: r.numero, hecha: false });
+        if (r.numero === 0 && r.kg != null) enqueue({ t: 'kg', item, kg: null });
+        if (r.numero === 0 && r.nota) enqueue({ t: 'nota', item, nota: null });
+      }
+      if (S.sesion?.terminada) { enqueue({ t: 'cierre', terminada: null, esfuerzo: null, nota: null }); S.sesion = { ...S.sesion, terminada: null, esfuerzo: null, nota: null }; }
+      stopTimer(); closeOverlay();
+      // Espera a que se suban los cambios para no volver a leer datos viejos
+      for (let i = 0; i < 40 && navigator.onLine && queue().some((o) => o.uid === S.user.id); i++) { flush(); await new Promise((r) => setTimeout(r, 150)); }
+      toast('Día reiniciado');
+      return renderEntreno();
+    }
     if (a === 'go-cierre') { closeOverlay(); return go('cierre'); }
     if (a === 'comment') {
       const box = t.parentElement;
@@ -1637,7 +1662,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.se
 // ---------- Aviso de versión nueva ----------
 // Cada vez que se publica un cambio: subir APP_VERSION acá y el mismo número en version.json
 // (primero este archivo, después version.json).
-const APP_VERSION = 5;
+const APP_VERSION = 6;
 async function checkVersion() {
   if (!navigator.onLine || document.querySelector('.overlay.update')) return;
   try {
